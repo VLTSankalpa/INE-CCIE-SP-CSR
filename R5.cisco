@@ -129,6 +129,7 @@ interface GigabitEthernet1.56
  encapsulation dot1Q 56
  ip address 10.5.6.5 255.255.255.0
  ip router isis 1
+ ipv6 address 2001:5:6::5/64
 !
 router isis 1
  net 01.0000.0000.0005.00
