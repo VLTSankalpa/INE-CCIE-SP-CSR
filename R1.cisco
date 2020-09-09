@@ -1,5 +1,5 @@
 !
-! Last configuration change at 09:04:53 UTC Wed Sep 9 2020
+! Last configuration change at 13:01:42 UTC Wed Sep 9 2020
 !
 version 16.6
 service timestamps debug datetime msec
@@ -67,7 +67,7 @@ crypto pki certificate chain TP-self-signed-1979137170
 !
 !
 !
-license udi pid CSR1000V sn 9VB2S9FIE72
+license udi pid CSR1000V sn 9M741B9PYZR
 diagnostic bootup level minimal
 spanning-tree extend system-id
 !
@@ -114,27 +114,37 @@ interface GigabitEthernet1.12
  no shutdown
  encapsulation dot1Q 12
  ip address 10.1.2.1 255.255.255.0
+ ip router isis 1
  ipv6 address 2001:1:2::1/64
 !
 interface GigabitEthernet1.15
  no shutdown
  encapsulation dot1Q 15
  ip address 10.1.5.1 255.255.255.0
+ ip router isis 1
  ipv6 address 2001:1:5::1/64
 !
 interface GigabitEthernet1.111
  no shutdown
  encapsulation dot1Q 111
  ip address 10.1.11.1 255.255.255.0
+ ip router isis 1
  ipv6 address 2001:1:11::1/64
 !
 interface GigabitEthernet1.112
  no shutdown
  encapsulation dot1Q 112
  ip address 10.1.12.1 255.255.255.0
+ ip router isis 1
  ipv6 address 2001:1:12::1/64
 !
+router isis 1
+ net 00.0000.0000.0001.00
+ metric-style narrow
+ passive-interface Loopback0
 !
+!
+virtual-service csr_mgmt
 !
 ip forward-protocol nd
 ip http server

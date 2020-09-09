@@ -1,5 +1,5 @@
 !! IOS XR Configuration 6.0.1
-!! Last configuration change at Wed Sep  9 08:58:19 2020 by cisco
+!! Last configuration change at Wed Sep  9 14:02:54 2020 by cisco
 !
 hostname XR1
 line console
@@ -43,6 +43,35 @@ interface GigabitEthernet0/0/0/0.1112
  ipv4 address 10.11.12.11 255.255.255.0
  ipv6 address 2001:11:12::11/64
  encapsulation dot1q 1112
+!
+router isis 1
+ net 00.0000.0000.0011.00
+ address-family ipv4 unicast
+ !
+ interface Loopback0
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.411
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.811
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+ !
 !
 !
 end
