@@ -1,5 +1,5 @@
 !! IOS XR Configuration 6.0.1
-!! Last configuration change at Wed Sep  9 09:08:54 2020 by cisco
+!! Last configuration change at Wed Sep  9 10:41:37 2020 by cisco
 !
 hostname XR3
 line console
@@ -43,6 +43,32 @@ interface GigabitEthernet0/0/0/0.1314
  ipv4 address 10.13.14.13 255.255.255.0
  ipv6 address 2001:13:14::13/64
  encapsulation dot1q 1314
+!
+router ospf 1
+ area 0
+  interface Loopback0
+   passive enable
+  !
+  interface GigabitEthernet0/0/0/0.213
+  !
+  interface GigabitEthernet0/0/0/0.313
+  !
+  interface GigabitEthernet0/0/0/0.1213
+  !
+ !
+!
+router ospfv3 1
+ area 0
+  interface Loopback0
+   passive disable
+  !
+  interface GigabitEthernet0/0/0/0.213
+  !
+  interface GigabitEthernet0/0/0/0.313
+  !
+  interface GigabitEthernet0/0/0/0.1213
+  !
+ !
 !
 !
 end

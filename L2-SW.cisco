@@ -1,5 +1,6 @@
+Current configuration : 4345 bytes
 !
-! Last configuration change at 09:58:03 UTC Wed Sep 9 2020
+! Last configuration change at 10:35:00 UTC Wed Sep 9 2020
 !
 version 15.2
 service timestamps debug datetime msec
@@ -147,7 +148,7 @@ no ip http secure-server
 !
 control-plane
 !
-banner exec ^CC
+banner exec ^C
 **************************************************************************
 * IOSv is strictly limited to use for evaluation, demonstration and IOS  *
 * education. IOSv is provided as-is and is not supported by Cisco's      *
@@ -156,7 +157,7 @@ banner exec ^CC
 * purposes is expressly prohibited except as otherwise authorized by     *
 * Cisco in writing.                                                      *
 **************************************************************************^C
-banner incoming ^CC
+banner incoming ^C
 **************************************************************************
 * IOSv is strictly limited to use for evaluation, demonstration and IOS  *
 * education. IOSv is provided as-is and is not supported by Cisco's      *
@@ -165,7 +166,7 @@ banner incoming ^CC
 * purposes is expressly prohibited except as otherwise authorized by     *
 * Cisco in writing.                                                      *
 **************************************************************************^C
-banner login ^CC
+banner login ^C
 **************************************************************************
 * IOSv is strictly limited to use for evaluation, demonstration and IOS  *
 * education. IOSv is provided as-is and is not supported by Cisco's      *

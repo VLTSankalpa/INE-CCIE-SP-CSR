@@ -1,5 +1,5 @@
 !
-! Last configuration change at 09:30:44 UTC Wed Sep 9 2020
+! Last configuration change at 10:35:29 UTC Wed Sep 9 2020
 !
 version 16.6
 service timestamps debug datetime msec
@@ -50,16 +50,13 @@ multilink bundle-name authenticated
 !
 !
 !
-crypto pki trustpoint TP-self-signed-3044030264
+crypto pki trustpoint TP-self-signed-1376961475
  enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-3044030264
- revocation-check none
- rsakeypair TP-self-signed-3044030264
+ revocation-check crl
+ rsakeypair TP-self-signed-1376961475
 !
 !
-crypto pki certificate chain TP-self-signed-3044030264
-!
-!
+crypto pki certificate chain TP-self-signed-1376961475
 !
 !
 !
@@ -67,7 +64,9 @@ crypto pki certificate chain TP-self-signed-3044030264
 !
 !
 !
-license udi pid CSR1000V sn 9U65TUEP581
+!
+!
+license udi pid CSR1000V sn 94A156LEOYY
 diagnostic bootup level minimal
 spanning-tree extend system-id
 !

@@ -1,5 +1,5 @@
 !
-! Last configuration change at 09:33:27 UTC Wed Sep 9 2020
+! Last configuration change at 10:35:23 UTC Wed Sep 9 2020
 !
 version 16.6
 service timestamps debug datetime msec
@@ -50,24 +50,24 @@ multilink bundle-name authenticated
 !
 !
 !
-crypto pki trustpoint TP-self-signed-2851301080
+crypto pki trustpoint TP-self-signed-3518163638
  enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-2851301080
+ subject-name cn=IOS-Self-Signed-Certificate-3518163638
  revocation-check none
- rsakeypair TP-self-signed-2851301080
+ rsakeypair TP-self-signed-3518163638
 !
 !
-crypto pki certificate chain TP-self-signed-2851301080
-!
-!
-!
+crypto pki certificate chain TP-self-signed-3518163638
 !
 !
 !
 !
 !
 !
-license udi pid CSR1000V sn 92VYJGHOVG9
+!
+!
+!
+license udi pid CSR1000V sn 9785GQBZH6Q
 diagnostic bootup level minimal
 spanning-tree extend system-id
 !
@@ -101,7 +101,10 @@ redundancy
 interface Loopback0
  no shutdown
  ip address 3.3.3.3 255.255.255.255
+ ip ospf 1 area 0
  ipv6 address 2001::3/128
+ ospfv3 1 ipv6 area 0
+ ospfv3 1 ipv4 area 0
 !
 interface GigabitEthernet1
  no shutdown
@@ -114,7 +117,10 @@ interface GigabitEthernet1.23
  no shutdown
  encapsulation dot1Q 23
  ip address 10.2.3.3 255.255.255.0
+ ip ospf 1 area 0
  ipv6 address 2001:2:3::3/64
+ ospfv3 1 ipv6 area 0
+ ospfv3 1 ipv4 area 0
 !
 interface GigabitEthernet1.37
  no shutdown
@@ -126,13 +132,32 @@ interface GigabitEthernet1.312
  no shutdown
  encapsulation dot1Q 312
  ip address 10.3.12.3 255.255.255.0
+ ip ospf 1 area 0
  ipv6 address 2001:3:12::3/64
+ ospfv3 1 ipv6 area 0
+ ospfv3 1 ipv4 area 0
 !
 interface GigabitEthernet1.313
  no shutdown
  encapsulation dot1Q 313
  ip address 10.3.13.3 255.255.255.0
+ ip ospf 1 area 0
  ipv6 address 2001:3:13::3/64
+ ospfv3 1 ipv6 area 0
+ ospfv3 1 ipv4 area 0
+!
+router ospfv3 1
+ !
+ address-family ipv4 unicast
+  passive-interface Loopback0
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  passive-interface Loopback0
+ exit-address-family
+!
+router ospf 1
+ passive-interface Loopback0
 !
 !
 !
