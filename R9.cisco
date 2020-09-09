@@ -1,0 +1,155 @@
+!
+! Last configuration change at 09:34:47 UTC Wed Sep 9 2020
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R9
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+no login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+!
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1633956493
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1633956493
+ revocation-check none
+ rsakeypair TP-self-signed-1633956493
+!
+!
+crypto pki certificate chain TP-self-signed-1633956493
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 966BVREOEBF
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ no shutdown
+ ip address 9.9.9.9 255.255.255.255
+ ipv6 address 2001::9/128
+!
+interface GigabitEthernet1
+ no shutdown
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet1.89
+ no shutdown
+ encapsulation dot1Q 89
+ ip address 10.8.9.9 255.255.255.0
+ ipv6 address 2001:8:9::9/64
+!
+interface GigabitEthernet1.914
+ no shutdown
+ encapsulation dot1Q 914
+ ip address 10.9.14.9 255.255.255.0
+ ipv6 address 2001:9:14::9/64
+!
+!
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end

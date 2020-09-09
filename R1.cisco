@@ -1,0 +1,167 @@
+!
+! Last configuration change at 09:04:53 UTC Wed Sep 9 2020
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+no login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+!
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1979137170
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1979137170
+ revocation-check none
+ rsakeypair TP-self-signed-1979137170
+!
+!
+crypto pki certificate chain TP-self-signed-1979137170
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9VB2S9FIE72
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ no shutdown
+ ip address 1.1.1.1 255.255.255.255
+ ipv6 address 2001::1/128
+!
+interface GigabitEthernet1
+ no shutdown
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet1.12
+ no shutdown
+ encapsulation dot1Q 12
+ ip address 10.1.2.1 255.255.255.0
+ ipv6 address 2001:1:2::1/64
+!
+interface GigabitEthernet1.15
+ no shutdown
+ encapsulation dot1Q 15
+ ip address 10.1.5.1 255.255.255.0
+ ipv6 address 2001:1:5::1/64
+!
+interface GigabitEthernet1.111
+ no shutdown
+ encapsulation dot1Q 111
+ ip address 10.1.11.1 255.255.255.0
+ ipv6 address 2001:1:11::1/64
+!
+interface GigabitEthernet1.112
+ no shutdown
+ encapsulation dot1Q 112
+ ip address 10.1.12.1 255.255.255.0
+ ipv6 address 2001:1:12::1/64
+!
+!
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end

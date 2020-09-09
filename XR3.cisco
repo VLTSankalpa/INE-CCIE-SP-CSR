@@ -1,0 +1,48 @@
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Wed Sep  9 09:08:54 2020 by cisco
+!
+hostname XR3
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ no shutdown
+ ipv4 address 13.13.13.13 255.255.255.255
+ ipv6 address 2001::13/128
+!
+interface MgmtEth0/0/CPU0/0
+ no shutdown
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.213
+ no shutdown
+ ipv4 address 10.2.13.13 255.255.255.0
+ ipv6 address 2001:2:13::13/64
+ encapsulation dot1q 213
+!
+interface GigabitEthernet0/0/0/0.313
+ no shutdown
+ ipv4 address 10.3.13.13 255.255.255.0
+ ipv6 address 2001:3:13::13/64
+ encapsulation dot1q 313
+!
+interface GigabitEthernet0/0/0/0.713
+ no shutdown
+ ipv4 address 10.7.13.13 255.255.255.0
+ ipv6 address 2001:7:13::13/64
+ encapsulation dot1q 713
+!
+interface GigabitEthernet0/0/0/0.1213
+ no shutdown
+ ipv4 address 10.12.13.13 255.255.255.0
+ ipv6 address 2001:12:13::13/64
+ encapsulation dot1q 1213
+!
+interface GigabitEthernet0/0/0/0.1314
+ no shutdown
+ ipv4 address 10.13.14.13 255.255.255.0
+ ipv6 address 2001:13:14::13/64
+ encapsulation dot1q 1314
+!
+!
+end

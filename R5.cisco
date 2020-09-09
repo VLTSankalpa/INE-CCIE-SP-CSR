@@ -1,0 +1,161 @@
+!
+! Last configuration change at 09:34:49 UTC Wed Sep 9 2020
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+no login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+!
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3738844489
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3738844489
+ revocation-check none
+ rsakeypair TP-self-signed-3738844489
+!
+!
+crypto pki certificate chain TP-self-signed-3738844489
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9YEYTJ8KVYZ
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ no shutdown
+ ip address 5.5.5.5 255.255.255.255
+ ipv6 address 2001::5/128
+!
+interface GigabitEthernet1
+ no shutdown
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet1.15
+ no shutdown
+ encapsulation dot1Q 15
+ ip address 10.1.5.5 255.255.255.0
+ ipv6 address 2001:1:5::5/64
+!
+interface GigabitEthernet1.45
+ no shutdown
+ encapsulation dot1Q 45
+ ip address 10.4.5.5 255.255.255.0
+ ipv6 address 2001:4:5::5/64
+!
+interface GigabitEthernet1.46
+ no shutdown
+ encapsulation dot1Q 46
+ ip address 10.4.6.5 255.255.255.0
+ ipv6 address 2001:4:6::5/64
+!
+!
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end
