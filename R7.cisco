@@ -1,5 +1,5 @@
 !
-! Last configuration change at 09:33:07 UTC Wed Sep 9 2020
+! Last configuration change at 09:05:03 UTC Sun Sep 13 2020
 !
 version 16.6
 service timestamps debug datetime msec
@@ -67,7 +67,7 @@ crypto pki certificate chain TP-self-signed-3621224970
 !
 !
 !
-license udi pid CSR1000V sn 91OF6IFRLB7
+license udi pid CSR1000V sn 9PI2V73TIZT
 diagnostic bootup level minimal
 spanning-tree extend system-id
 !
@@ -122,7 +122,13 @@ interface GigabitEthernet1.713
  ip address 10.7.13.7 255.255.255.0
  ipv6 address 2001:7:13::7/64
 !
+router bgp 7
+ bgp log-neighbor-changes
+ network 7.7.7.7 mask 255.255.255.255
+ neighbor 10.3.7.3 remote-as 1
 !
+!
+virtual-service csr_mgmt
 !
 ip forward-protocol nd
 ip http server

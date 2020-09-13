@@ -1,0 +1,2790 @@
+﻿
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:n
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 16:42:32.154 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 06:36:57 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 11.11.11.11/32
+ !
+ neighbor 1.1.1.1
+  remote-as 1
+  update-source Loopback0
+  address-family ipv4 unicast
+   next-hop-self
+  !
+ !
+ neighbor 2.2.2.2
+  remote-as 1
+  update-source Loopback0
+  address-family ipv4 unicast
+   next-hop-self
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#conf t
+Sun Sep 13 16:42:36.534 UTC
+RP/0/0/CPU0:XR1(config)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)#no neighbor 1.1.1.1
+RP/0/0/CPU0:XR1(config-bgp)#no neighbor 2.2.2.2
+RP/0/0/CPU0:XR1(config-bgp)#session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#exit
+RP/0/0/CPU0:XR1(config-bgp)#af-group IPV4_IBGP_RR_CLIENTS
+% Incomplete command.
+RP/0/0/CPU0:XR1(config-bgp)#af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 $
+RP/0/0/CPU0:XR1(config-bgp-afgrp)#next-hop-self 
+RP/0/0/CPU0:XR1(config-bgp-afgrp)#route-reflector-client 
+RP/0/0/CPU0:XR1(config-bgp-afgrp)# commit
+Sun Sep 13 16:46:30.158 UTC
+RP/0/0/CPU0:XR1(config-bgp-afgrp)#    
+RP/0/0/CPU0:XR1(config-bgp-afgrp)#
+RP/0/0/CPU0:XR1(config-bgp-afgrp)#
+RP/0/0/CPU0:XR1(config-bgp-afgrp)#
+RP/0/0/CPU0:XR1(config-bgp-afgrp)#
+RP/0/0/CPU0:XR1(config-bgp-afgrp)#
+RP/0/0/CPU0:XR1(config-bgp-afgrp)#exit
+RP/0/0/CPU0:XR1(config-bgp)#neighbor 1.1.1.1    
+RP/0/0/CPU0:XR1(config-bgp-nbr)#in?
+                                 ^
+% Invalid input detected at '^' marker.
+RP/0/0/CPU0:XR1(config-bgp-nbr)#use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#address-family ipv4 ?
+  flowspec         Address Family modifier
+  labeled-unicast  Address Family modifier
+  mdt              Address Family modifier
+  multicast        Address Family modifier
+  mvpn             Address Family modifier
+  rt-filter        Address Family modifier
+  tunnel           Address Family modifier
+  unicast          Address Family modifier
+RP/0/0/CPU0:XR1(config-bgp-nbr)#address-family ipv4 unicast ?
+  advertise                     Per neighbor advertisement options
+  aigp                          Enable AIGP for this neighbor 
+  allowas-in                    Allow as-path with my AS present in it
+  as-override                   Override matching AS-number while sending update
+  bestpath                      Change default route selection criteria
+  capability                    Advertise capability to the peer
+  default-originate             Originate default route to this neighbor
+  long-lived-graceful-restart   Enable long lived graceful restart support
+  maximum-prefix                Maximum number of prefixes to accept from this peer
+  multipath                     Paths from this neighbor is eligible for multipath
+  next-hop-self                 Disable the next hop calculation for this neighbor
+  next-hop-unchanged            Do not overwrite next hop before advertising to eBGP peers
+  optimal-route-reflection      Configure optiomal-route-reflection for this neighbor
+  orf                           Specify ORF and inbound filtering criteria
+  origin-as                     BGP origin-AS knobs
+  remove-private-AS             Remove private AS number from outbound updates
+  route-policy                  Apply route policy to neighbor
+  route-reflector-client        Configure a neighbor as Route Reflector client
+  send-community-ebgp           Send community attribute to this external neighbor
+  send-community-gshut-ebgp     Allow the g-shut community to be sent to this external neighbor
+  send-extended-community-ebgp  Send extended community attribute to this external neighbor
+  send-multicast-attributes     Send multicast attributes to this neighbor 
+  soft-reconfiguration          Per neighbor soft reconfiguration
+  use                           Inherit configuration for this address-family from a group
+  weight                        Set default weight for routes from this neighbor
+  <cr>                          
+RP/0/0/CPU0:XR1(config-bgp-nbr)#address-family ipv4 unicast 
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#use af-group ?
+  WORD  AF group name
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#show config 
+Sun Sep 13 16:49:10.847 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+router bgp 1
+ neighbor 1.1.1.1
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#show config
+Sun Sep 13 16:50:41.900 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+router bgp 1
+ neighbor 1.1.1.1
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# 
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#exit
+RP/0/0/CPU0:XR1(config-bgp-nbr)#exit
+RP/0/0/CPU0:XR1(config-bgp)#no neighbor 1.1.1.1
+RP/0/0/CPU0:XR1(config-bgp)#
+RP/0/0/CPU0:XR1(config-bgp)#
+RP/0/0/CPU0:XR1(config-bgp)#
+RP/0/0/CPU0:XR1(config-bgp)#do show config
+% Incomplete command.
+RP/0/0/CPU0:XR1(config-bgp)#show config
+Sun Sep 13 16:59:53.482 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+router bgp 1
+ no neighbor 1.1.1.1
+!
+end
+
+RP/0/0/CPU0:XR1(config-bgp)#
+RP/0/0/CPU0:XR1(config-bgp)#
+RP/0/0/CPU0:XR1(config-bgp)#
+RP/0/0/CPU0:XR1(config-bgp)#
+RP/0/0/CPU0:XR1(config-bgp)#
+RP/0/0/CPU0:XR1(config-bgp)#
+RP/0/0/CPU0:XR1(config-bgp)#
+RP/0/0/CPU0:XR1(config-bgp)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)# neighbor 2.2.2.2
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+
+% Failed to commit one or more configuration items during a pseudo-atomic operation. All changes made have been reverted. Please issue 'show configuration failed [inheritance]' from this session to view the errors
+RP/0/0/CPU0:XR1(config)#
+RP/0/0/CPU0:XR1(config)#
+RP/0/0/CPU0:XR1(config)#
+RP/0/0/CPU0:XR1(config)#
+RP/0/0/CPU0:XR1(config)#
+RP/0/0/CPU0:XR1(config)#
+RP/0/0/CPU0:XR1(config)#
+RP/0/0/CPU0:XR1(config)#
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+
+% Failed to commit one or more configuration items during a pseudo-atomic operation. All changes made have been reverted. Please issue 'show configuration failed [inheritance]' from this session to view the errors
+RP/0/0/CPU0:XR1(config)#
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:n
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 17:00:56.878 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 16:46:30 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#conf t
+Sun Sep 13 17:01:22.736 UTC
+RP/0/0/CPU0:XR1(config)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)# neighbor 2.2.2.2
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+
+% Failed to commit one or more configuration items during a pseudo-atomic operation. All changes made have been reverted. Please issue 'show configuration failed [inheritance]' from this session to view the errors
+RP/0/0/CPU0:XR1(config)#show configuration failed ?
+  apply-template  Failed configuration (syntax errors) in last apply-template
+  inheritance     Show failed items in inheritance view
+  load            Failed configuration (syntax errors) in last load
+  noerrors        Show failed items in last commit (exclude error reasons)
+  |               Output Modifiers
+  <cr>            Contents of failed configuration
+RP/0/0/CPU0:XR1(config)#show configuration failed 
+Sun Sep 13 17:01:48.335 UTC
+!! SEMANTIC ERRORS: This configuration was rejected by 
+!! the system due to semantic errors. The individual 
+!! errors with each failed configuration command can be 
+!! found below.
+
+
+router bgp 1
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+!!% 'BGP' detected the 'warning' condition 'Neighbor does not exist (ie has no remote-as defined) - create first'
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+!!% 'BGP' detected the 'warning' condition 'Neighbor does not exist (ie has no remote-as defined) - create first'
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+!!% 'BGP' detected the 'warning' condition 'Neighbor does not exist (ie has no remote-as defined) - create first'
+ !
+!
+end
+
+RP/0/0/CPU0:XR1(config)#
+RP/0/0/CPU0:XR1(config)#
+RP/0/0/CPU0:XR1(config)#
+RP/0/0/CPU0:XR1(config)#
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:n
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 17:02:14.283 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 16:46:30 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#conf t
+Sun Sep 13 17:02:40.491 UTC
+RP/0/0/CPU0:XR1(config)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)#session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#remote-as 1
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#update-source loopback 0
+RP/0/0/CPU0:XR1(config-bgp-sngrp)#
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 17:03:20.518 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 17:03:17 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#conf t
+Sun Sep 13 17:03:30.698 UTC
+RP/0/0/CPU0:XR1(config)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)# neighbor 2.2.2.2
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 17:03:46.137 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 17:03:39 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+  !
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#  
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#conf t
+Sun Sep 13 17:05:08.741 UTC
+RP/0/0/CPU0:XR1(config)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)# neighbor 1.1.1.1
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 2.2.2.2
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 3.3.3.3
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:
+RP/0/0/CPU0:XR1(config)#show run
+Sun Sep 13 17:05:19.110 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 17:03:39 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+  !
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1(config)#
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show bgp ipv4 unicast summary 
+Sun Sep 13 17:09:54.751 UTC
+BGP router identifier 11.11.11.11, local AS number 1
+BGP generic scan interval 60 secs
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0xe0000000   RD version: 41
+BGP main routing table version 41
+BGP NSR Initial initsync version 5 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+BGP scan interval 60 secs
+
+BGP is operating in STANDALONE mode.
+
+
+Process       RcvTblVer   bRIB/RIB   LabelVer  ImportVer  SendTblVer  StandbyVer
+Speaker              41         41         41         41          41           0
+
+Neighbor        Spk    AS MsgRcvd MsgSent   TblVer  InQ OutQ  Up/Down  St/PfxRcd
+1.1.1.1           0     1       0       0        0    0    0 00:00:00 Idle
+2.2.2.2           0     1      12      10       41    0    0 00:06:04          3
+3.3.3.3           0     1       5       2        0    0    0 00:00:03          2
+10.8.11.8         0     8     786     735       41    0    0 11:50:11          1
+12.12.12.12       0     1       8      10       41    0    0 00:05:46          1
+13.13.13.13       0     1      10      10       41    0    0 00:05:55          2
+
+RP/0/0/CPU0:XR1#show ip route bgp
+Sun Sep 13 17:10:36.858 UTC
+
+B    7.7.7.7/32 [200/0] via 3.3.3.3, 00:00:45
+B    8.8.8.8/32 [20/0] via 10.8.11.8, 11:39:16
+B    10.2.10.0/24 [200/0] via 2.2.2.2, 00:06:46
+B    10.10.10.10/32 [200/0] via 10.2.10.10, 00:06:43
+B    14.14.14.14/32 [200/0] via 13.13.13.13, 00:06:32
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#          
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 17:20:52.826 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 17:09:46 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 1.1.1.1
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 3.3.3.3
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+  !
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#conf t
+Sun Sep 13 17:23:09.857 UTC
+RP/0/0/CPU0:XR1(config)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)#neighbor
+RP/0/0/CPU0:XR1(config-bgp)#neighbor 10.8.11.8
+RP/0/0/CPU0:XR1(config-bgp-nbr)#address-family ipv
+ipv4  ipv6  
+RP/0/0/CPU0:XR1(config-bgp-nbr)#address-family ipv4 unicast 
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#next-hop-self 
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#clear bgp * ?
+  graceful  Clear with a hard reset and a graceful restart
+  <cr>      
+RP/0/0/CPU0:XR1#clear ip ?  
+                       ^
+% Invalid input detected at '^' marker.
+RP/0/0/CPU0:XR1#clear so?
+                       ^
+% Invalid input detected at '^' marker.
+RP/0/0/CPU0:XR1#clear ? 
+  access-list        Access lists
+  adjacency          Clear adj
+  arp                Clear ARP data(cisco-support)
+  arp-cache          Clear ARP table or statistics
+  bfd                BFD clear commands
+  bgp                Clear BGP connections
+  bundle             Clear bundle data
+  call-home          Call-Home commands
+  cdp                Reset cdp information
+  cef                CEF clear commands
+  clns               Clear CLNS data structures
+  configuration      Configuration activity
+  context            delete dumper context
+  controller         Clear interface controller data
+  counters           Clear counters on one or all interfaces
+  crypto             Global Crypto command
+  dampening          Clear state dampening on the given interface
+  debug-collector    Clear debug collector commands(cisco-support)
+  dhcp               Clear DHCP information
+  diameter           clear diameter peer statistics
+  eigrp              EIGRP clear command
+  error-disable      Clear Error-Disable state
+  ethernet           Ethernet clear commands
+  flowspec           Clear FlowSpec information
+  gsp                GSP clear commands
+  host               Delete host table entries
+  hsrp               Clear Hot Standby Routing Protocol Data
+  iccp               Interchassis Communication Protocol information
+  igmp               Clear IGMP command
+  igpte-lib          MPLS IGP library(cisco-support)
+  im-statistics      Clear interface manager client and server statistics
+  ipv6               IPv6 information
+  isis               Clear IS-IS data structures
+  l2route            Clear L2 route
+  l2snoop            Clear l2snoop commands
+  l2tp               Clear L2TPv3 information
+  l2tpv2             Show L2TPv2 information
+  l2vpn              Clear L2VPN information
+  lacp               Clear Link Aggregation Control Protocol data
+  lcc                Label Consistency Check
+  line               Reset a terminal line.
+  lisp               Clear LISP (Locator/ID Separation Protocol) commands
+  lldp               Reset lldp information
+  lmp                Link Management Protocol information
+  logging            Clear logging buffer
+  lpts               Local Packet Transport Service information
+  mac-accounting     MAC accounting statistics
+  mfib               Multicast Forwarding Information Base
+  mirror             clear disk mirroring statistics(cisco-support)
+  mlacp              Multi-chassis Link Aggregation Control Protocol clear commands
+  mld                Clear MLD command
+  mpls               MPLS information
+  msdp               Multicast Source Discovery Protocol (MSDP)
+  netconf-yang       Clear NETCONF daemon information
+  netio              Clear netio information(cisco-support)
+  netio-perf         Clear NetIO DLL performance counters(cisco-support)
+  nrs                nrs clear command(cisco-support)
+  nsr                Clear NSR commands
+  nv                 Network Virtualisation(cisco-support)
+  onep               Clear ONEP
+  onep               Clear ONEP commands
+  ospf               clear OSPF information
+  ospfv3             clear OSPFv3 information
+  packet-memory      Clear packet commands(cisco-support)
+  pcl                Policy clientlib information(cisco-support)
+  pim                PIM - Protocol Independent Multicast
+  pm-collector       Performance Management subsystem
+  policy             Clear policy information(cisco-support)
+  ppp                PPP information
+  prefix-list        Prefix lists
+  qos                Clear QoS counters
+  radius             clear radius server statistics
+  raw                Clear RAW commands
+  rcc                Route Consistency Check
+  rcmd               Router Convergence(cisco-support)
+  rip                Clear RIP data
+  route              Clear route table entries
+  router             Clear Routing Protocol
+  rsvp               RSVP clear commands
+  scheduled          Clear scheduled(cisco-support)
+  segment-routing    Segment Routing
+  snmp               Clear SNMP statistics
+  spp                Clear SPP commands
+  srp                Clear SRP interface commands
+  ssh                Disconnect ssh connection
+  state-transitions  Clear state transition count on the given interface
+  sysdb              SysDB clear commands(cisco-support)
+  tcp                Clear TCP commands
+  telemetry          Clear telemetry commands(cisco-support)
+  traffic-collector  Traffic Collector
+  udp                Clear UDP commands
+  vrrp               Clear Virtual Router Redundancy Protocol Data
+  yfw                clear YANG Framework information
+RP/0/0/CPU0:XR1#clear b?
+bfd  bgp  bundle  
+RP/0/0/CPU0:XR1#clear b
+bfd  bgp  bundle  
+RP/0/0/CPU0:XR1#clear bgp ?
+  *                       Clear all peers and all routes from the BGP table 
+  A.B.C.D or X:X::X       BGP neighbor address to clear
+  all                     Both ipv4 and ipv6 address families
+  as                      Clear peers in a specific AS
+  bestpath                re-run BGP bestpath selection
+  external                Clear all external peers
+  instance                Choose a particular BGP instance
+  ipv4                    IPv4 Address Family
+  ipv6                    IPv6 Address Family
+  l2vpn                   L2VPN Address Family
+  link-state              Link-state Address Family
+  nexthop                 Clear nexthop
+  peer-drops              Clear established/dropped counters for a peer
+  performance-statistics  Clear performance statistics
+  rpki                    RPKI clear command
+  shutdown                Clear all peers which were shut down due to low memory
+  update                  Clear Update information (Do NOT execute without cisco support)(cisco-support)
+  version                 clear BGP prefix version
+  vpnv4                   VPNv4 Address Family
+  vpnv6                   VPNv6 Address Family
+  vrf                     Specify a VRF
+RP/0/0/CPU0:XR1#clear bgp ipv4 ?
+  all              All address family modifiers
+  flowspec         Flow Spec address family modifier
+  labeled-unicast  Labeled Unicast address family modifier
+  mdt              MDT address family modifier
+  multicast        Multicast address family modifier
+  mvpn             Multicast vpn address family modifier
+  rt-filter        RT Constraint address family modifier
+  tunnel           Tunnel address family modifier
+  unicast          Unicast address family modifier
+RP/0/0/CPU0:XR1#               
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show ip bgp
+Sun Sep 13 17:26:47.502 UTC
+BGP router identifier 11.11.11.11, local AS number 1
+BGP generic scan interval 60 secs
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0xe0000000   RD version: 42
+BGP main routing table version 42
+BGP NSR Initial initsync version 5 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+BGP scan interval 60 secs
+
+Status codes: s suppressed, d damped, h history, * valid, > best
+              i - internal, r RIB-failure, S stale, N Nexthop-discard
+Origin codes: i - IGP, e - EGP, ? - incomplete
+   Network            Next Hop            Metric LocPrf Weight Path
+*>i1.1.1.1/32         1.1.1.1                  0    100      0 i
+* i2.2.2.2/32         2.2.2.2                  0    100      0 i
+*>i                   2.2.2.2                  0    100      0 i
+* i3.3.3.3/32         3.3.3.3                  0    100      0 i
+*>i                   3.3.3.3                  0    100      0 i
+* i7.7.7.7/32         3.3.3.3                  0    100      0 7 i
+*>i                   3.3.3.3                  0    100      0 7 i
+*> 8.8.8.8/32         10.8.11.8                0             0 8 i
+* i10.2.10.0/24       2.2.2.2                  0    100      0 i
+*>i                   2.2.2.2                  0    100      0 i
+* i10.10.10.10/32     10.2.10.10               0    100      0 10 i
+*>i                   10.2.10.10               0    100      0 10 i
+*> 11.11.11.11/32     0.0.0.0                  0         32768 i
+* i12.12.12.12/32     12.12.12.12              0    100      0 i
+*>i                   12.12.12.12              0    100      0 i
+* i13.13.13.13/32     13.13.13.13              0    100      0 i
+*>i                   13.13.13.13              0    100      0 i
+* i14.14.14.14/32     13.13.13.13              0    100      0 14 i
+*>i                   13.13.13.13              0    100      0 14 i
+
+Processed 11 prefixes, 19 paths
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#clear bgp *   
+Sun Sep 13 17:27:37.119 UTC
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 17:28:29.885 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 17:23:51 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 1.1.1.1
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 3.3.3.3
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+   next-hop-self
+  !
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show ip bg
+Sun Sep 13 17:34:18.291 UTC
+BGP router identifier 11.11.11.11, local AS number 1
+BGP generic scan interval 60 secs
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0xe0000000   RD version: 68
+BGP main routing table version 68
+BGP NSR Initial initsync version 5 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+BGP scan interval 60 secs
+
+Status codes: s suppressed, d damped, h history, * valid, > best
+              i - internal, r RIB-failure, S stale, N Nexthop-discard
+Origin codes: i - IGP, e - EGP, ? - incomplete
+   Network            Next Hop            Metric LocPrf Weight Path
+*>i1.1.1.1/32         1.1.1.1                  0    100      0 i
+* i2.2.2.2/32         2.2.2.2                  0    100      0 i
+*>i                   2.2.2.2                  0    100      0 i
+* i3.3.3.3/32         3.3.3.3                  0    100      0 i
+*>i                   3.3.3.3                  0    100      0 i
+* i7.7.7.7/32         3.3.3.3                  0    100      0 7 i
+*>i                   3.3.3.3                  0    100      0 7 i
+*> 8.8.8.8/32         10.8.11.8                0             0 8 i
+* i10.2.10.0/24       2.2.2.2                  0    100      0 i
+*>i                   2.2.2.2                  0    100      0 i
+* i10.10.10.10/32     10.2.10.10               0    100      0 10 i
+*>i                   10.2.10.10               0    100      0 10 i
+*> 11.11.11.11/32     0.0.0.0                  0         32768 i
+* i12.12.12.12/32     12.12.12.12              0    100      0 i
+*>i                   12.12.12.12              0    100      0 i
+* i13.13.13.13/32     13.13.13.13              0    100      0 i
+*>i                   13.13.13.13              0    100      0 i
+* i14.14.14.14/32     13.13.13.13              0    100      0 14 i
+*>i                   13.13.13.13              0    100      0 14 i
+
+Processed 11 prefixes, 19 paths
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 17:40:40.485 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 17:23:51 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 1.1.1.1
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 3.3.3.3
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+   next-hop-self
+  !
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#conf t
+Sun Sep 13 17:42:54.256 UTC
+RP/0/0/CPU0:XR1(config)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)#address-family ipv4 unicast 
+RP/0/0/CPU0:XR1(config-bgp-af)#ne
+network  nexthop  
+RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 mask 255.255.255.0
+                                                 ^
+% Invalid input detected at '^' marker.
+RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 ma?               
+                                                 ^
+% Invalid input detected at '^' marker.
+RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 ? 
+  IPV4 subnet mask  IPv4 network and mask or masklength
+RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0?
+A.B.C.D/length  
+RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 ?
+  IPV4 subnet mask  IPv4 network and mask or masklength
+RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 ma?
+                                                 ^
+% Invalid input detected at '^' marker.
+RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 i?
+                                                 ^
+% Invalid input detected at '^' marker.
+RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0/24
+RP/0/0/CPU0:XR1(config-bgp-af)#
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#conf t
+Sun Sep 13 17:45:10.256 UTC
+RP/0/0/CPU0:XR1(config)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)#address-family ipv4 unicast 
+RP/0/0/CPU0:XR1(config-bgp-af)#show config
+Sun Sep 13 17:46:04.773 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+router bgp 1
+ address-family ipv4 unicast
+ !
+!
+end
+
+RP/0/0/CPU0:XR1(config-bgp-af)#do show run
+Sun Sep 13 17:46:20.172 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 17:44:42 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 10.11.8.0/24
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 1.1.1.1
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 3.3.3.3
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+   next-hop-self
+  !
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1(config-bgp-af)#no network 10.11.8.0/24
+RP/0/0/CPU0:XR1(config-bgp-af)#network 10.8.11.0/24
+RP/0/0/CPU0:XR1(config-bgp-af)#
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 17:47:06.118 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 17:47:02 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 10.8.11.0/24
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 1.1.1.1
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 3.3.3.3
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+   next-hop-self
+  !
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show ip route
+Sun Sep 13 17:47:35.266 UTC
+
+Codes: C - connected, S - static, R - RIP, B - BGP, (>) - Diversion path
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - ISIS, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, su - IS-IS summary null, * - candidate default
+       U - per-user static route, o - ODR, L - local, G  - DAGR, l - LISP
+       A - access/subscriber, a - Application route
+       M - mobile route, r - RPL, (!) - FRR Backup path
+
+Gateway of last resort is not set
+
+i L2 1.1.1.1/32 [115/10] via 10.1.11.1, 12:53:00, GigabitEthernet0/0/0/0.111
+i L2 2.2.2.2/32 [115/10] via 10.2.11.2, 12:55:25, GigabitEthernet0/0/0/0.211
+i L2 3.3.3.3/32 [115/20] via 10.2.11.2, 12:30:34, GigabitEthernet0/0/0/0.211
+                [115/20] via 10.11.12.12, 12:30:34, GigabitEthernet0/0/0/0.1112
+B    7.7.7.7/32 [200/0] via 3.3.3.3, 00:19:56
+B    8.8.8.8/32 [20/0] via 10.8.11.8, 00:19:57
+i L2 10.1.2.0/24 [115/20] via 10.1.11.1, 12:53:00, GigabitEthernet0/0/0/0.111
+                 [115/20] via 10.2.11.2, 12:53:00, GigabitEthernet0/0/0/0.211
+C    10.1.11.0/24 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.111
+L    10.1.11.11/32 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.111
+i L2 10.1.12.0/24 [115/20] via 10.1.11.1, 12:53:00, GigabitEthernet0/0/0/0.111
+                  [115/20] via 10.11.12.12, 12:53:00, GigabitEthernet0/0/0/0.1112
+i L2 10.2.3.0/24 [115/20] via 10.2.11.2, 12:55:25, GigabitEthernet0/0/0/0.211
+B    10.2.10.0/24 [200/0] via 2.2.2.2, 00:19:57
+C    10.2.11.0/24 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.211
+L    10.2.11.11/32 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.211
+i L2 10.2.12.0/24 [115/20] via 10.2.11.2, 12:55:21, GigabitEthernet0/0/0/0.211
+                  [115/20] via 10.11.12.12, 12:55:21, GigabitEthernet0/0/0/0.1112
+i L2 10.2.13.0/24 [115/20] via 10.2.11.2, 12:55:25, GigabitEthernet0/0/0/0.211
+i L2 10.3.12.0/24 [115/20] via 10.11.12.12, 12:55:21, GigabitEthernet0/0/0/0.1112
+i L2 10.3.13.0/24 [115/30] via 10.2.11.2, 12:30:34, GigabitEthernet0/0/0/0.211
+                  [115/30] via 10.11.12.12, 12:30:34, GigabitEthernet0/0/0/0.1112
+C    10.4.11.0/24 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.411
+L    10.4.11.11/32 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.411
+C    10.8.11.0/24 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.811
+L    10.8.11.11/32 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.811
+B    10.10.10.10/32 [200/0] via 10.2.10.10, 00:19:54
+C    10.11.12.0/24 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.1112
+L    10.11.12.11/32 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.1112
+i L2 10.12.13.0/24 [115/30] via 10.2.11.2, 12:52:55, GigabitEthernet0/0/0/0.211
+L    11.11.11.11/32 is directly connected, 13:56:03, Loopback0
+i L2 12.12.12.12/32 [115/10] via 10.11.12.12, 12:55:21, GigabitEthernet0/0/0/0.1112
+i L2 13.13.13.13/32 [115/30] via 10.2.11.2, 12:52:55, GigabitEthernet0/0/0/0.211
+B    14.14.14.14/32 [200/0] via 13.13.13.13, 00:19:36
+RP/0/0/CPU0:XR1#show ip route b
+                        ^
+% Invalid input detected at '^' marker.
+RP/0/0/CPU0:XR1#show ip b
+Sun Sep 13 17:47:44.496 UTC
+BGP router identifier 11.11.11.11, local AS number 1
+BGP generic scan interval 60 secs
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0xe0000000   RD version: 69
+BGP main routing table version 69
+BGP NSR Initial initsync version 5 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+BGP scan interval 60 secs
+
+Status codes: s suppressed, d damped, h history, * valid, > best
+              i - internal, r RIB-failure, S stale, N Nexthop-discard
+Origin codes: i - IGP, e - EGP, ? - incomplete
+   Network            Next Hop            Metric LocPrf Weight Path
+*>i1.1.1.1/32         1.1.1.1                  0    100      0 i
+* i2.2.2.2/32         2.2.2.2                  0    100      0 i
+*>i                   2.2.2.2                  0    100      0 i
+* i3.3.3.3/32         3.3.3.3                  0    100      0 i
+*>i                   3.3.3.3                  0    100      0 i
+* i7.7.7.7/32         3.3.3.3                  0    100      0 7 i
+*>i                   3.3.3.3                  0    100      0 7 i
+*> 8.8.8.8/32         10.8.11.8                0             0 8 i
+* i10.2.10.0/24       2.2.2.2                  0    100      0 i
+*>i                   2.2.2.2                  0    100      0 i
+*> 10.8.11.0/24       0.0.0.0                  0         32768 i
+* i10.10.10.10/32     10.2.10.10               0    100      0 10 i
+*>i                   10.2.10.10               0    100      0 10 i
+*> 11.11.11.11/32     0.0.0.0                  0         32768 i
+* i12.12.12.12/32     12.12.12.12              0    100      0 i
+*>i                   12.12.12.12              0    100      0 i
+* i13.13.13.13/32     13.13.13.13              0    100      0 i
+*>i                   13.13.13.13              0    100      0 i
+* i14.14.14.14/32     13.13.13.13              0    100      0 14 i
+*>i                   13.13.13.13              0    100      0 14 i
+
+Processed 12 prefixes, 20 paths
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#wr
+                ^
+% Invalid input detected at '^' marker.
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#terminal length 0
+Sun Sep 13 17:51:13.122 UTC
+RP/0/0/CPU0:XR1#configure terminal
+Sun Sep 13 17:51:13.281 UTC
+RP/0/0/CPU0:XR1(config)#no logging console
+RP/0/0/CPU0:XR1(config)#commit
+Sun Sep 13 17:51:13.741 UTC
+RP/0/0/CPU0:XR1(config)#exit
+RP/0/0/CPU0:XR1#show running-config
+Sun Sep 13 17:51:14.101 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 17:47:02 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 10.8.11.0/24
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 1.1.1.1
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 3.3.3.3
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+   next-hop-self
+  !
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#quit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+XR1 con0/0/CPU0 is now available
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+IMPORTANT:  READ CAREFULLY
+Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+The Software is subject to and governed by the terms and conditions
+of the End User License Agreement and the Supplemental End User
+License Agreement accompanying the product, made available at the
+time of your order, or posted on the Cisco website at
+www.cisco.com/go/terms (collectively, the "Agreement").
+As set forth more fully in the Agreement, use of the Software is
+strictly limited to internal use in a non-production environment
+solely for demonstration and evaluation purposes.  Downloading,
+installing, or using the Software constitutes acceptance of the
+Agreement, and you are binding yourself and the business entity
+that you represent to the Agreement.  If you do not agree to all
+of the terms of the Agreement, then Cisco is unwilling to license
+the Software to you and (a) you may not download, install or use the
+Software, and (b) you may return the Software as more fully set forth
+in the Agreement.
+
+
+Please login with any configured user/password, or cisco/cisco
+
+
+User Access Verification
+
+Username: cisco
+Password: 
+
+
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 18:02:06.907 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 17:47:02 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 10.8.11.0/24
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 1.1.1.1
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 3.3.3.3
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+   next-hop-self
+  !
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#conf t
+Sun Sep 13 18:02:50.814 UTC
+RP/0/0/CPU0:XR1(config)#router bgp 1
+RP/0/0/CPU0:XR1(config-bgp)# neighbor 10.8.11.8
+RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   no next-hop-self
+RP/0/0/CPU0:XR1(config-bgp-nbr-af)#
+Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show run
+Sun Sep 13 18:03:02.993 UTC
+Building configuration...
+!! IOS XR Configuration 6.0.1
+!! Last configuration change at Sun Sep 13 18:02:59 2020 by cisco
+!
+hostname XR1
+line console
+ exec-timeout 0 0
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+ ipv6 address 2001::11/128
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0.111
+ ipv4 address 10.1.11.11 255.255.255.0
+ ipv6 address 2001:1:11::11/64
+ encapsulation dot1q 111
+!
+interface GigabitEthernet0/0/0/0.211
+ ipv4 address 10.2.11.11 255.255.255.0
+ ipv6 address 2001:2:11::11/64
+ encapsulation dot1q 211
+!
+interface GigabitEthernet0/0/0/0.411
+ ipv4 address 10.4.11.11 255.255.255.0
+ ipv6 address 2001:4:11::11/64
+ encapsulation dot1q 411
+!
+interface GigabitEthernet0/0/0/0.811
+ ipv4 address 10.8.11.11 255.255.255.0
+ ipv6 address 2001:8:11::11/64
+ encapsulation dot1q 811
+!
+interface GigabitEthernet0/0/0/0.1112
+ ipv4 address 10.11.12.11 255.255.255.0
+ ipv6 address 2001:11:12::11/64
+ encapsulation dot1q 1112
+!
+route-policy PASS_ALL
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0011.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  passive
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.111
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.211
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1112
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 10.8.11.0/24
+  network 11.11.11.11/32
+ !
+ af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+  route-reflector-client
+  next-hop-self
+ !
+ session-group IBGP_PEERS
+  remote-as 1
+  update-source Loopback0
+ !
+ neighbor 1.1.1.1
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 2.2.2.2
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 3.3.3.3
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 10.8.11.8
+  remote-as 8
+  address-family ipv4 unicast
+   route-policy PASS_ALL in
+   route-policy PASS_ALL out
+  !
+ !
+ neighbor 12.12.12.12
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+ neighbor 13.13.13.13
+  use session-group IBGP_PEERS
+  address-family ipv4 unicast
+   use af-group IPV4_IBGP_CLIENTS
+  !
+ !
+!
+end
+
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show bgp ipv
+ipv4  ipv6  
+RP/0/0/CPU0:XR1#show bgp ipv4 unicast neighbors 3.3.3.3 advertised-routes 
+Sun Sep 13 18:08:01.692 UTC
+Network            Next Hop        From            AS Path
+8.8.8.8/32         10.8.11.8       10.8.11.8       8i
+10.8.11.0/24       11.11.11.11     Local           i
+11.11.11.11/32     11.11.11.11     Local           i
+
+Processed 3 prefixes, 3 paths
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#
+RP/0/0/CPU0:XR1#show bgp ipv4 unicast neighbors 3.3.3.3 advertised-routes 
+Sun Sep 13 18:10:09.714 UTC
+Network            Next Hop        From            AS Path
+8.8.8.8/32         10.8.11.8       10.8.11.8       8i
+10.8.11.0/24       11.11.11.11     Local           i
+11.11.11.11/32     11.11.11.11     Local           i
+
+Processed 3 prefixes, 3 paths

@@ -1,0 +1,1066 @@
+﻿
+R8>
+R8>
+R8>
+R8>
+R8>
+R8>en
+R8#show ip route bgp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+B        1.1.1.1 [20/0] via 10.8.11.11, 00:04:06
+      2.0.0.0/32 is subnetted, 1 subnets
+B        2.2.2.2 [20/0] via 10.8.11.11, 00:10:36
+      3.0.0.0/32 is subnetted, 1 subnets
+B        3.3.3.3 [20/0] via 10.8.11.11, 00:04:36
+      7.0.0.0/32 is subnetted, 1 subnets
+B        7.7.7.7 [20/0] via 10.8.11.11, 00:04:36
+      10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+B        10.2.10.0/24 [20/0] via 10.8.11.11, 00:10:36
+B        10.10.10.10/32 [20/0] via 10.8.11.11, 00:10:06
+      11.0.0.0/32 is subnetted, 1 subnets
+B        11.11.11.11 [20/0] via 10.8.11.11, 11:43:05
+      12.0.0.0/32 is subnetted, 1 subnets
+B        12.12.12.12 [20/0] via 10.8.11.11, 00:10:06
+      13.0.0.0/32 is subnetted, 1 subnets
+B        13.13.13.13 [20/0] via 10.8.11.11, 00:10:06
+      14.0.0.0/32 is subnetted, 1 subnets
+B        14.14.14.14 [20/0] via 10.8.11.11, 00:10:06
+R8#
+R8#
+R8#
+R8#sh run
+Building configuration...
+
+Current configuration : 1717 bytes
+!
+! Last configuration change at 05:20:44 UTC Sun Sep 13 2020
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R8
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!         
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+no login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!         
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-44270087
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-44270087
+ revocation-check none
+ rsakeypair TP-self-signed-44270087
+!
+!
+crypto pki certificate chain TP-self-signed-44270087
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+license udi pid CSR1000V sn 9K1LLP938QL
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+ ipv6 address 2001::8/128
+!
+interface GigabitEthernet1
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet1.89
+ encapsulation dot1Q 89
+ ip address 10.8.9.8 255.255.255.0
+ ipv6 address 2001:8:9::8/64
+!
+interface GigabitEthernet1.811
+ encapsulation dot1Q 811
+ ip address 10.8.11.8 255.255.255.0
+ ipv6 address 2001:8:11::8/64
+!
+router bgp 8
+ bgp log-neighbor-changes
+ network 8.8.8.8 mask 255.255.255.255
+ neighbor 10.8.11.11 remote-as 1
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!         
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end
+
+R8#show run | s bgp
+router bgp 8
+ bgp log-neighbor-changes
+ network 8.8.8.8 mask 255.255.255.255
+ neighbor 10.8.11.11 remote-as 1
+R8#
+*Sep 13 17:27:40.088: %BGP-3-NOTIFICATION: received from neighbor 10.8.11.11 6/4 (Administrative Reset) 0 bytes 
+*Sep 13 17:27:40.095: %BGP-5-NBR_RESET: Neighbor 10.8.11.11 reset (BGP Notification received)
+*Sep 13 17:27:40.118: %BGP-5-ADJCHANGE: neighbor 10.8.11.11 Down BGP Notification received
+*Sep 13 17:27:40.119: %BGP_SESSION-5-ADJCHANGE: neighbor 10.8.11.11 IPv4 Unicast topology base removed from session  BGP Notification received
+*Sep 13 17:27:41.066: %BGP-5-ADJCHANGE: neighbor 10.8.11.11 Up 
+R8#
+R8#
+R8#
+R8#
+R8#
+R8#
+R8#
+R8#show run | s bgp
+router bgp 8
+ bgp log-neighbor-changes
+ network 8.8.8.8 mask 255.255.255.255
+ neighbor 10.8.11.11 remote-as 1
+R8#show ip bgp
+R8#show ip bgp 
+BGP table version is 56, local router ID is 8.8.8.8
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, 
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter, 
+              x best-external, a additional-path, c RIB-compressed, 
+              t secondary path, 
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>   1.1.1.1/32       10.8.11.11                             0 1 i
+ *>   2.2.2.2/32       10.8.11.11                             0 1 i
+ *>   3.3.3.3/32       10.8.11.11                             0 1 i
+ *>   7.7.7.7/32       10.8.11.11                             0 1 7 i
+ *>   8.8.8.8/32       0.0.0.0                  0         32768 i
+ *>   10.2.10.0/24     10.8.11.11                             0 1 i
+ *>   10.10.10.10/32   10.8.11.11                             0 1 10 i
+ *>   11.11.11.11/32   10.8.11.11               0             0 1 i
+ *>   12.12.12.12/32   10.8.11.11                             0 1 i
+ *>   13.13.13.13/32   10.8.11.11                             0 1 i
+ *>   14.14.14.14/32   10.8.11.11                             0 1 14 i
+R8#
+R8#
+R8#
+R8#
+R8#
+R8#
+R8#wr
+Building configuration...
+[OK]
+R8#
+R8#
+R8#
+R8#
+R8#
+R8#
+R8#terminal length 0
+R8#more system:running-config
+!
+! Last configuration change at 05:20:44 UTC Sun Sep 13 2020
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R8
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+no login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-44270087
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-44270087
+ revocation-check none
+ rsakeypair TP-self-signed-44270087
+!
+!
+crypto pki certificate chain TP-self-signed-44270087
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9K1LLP938QL
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+ ipv6 address 2001::8/128
+!
+interface GigabitEthernet1
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernetuter bgp 8
+ bgp log-neighbor-changes
+ network 8.8.ver
+ip http authentication local
+quit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+R8 con0 is now available
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+R8>
+R8>
+R8>
+R8>
+R8>en
+R8#show run
+Building configuration...
+
+Current configuration : 1717 bytes
+!
+! Last configuration change at 05:20:44 UTC Sun Sep 13 2020
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R8
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!         
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+no login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!         
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-44270087
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-44270087
+ revocation-check none
+ rsakeypair TP-self-signed-44270087
+!
+!
+crypto pki certificate chain TP-self-signed-44270087
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+license udi pid CSR1000V sn 9K1LLP938QL
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+ ipv6 address 2001::8/128
+!
+interface GigabitEthernet1
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet1.89
+ encapsulation dot1Q 89
+ ip address 10.8.9.8 255.255.255.0
+ ipv6 address 2001:8:9::8/64
+!
+interface GigabitEthernet1.811
+ encapsulation dot1Q 811
+ ip address 10.8.11.8 255.255.255.0
+ ipv6 address 2001:8:11::8/64
+!
+router bgp 8
+ bgp log-neighbor-changes
+ network 8.8.8.8 mask 255.255.255.255
+ neighbor 10.8.11.11 remote-as 1
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!         
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end
+
+R8#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R8(config)#router bg
+R8(config)#router bgp 1
+BGP is already running; AS is 8
+R8(config)#no router bgp 1
+R8(config)#router bgp 8   
+R8(config-router)#add
+R8(config-router)#address-family ipv
+R8(config-router)#address-family ipv4 un
+R8(config-router)#address-family ipv4 unicast 
+R8(config-router-af)#^Z
+R8#
+R8#
+R8#show
+*Sep 13 18:04:26.696: %SYS-5-CONFIG_I: Configured from console by console run
+Building configuration...
+
+Current configuration : 1794 bytes
+!
+! Last configuration change at 18:04:26 UTC Sun Sep 13 2020
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R8
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!         
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+no login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!         
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-44270087
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-44270087
+ revocation-check none
+ rsakeypair TP-self-signed-44270087
+!
+!
+crypto pki certificate chain TP-self-signed-44270087
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+license udi pid CSR1000V sn 9K1LLP938QL
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+ ipv6 address 2001::8/128
+!
+interface GigabitEthernet1
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet1.89
+ encapsulation dot1Q 89
+ ip address 10.8.9.8 255.255.255.0
+ ipv6 address 2001:8:9::8/64
+!
+interface GigabitEthernet1.811
+ encapsulation dot1Q 811
+ ip address 10.8.11.8 255.255.255.0
+ ipv6 address 2001:8:11::8/64
+!
+router bgp 8
+ bgp log-neighbor-changes
+ neighbor 10.8.11.11 remote-as 1
+ !
+ address-family ipv4
+  network 8.8.8.8 mask 255.255.255.255
+  neighbor 10.8.11.11 activate
+ exit-address-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!         
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!         
+end       
+          
+R8#
+R8#
+R8#
+R8#
+R8#wr
+Building configuration...
+[OK]
+R8#
+R8#
+R8#
+R8#
+R8#
+R8#
+R8#
+R8#terminal length 0
+R8#more system:running-config
+!
+! Last configuration change at 18:04:26 UTC Sun Sep 13 2020
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R8
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+no login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-44270087
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-44270087
+ revocation-check none
+ rsakeypair TP-self-signed-44270087
+!
+!
+crypto pki certificate chain TP-self-signed-44270087
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9K1LLP938QL
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+ ipv6 address 2001::8/128
+!
+interface GigabitEthernet1
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet1.89
+ encapsulation dot1Q 89
+ ip address 10.8.9.8 255.255.255.0
+ ipv6 address 2001:8:9::8/64
+!
+interface GigabitEthernet1.811
+ encapsulation dot1Q 811
+ ip address 10.8.11.8 255.255.255.0
+ ipv6 address 2001:8:11::8/64
+!
+router bgp 8
+ bgp log-neighbor-changes
+ neighbor 10.8.11.11 remote-as 1
+ !
+ address-family ipv4
+  network 8.8.8.8 mask 255.255.255.255
+  neighbor 10.8.11.11 activate
+ exit-address-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end
+
+R8#quit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+R8 con0 is now available
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

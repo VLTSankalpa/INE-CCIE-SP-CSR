@@ -1,5 +1,5 @@
 !! IOS XR Configuration 6.0.1
-!! Last configuration change at Wed Sep  9 09:08:54 2020 by cisco
+!! Last configuration change at Sun Sep 13 09:12:22 2020 by cisco
 !
 hostname XR3
 line console
@@ -43,6 +43,78 @@ interface GigabitEthernet0/0/0/0.1314
  ipv4 address 10.13.14.13 255.255.255.0
  ipv6 address 2001:13:14::13/64
  encapsulation dot1q 1314
+!
+route-policy PASS
+  pass
+end-policy
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0013.00
+ log adjacency changes
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ address-family ipv6 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.213
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.312
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.313
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.1213
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+!
+router bgp 1
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 13.13.13.13/32
+ !
+ neighbor 1.1.1.1
+  remote-as 1
+  update-source Loopback0
+  address-family ipv4 unicast
+   next-hop-self
+  !
+ !
+ neighbor 10.13.14.14
+  remote-as 14
+  address-family ipv4 unicast
+   route-policy PASS in
+   route-policy PASS out
+  !
+ !
+ neighbor 11.11.11.11
+  remote-as 1
+  update-source Loopback0
+  address-family ipv4 unicast
+   next-hop-self
+  !
+ !
 !
 !
 end

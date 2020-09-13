@@ -1,5 +1,5 @@
 !! IOS XR Configuration 6.0.1
-!! Last configuration change at Wed Sep  9 09:09:01 2020 by cisco
+!! Last configuration change at Sun Sep 13 10:49:20 2020 by cisco
 !
 hostname XR4
 line console
@@ -25,6 +25,23 @@ interface GigabitEthernet0/0/0/0.1314
  ipv4 address 10.13.14.14 255.255.255.0
  ipv6 address 2001:13:14::14/64
  encapsulation dot1q 1314
+!
+route-policy PASS
+  pass
+end-policy
+!
+router bgp 14
+ bgp log neighbor changes detail
+ address-family ipv4 unicast
+  network 14.14.14.14/32
+ !
+ neighbor 10.13.14.13
+  remote-as 1
+  address-family ipv4 unicast
+   route-policy PASS in
+   route-policy PASS out
+  !
+ !
 !
 !
 end
