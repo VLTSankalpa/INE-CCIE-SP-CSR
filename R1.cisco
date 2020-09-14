@@ -1,5 +1,5 @@
 !
-! Last configuration change at 15:07:38 UTC Sun Sep 13 2020
+! Last configuration change at 09:03:14 UTC Mon Sep 14 2020
 !
 version 16.6
 service timestamps debug datetime msec
@@ -177,6 +177,7 @@ router isis 1
 router bgp 1
  template peer-policy IPV4_IBGP_RR_CLIENS
   route-reflector-client
+  next-hop-self
  exit-peer-policy
  !
  template peer-session IBGP_PEERS

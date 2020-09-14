@@ -1,0 +1,133 @@
+﻿[2020-09-15 00:07:45]
+[2020-09-15 00:07:45]R7>
+[2020-09-15 00:07:45]R7>
+[2020-09-15 00:07:45]R7>
+[2020-09-15 00:07:46]R7>en
+[2020-09-15 00:07:56]R7#show ip b
+[2020-09-15 00:07:56]BGP table version is 48, local router ID is 7.7.7.7
+[2020-09-15 00:07:56]Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, 
+[2020-09-15 00:07:56]              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter, 
+[2020-09-15 00:07:56]              x best-external, a additional-path, c RIB-compressed, 
+[2020-09-15 00:07:56]              t secondary path, 
+[2020-09-15 00:07:56]Origin codes: i - IGP, e - EGP, ? - incomplete
+[2020-09-15 00:07:56]RPKI validation codes: V valid, I invalid, N Not found
+[2020-09-15 00:07:56]
+[2020-09-15 00:07:56]     Network          Next Hop            Metric LocPrf Weight Path
+[2020-09-15 00:07:56] *>   1.1.1.1/32       10.3.7.3                               0 1 i
+[2020-09-15 00:07:56] *                     10.7.13.13                             0 1 i
+[2020-09-15 00:07:56] *    2.2.2.2/32       10.3.7.3                               0 1 i
+[2020-09-15 00:07:56] *>                    10.7.13.13                             0 1 i
+[2020-09-15 00:07:56] *    3.3.3.3/32       10.7.13.13                             0 1 i
+[2020-09-15 00:07:56] *>                    10.3.7.3                 0             0 1 i
+[2020-09-15 00:07:56] *>   7.7.7.7/32       0.0.0.0                  0         32768 i
+[2020-09-15 00:07:56] *    8.8.8.8/32       10.3.7.3                               0 1 8 i
+[2020-09-15 00:07:56] *>                    10.7.13.13                             0 1 8 i
+[2020-09-15 00:07:56] *    10.8.11.0/24     10.3.7.3                               0 1 i
+[2020-09-15 00:07:56] *>                    10.7.13.13                             0 1 i
+[2020-09-15 00:07:56] *    10.10.10.10/32   10.3.7.3                               0 1 1 1 1 1 1 10 i
+[2020-09-15 00:07:56] *>                    10.7.13.13                             0 1 10 i
+[2020-09-15 00:07:58] *    11.11.11.11/32   10.3.7.3                               0 1 i
+[2020-09-15 00:07:58] *>                    10.7.13.13                             0 1 i
+[2020-09-15 00:07:59] *>   12.12.12.12/32   10.3.7.3                               0 1 i
+[2020-09-15 00:07:59] *                     10.7.13.13                             0 1 i
+[2020-09-15 00:07:59] *>   13.13.13.13/32   10.3.7.3                               0 1 i
+[2020-09-15 00:08:00] *                     10.7.13.13               0             0 1 i
+[2020-09-15 00:08:00] *>   14.14.14.14/32   10.3.7.3                               0 1 14 i
+[2020-09-15 00:08:00] *                     10.7.13.13                             0 1 14 i
+[2020-09-15 00:08:00]R7#
+[2020-09-15 00:08:20]R7#trac
+[2020-09-15 00:08:23]R7#traceroute 10.10.10.10
+[2020-09-15 00:08:23]Type escape sequence to abort.
+[2020-09-15 00:08:23]Tracing the route to 10.10.10.10
+[2020-09-15 00:08:23]VRF info: (vrf in name/id, vrf out name/id)
+[2020-09-15 00:08:26]  1 10.7.13.13 28 msec 9 msec 14 msec
+[2020-09-15 00:08:30]  2  *  * 
+[2020-09-15 00:08:33]R7#traceroute 10.10.10.10 so
+[2020-09-15 00:08:34]R7#traceroute 10.10.10.10 source lo
+[2020-09-15 00:08:35]R7#traceroute 10.10.10.10 source loo
+[2020-09-15 00:08:36]R7#traceroute 10.10.10.10 source loopback 0
+[2020-09-15 00:08:36]Type escape sequence to abort.
+[2020-09-15 00:08:36]Tracing the route to 10.10.10.10
+[2020-09-15 00:08:36]VRF info: (vrf in name/id, vrf out name/id)
+[2020-09-15 00:08:36]  1 10.7.13.13 27 msec 7 msec 11 msec
+[2020-09-15 00:08:37]  2 10.2.13.2 20 msec 12 msec 22 msec
+[2020-09-15 00:08:40]  3 10.2.10.10 54 msec *  24 msec
+[2020-09-15 00:09:57]R7#show ip route b
+[2020-09-15 00:09:58]R7#show ip route bgp 
+[2020-09-15 00:09:58]Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+[2020-09-15 00:09:58]       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+[2020-09-15 00:09:58]       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+[2020-09-15 00:09:58]       E1 - OSPF external type 1, E2 - OSPF external type 2
+[2020-09-15 00:09:58]       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+[2020-09-15 00:09:58]       ia - IS-IS inter area, * - candidate default, U - per-user static route
+[2020-09-15 00:09:58]       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+[2020-09-15 00:09:58]       a - application route
+[2020-09-15 00:09:58]       + - replicated route, % - next hop override, p - overrides from PfR
+[2020-09-15 00:09:58]
+[2020-09-15 00:09:58]Gateway of last resort is not set
+[2020-09-15 00:09:58]
+[2020-09-15 00:09:58]      1.0.0.0/32 is subnetted, 1 subnets
+[2020-09-15 00:09:58]B        1.1.1.1 [20/0] via 10.3.7.3, 09:25:59
+[2020-09-15 00:09:58]      2.0.0.0/32 is subnetted, 1 subnets
+[2020-09-15 00:09:58]B        2.2.2.2 [20/0] via 10.7.13.13, 09:25:59
+[2020-09-15 00:09:58]      3.0.0.0/32 is subnetted, 1 subnets
+[2020-09-15 00:09:58]B        3.3.3.3 [20/0] via 10.3.7.3, 09:25:59
+[2020-09-15 00:09:58]      8.0.0.0/32 is subnetted, 1 subnets
+[2020-09-15 00:09:58]B        8.8.8.8 [20/0] via 10.7.13.13, 09:13:13
+[2020-09-15 00:09:58]      10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+[2020-09-15 00:09:58]B        10.8.11.0/24 [20/0] via 10.7.13.13, 09:13:13
+[2020-09-15 00:09:59]B        10.10.10.10/32 [20/0] via 10.7.13.13, 09:25:59
+[2020-09-15 00:09:59]      11.0.0.0/32 is subnetted, 1 subnets
+[2020-09-15 00:10:00]B        11.11.11.11 [20/0] via 10.7.13.13, 09:13:13
+[2020-09-15 00:10:00]      12.0.0.0/32 is subnetted, 1 subnets
+[2020-09-15 00:10:00]B        12.12.12.12 [20/0] via 10.3.7.3, 09:25:59
+[2020-09-15 00:10:01]      13.0.0.0/32 is subnetted, 1 subnets
+[2020-09-15 00:10:01]B        13.13.13.13 [20/0] via 10.3.7.3, 09:25:59
+[2020-09-15 00:10:01]      14.0.0.0/32 is subnetted, 1 subnets
+[2020-09-15 00:10:02]B        14.14.14.14 [20/0] via 10.3.7.3, 09:25:59
+[2020-09-15 00:10:02]R7#
+[2020-09-15 00:11:28]R7#conf t
+[2020-09-15 00:11:28]Enter configuration commands, one per line.  End with CNTL/Z.
+[2020-09-15 00:11:30]R7(config)#router bgp 1
+[2020-09-15 00:11:30]BGP is already running; AS is 7
+[2020-09-15 00:11:36]R7(config)#no router bgp 1
+[2020-09-15 00:11:40]R7(config)#router bgp 7   
+[2020-09-15 00:11:43]R7(config-router)#add
+[2020-09-15 00:11:45]R7(config-router)#address-family ip
+[2020-09-15 00:11:47]R7(config-router)#address-family ipv4 un
+[2020-09-15 00:11:48]R7(config-router)#address-family ipv4 unicast 
+[2020-09-15 00:11:53]R7(config-router-af)#nei
+[2020-09-15 00:12:05]R7(config-router-af)#neighbor 10.3.7.3 wei
+[2020-09-15 00:12:07]R7(config-router-af)#neighbor 10.3.7.3 weight 100
+[2020-09-15 00:12:08]R7(config-router-af)#^Z
+[2020-09-15 00:12:08]R7#
+[2020-09-15 00:12:09]R7#
+[2020-09-15 00:12:10]R7#
+[2020-09-15 00:12:15]*Sep 14 18:42:08.185: %SYS-5-CONFIG_I: Configured from console by consoleclear ip bgp * so
+[2020-09-15 00:12:57]R7#clear ip bgp * soft in
+[2020-09-15 00:13:26]R7#show ip b 10.10.10.10
+[2020-09-15 00:13:26]BGP routing table entry for 10.10.10.10/32, version 51
+[2020-09-15 00:13:26]Paths: (2 available, best #1, table default)
+[2020-09-15 00:13:26]  Advertised to update-groups:
+[2020-09-15 00:13:26]     4         
+[2020-09-15 00:13:26]  Refresh Epoch 3
+[2020-09-15 00:13:26]  1 1 1 1 1 1 10
+[2020-09-15 00:13:26]    10.3.7.3 from 10.3.7.3 (3.3.3.3)
+[2020-09-15 00:13:26]      Origin IGP, localpref 100, weight 100, valid, external, best
+[2020-09-15 00:13:26]      rx pathid: 0, tx pathid: 0x0
+[2020-09-15 00:13:26]  Refresh Epoch 1
+[2020-09-15 00:13:26]  1 10
+[2020-09-15 00:13:26]    10.7.13.13 from 10.7.13.13 (13.13.13.13)
+[2020-09-15 00:13:26]      Origin IGP, localpref 100, valid, external
+[2020-09-15 00:13:26]      rx pathid: 0, tx pathid: 0
+[2020-09-15 00:14:05]R7#wr
+[2020-09-15 00:14:06]Building configuration...
+[2020-09-15 00:14:13][OK]
+[2020-09-15 00:14:31]R7#
+[2020-09-15 00:14:31]R7#
+[2020-09-15 00:14:31]R7#
+[2020-09-15 00:14:31]R7#
+[2020-09-15 00:14:32]R7#wr
+[2020-09-15 00:14:33]Building configuration...
+[2020-09-15 00:14:38][OK]
+[2020-09-15 00:14:51]=====Disconnect: 2020-09-15 00:14:51

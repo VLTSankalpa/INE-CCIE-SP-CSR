@@ -1,2790 +1,2132 @@
-﻿
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:n
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 16:42:32.154 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 06:36:57 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 11.11.11.11/32
- !
- neighbor 1.1.1.1
-  remote-as 1
-  update-source Loopback0
-  address-family ipv4 unicast
-   next-hop-self
-  !
- !
- neighbor 2.2.2.2
-  remote-as 1
-  update-source Loopback0
-  address-family ipv4 unicast
-   next-hop-self
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#conf t
-Sun Sep 13 16:42:36.534 UTC
-RP/0/0/CPU0:XR1(config)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)#no neighbor 1.1.1.1
-RP/0/0/CPU0:XR1(config-bgp)#no neighbor 2.2.2.2
-RP/0/0/CPU0:XR1(config-bgp)#session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#exit
-RP/0/0/CPU0:XR1(config-bgp)#af-group IPV4_IBGP_RR_CLIENTS
-% Incomplete command.
-RP/0/0/CPU0:XR1(config-bgp)#af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 $
-RP/0/0/CPU0:XR1(config-bgp-afgrp)#next-hop-self 
-RP/0/0/CPU0:XR1(config-bgp-afgrp)#route-reflector-client 
-RP/0/0/CPU0:XR1(config-bgp-afgrp)# commit
-Sun Sep 13 16:46:30.158 UTC
-RP/0/0/CPU0:XR1(config-bgp-afgrp)#    
-RP/0/0/CPU0:XR1(config-bgp-afgrp)#
-RP/0/0/CPU0:XR1(config-bgp-afgrp)#
-RP/0/0/CPU0:XR1(config-bgp-afgrp)#
-RP/0/0/CPU0:XR1(config-bgp-afgrp)#
-RP/0/0/CPU0:XR1(config-bgp-afgrp)#
-RP/0/0/CPU0:XR1(config-bgp-afgrp)#exit
-RP/0/0/CPU0:XR1(config-bgp)#neighbor 1.1.1.1    
-RP/0/0/CPU0:XR1(config-bgp-nbr)#in?
-                                 ^
-% Invalid input detected at '^' marker.
-RP/0/0/CPU0:XR1(config-bgp-nbr)#use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#address-family ipv4 ?
-  flowspec         Address Family modifier
-  labeled-unicast  Address Family modifier
-  mdt              Address Family modifier
-  multicast        Address Family modifier
-  mvpn             Address Family modifier
-  rt-filter        Address Family modifier
-  tunnel           Address Family modifier
-  unicast          Address Family modifier
-RP/0/0/CPU0:XR1(config-bgp-nbr)#address-family ipv4 unicast ?
-  advertise                     Per neighbor advertisement options
-  aigp                          Enable AIGP for this neighbor 
-  allowas-in                    Allow as-path with my AS present in it
-  as-override                   Override matching AS-number while sending update
-  bestpath                      Change default route selection criteria
-  capability                    Advertise capability to the peer
-  default-originate             Originate default route to this neighbor
-  long-lived-graceful-restart   Enable long lived graceful restart support
-  maximum-prefix                Maximum number of prefixes to accept from this peer
-  multipath                     Paths from this neighbor is eligible for multipath
-  next-hop-self                 Disable the next hop calculation for this neighbor
-  next-hop-unchanged            Do not overwrite next hop before advertising to eBGP peers
-  optimal-route-reflection      Configure optiomal-route-reflection for this neighbor
-  orf                           Specify ORF and inbound filtering criteria
-  origin-as                     BGP origin-AS knobs
-  remove-private-AS             Remove private AS number from outbound updates
-  route-policy                  Apply route policy to neighbor
-  route-reflector-client        Configure a neighbor as Route Reflector client
-  send-community-ebgp           Send community attribute to this external neighbor
-  send-community-gshut-ebgp     Allow the g-shut community to be sent to this external neighbor
-  send-extended-community-ebgp  Send extended community attribute to this external neighbor
-  send-multicast-attributes     Send multicast attributes to this neighbor 
-  soft-reconfiguration          Per neighbor soft reconfiguration
-  use                           Inherit configuration for this address-family from a group
-  weight                        Set default weight for routes from this neighbor
-  <cr>                          
-RP/0/0/CPU0:XR1(config-bgp-nbr)#address-family ipv4 unicast 
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#use af-group ?
-  WORD  AF group name
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#show config 
-Sun Sep 13 16:49:10.847 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-router bgp 1
- neighbor 1.1.1.1
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#show config
-Sun Sep 13 16:50:41.900 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-router bgp 1
- neighbor 1.1.1.1
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# 
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#exit
-RP/0/0/CPU0:XR1(config-bgp-nbr)#exit
-RP/0/0/CPU0:XR1(config-bgp)#no neighbor 1.1.1.1
-RP/0/0/CPU0:XR1(config-bgp)#
-RP/0/0/CPU0:XR1(config-bgp)#
-RP/0/0/CPU0:XR1(config-bgp)#
-RP/0/0/CPU0:XR1(config-bgp)#do show config
-% Incomplete command.
-RP/0/0/CPU0:XR1(config-bgp)#show config
-Sun Sep 13 16:59:53.482 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-router bgp 1
- no neighbor 1.1.1.1
-!
-end
-
-RP/0/0/CPU0:XR1(config-bgp)#
-RP/0/0/CPU0:XR1(config-bgp)#
-RP/0/0/CPU0:XR1(config-bgp)#
-RP/0/0/CPU0:XR1(config-bgp)#
-RP/0/0/CPU0:XR1(config-bgp)#
-RP/0/0/CPU0:XR1(config-bgp)#
-RP/0/0/CPU0:XR1(config-bgp)#
-RP/0/0/CPU0:XR1(config-bgp)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)# neighbor 2.2.2.2
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
-
-% Failed to commit one or more configuration items during a pseudo-atomic operation. All changes made have been reverted. Please issue 'show configuration failed [inheritance]' from this session to view the errors
-RP/0/0/CPU0:XR1(config)#
-RP/0/0/CPU0:XR1(config)#
-RP/0/0/CPU0:XR1(config)#
-RP/0/0/CPU0:XR1(config)#
-RP/0/0/CPU0:XR1(config)#
-RP/0/0/CPU0:XR1(config)#
-RP/0/0/CPU0:XR1(config)#
-RP/0/0/CPU0:XR1(config)#
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
-
-% Failed to commit one or more configuration items during a pseudo-atomic operation. All changes made have been reverted. Please issue 'show configuration failed [inheritance]' from this session to view the errors
-RP/0/0/CPU0:XR1(config)#
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:n
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 17:00:56.878 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 16:46:30 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#conf t
-Sun Sep 13 17:01:22.736 UTC
-RP/0/0/CPU0:XR1(config)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)# neighbor 2.2.2.2
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
-
-% Failed to commit one or more configuration items during a pseudo-atomic operation. All changes made have been reverted. Please issue 'show configuration failed [inheritance]' from this session to view the errors
-RP/0/0/CPU0:XR1(config)#show configuration failed ?
-  apply-template  Failed configuration (syntax errors) in last apply-template
-  inheritance     Show failed items in inheritance view
-  load            Failed configuration (syntax errors) in last load
-  noerrors        Show failed items in last commit (exclude error reasons)
-  |               Output Modifiers
-  <cr>            Contents of failed configuration
-RP/0/0/CPU0:XR1(config)#show configuration failed 
-Sun Sep 13 17:01:48.335 UTC
-!! SEMANTIC ERRORS: This configuration was rejected by 
-!! the system due to semantic errors. The individual 
-!! errors with each failed configuration command can be 
-!! found below.
-
-
-router bgp 1
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-!!% 'BGP' detected the 'warning' condition 'Neighbor does not exist (ie has no remote-as defined) - create first'
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-!!% 'BGP' detected the 'warning' condition 'Neighbor does not exist (ie has no remote-as defined) - create first'
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-!!% 'BGP' detected the 'warning' condition 'Neighbor does not exist (ie has no remote-as defined) - create first'
- !
-!
-end
-
-RP/0/0/CPU0:XR1(config)#
-RP/0/0/CPU0:XR1(config)#
-RP/0/0/CPU0:XR1(config)#
-RP/0/0/CPU0:XR1(config)#
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:n
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 17:02:14.283 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 16:46:30 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#conf t
-Sun Sep 13 17:02:40.491 UTC
-RP/0/0/CPU0:XR1(config)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)#session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#remote-as 1
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#update-source loopback 0
-RP/0/0/CPU0:XR1(config-bgp-sngrp)#
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 17:03:20.518 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:03:17 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#conf t
-Sun Sep 13 17:03:30.698 UTC
-RP/0/0/CPU0:XR1(config)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)# neighbor 2.2.2.2
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 17:03:46.137 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:03:39 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-  !
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#  
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#conf t
-Sun Sep 13 17:05:08.741 UTC
-RP/0/0/CPU0:XR1(config)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)# neighbor 1.1.1.1
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 2.2.2.2
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 3.3.3.3
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:
-RP/0/0/CPU0:XR1(config)#show run
-Sun Sep 13 17:05:19.110 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:03:39 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-  !
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1(config)#
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show bgp ipv4 unicast summary 
-Sun Sep 13 17:09:54.751 UTC
-BGP router identifier 11.11.11.11, local AS number 1
-BGP generic scan interval 60 secs
-Non-stop routing is enabled
-BGP table state: Active
-Table ID: 0xe0000000   RD version: 41
-BGP main routing table version 41
-BGP NSR Initial initsync version 5 (Reached)
-BGP NSR/ISSU Sync-Group versions 0/0
-BGP scan interval 60 secs
-
-BGP is operating in STANDALONE mode.
-
-
-Process       RcvTblVer   bRIB/RIB   LabelVer  ImportVer  SendTblVer  StandbyVer
-Speaker              41         41         41         41          41           0
-
-Neighbor        Spk    AS MsgRcvd MsgSent   TblVer  InQ OutQ  Up/Down  St/PfxRcd
-1.1.1.1           0     1       0       0        0    0    0 00:00:00 Idle
-2.2.2.2           0     1      12      10       41    0    0 00:06:04          3
-3.3.3.3           0     1       5       2        0    0    0 00:00:03          2
-10.8.11.8         0     8     786     735       41    0    0 11:50:11          1
-12.12.12.12       0     1       8      10       41    0    0 00:05:46          1
-13.13.13.13       0     1      10      10       41    0    0 00:05:55          2
-
-RP/0/0/CPU0:XR1#show ip route bgp
-Sun Sep 13 17:10:36.858 UTC
-
-B    7.7.7.7/32 [200/0] via 3.3.3.3, 00:00:45
-B    8.8.8.8/32 [20/0] via 10.8.11.8, 11:39:16
-B    10.2.10.0/24 [200/0] via 2.2.2.2, 00:06:46
-B    10.10.10.10/32 [200/0] via 10.2.10.10, 00:06:43
-B    14.14.14.14/32 [200/0] via 13.13.13.13, 00:06:32
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#          
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 17:20:52.826 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:09:46 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 1.1.1.1
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 3.3.3.3
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-  !
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#conf t
-Sun Sep 13 17:23:09.857 UTC
-RP/0/0/CPU0:XR1(config)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)#neighbor
-RP/0/0/CPU0:XR1(config-bgp)#neighbor 10.8.11.8
-RP/0/0/CPU0:XR1(config-bgp-nbr)#address-family ipv
-ipv4  ipv6  
-RP/0/0/CPU0:XR1(config-bgp-nbr)#address-family ipv4 unicast 
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#next-hop-self 
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#clear bgp * ?
-  graceful  Clear with a hard reset and a graceful restart
-  <cr>      
-RP/0/0/CPU0:XR1#clear ip ?  
-                       ^
-% Invalid input detected at '^' marker.
-RP/0/0/CPU0:XR1#clear so?
-                       ^
-% Invalid input detected at '^' marker.
-RP/0/0/CPU0:XR1#clear ? 
-  access-list        Access lists
-  adjacency          Clear adj
-  arp                Clear ARP data(cisco-support)
-  arp-cache          Clear ARP table or statistics
-  bfd                BFD clear commands
-  bgp                Clear BGP connections
-  bundle             Clear bundle data
-  call-home          Call-Home commands
-  cdp                Reset cdp information
-  cef                CEF clear commands
-  clns               Clear CLNS data structures
-  configuration      Configuration activity
-  context            delete dumper context
-  controller         Clear interface controller data
-  counters           Clear counters on one or all interfaces
-  crypto             Global Crypto command
-  dampening          Clear state dampening on the given interface
-  debug-collector    Clear debug collector commands(cisco-support)
-  dhcp               Clear DHCP information
-  diameter           clear diameter peer statistics
-  eigrp              EIGRP clear command
-  error-disable      Clear Error-Disable state
-  ethernet           Ethernet clear commands
-  flowspec           Clear FlowSpec information
-  gsp                GSP clear commands
-  host               Delete host table entries
-  hsrp               Clear Hot Standby Routing Protocol Data
-  iccp               Interchassis Communication Protocol information
-  igmp               Clear IGMP command
-  igpte-lib          MPLS IGP library(cisco-support)
-  im-statistics      Clear interface manager client and server statistics
-  ipv6               IPv6 information
-  isis               Clear IS-IS data structures
-  l2route            Clear L2 route
-  l2snoop            Clear l2snoop commands
-  l2tp               Clear L2TPv3 information
-  l2tpv2             Show L2TPv2 information
-  l2vpn              Clear L2VPN information
-  lacp               Clear Link Aggregation Control Protocol data
-  lcc                Label Consistency Check
-  line               Reset a terminal line.
-  lisp               Clear LISP (Locator/ID Separation Protocol) commands
-  lldp               Reset lldp information
-  lmp                Link Management Protocol information
-  logging            Clear logging buffer
-  lpts               Local Packet Transport Service information
-  mac-accounting     MAC accounting statistics
-  mfib               Multicast Forwarding Information Base
-  mirror             clear disk mirroring statistics(cisco-support)
-  mlacp              Multi-chassis Link Aggregation Control Protocol clear commands
-  mld                Clear MLD command
-  mpls               MPLS information
-  msdp               Multicast Source Discovery Protocol (MSDP)
-  netconf-yang       Clear NETCONF daemon information
-  netio              Clear netio information(cisco-support)
-  netio-perf         Clear NetIO DLL performance counters(cisco-support)
-  nrs                nrs clear command(cisco-support)
-  nsr                Clear NSR commands
-  nv                 Network Virtualisation(cisco-support)
-  onep               Clear ONEP
-  onep               Clear ONEP commands
-  ospf               clear OSPF information
-  ospfv3             clear OSPFv3 information
-  packet-memory      Clear packet commands(cisco-support)
-  pcl                Policy clientlib information(cisco-support)
-  pim                PIM - Protocol Independent Multicast
-  pm-collector       Performance Management subsystem
-  policy             Clear policy information(cisco-support)
-  ppp                PPP information
-  prefix-list        Prefix lists
-  qos                Clear QoS counters
-  radius             clear radius server statistics
-  raw                Clear RAW commands
-  rcc                Route Consistency Check
-  rcmd               Router Convergence(cisco-support)
-  rip                Clear RIP data
-  route              Clear route table entries
-  router             Clear Routing Protocol
-  rsvp               RSVP clear commands
-  scheduled          Clear scheduled(cisco-support)
-  segment-routing    Segment Routing
-  snmp               Clear SNMP statistics
-  spp                Clear SPP commands
-  srp                Clear SRP interface commands
-  ssh                Disconnect ssh connection
-  state-transitions  Clear state transition count on the given interface
-  sysdb              SysDB clear commands(cisco-support)
-  tcp                Clear TCP commands
-  telemetry          Clear telemetry commands(cisco-support)
-  traffic-collector  Traffic Collector
-  udp                Clear UDP commands
-  vrrp               Clear Virtual Router Redundancy Protocol Data
-  yfw                clear YANG Framework information
-RP/0/0/CPU0:XR1#clear b?
-bfd  bgp  bundle  
-RP/0/0/CPU0:XR1#clear b
-bfd  bgp  bundle  
-RP/0/0/CPU0:XR1#clear bgp ?
-  *                       Clear all peers and all routes from the BGP table 
-  A.B.C.D or X:X::X       BGP neighbor address to clear
-  all                     Both ipv4 and ipv6 address families
-  as                      Clear peers in a specific AS
-  bestpath                re-run BGP bestpath selection
-  external                Clear all external peers
-  instance                Choose a particular BGP instance
-  ipv4                    IPv4 Address Family
-  ipv6                    IPv6 Address Family
-  l2vpn                   L2VPN Address Family
-  link-state              Link-state Address Family
-  nexthop                 Clear nexthop
-  peer-drops              Clear established/dropped counters for a peer
-  performance-statistics  Clear performance statistics
-  rpki                    RPKI clear command
-  shutdown                Clear all peers which were shut down due to low memory
-  update                  Clear Update information (Do NOT execute without cisco support)(cisco-support)
-  version                 clear BGP prefix version
-  vpnv4                   VPNv4 Address Family
-  vpnv6                   VPNv6 Address Family
-  vrf                     Specify a VRF
-RP/0/0/CPU0:XR1#clear bgp ipv4 ?
-  all              All address family modifiers
-  flowspec         Flow Spec address family modifier
-  labeled-unicast  Labeled Unicast address family modifier
-  mdt              MDT address family modifier
-  multicast        Multicast address family modifier
-  mvpn             Multicast vpn address family modifier
-  rt-filter        RT Constraint address family modifier
-  tunnel           Tunnel address family modifier
-  unicast          Unicast address family modifier
-RP/0/0/CPU0:XR1#               
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show ip bgp
-Sun Sep 13 17:26:47.502 UTC
-BGP router identifier 11.11.11.11, local AS number 1
-BGP generic scan interval 60 secs
-Non-stop routing is enabled
-BGP table state: Active
-Table ID: 0xe0000000   RD version: 42
-BGP main routing table version 42
-BGP NSR Initial initsync version 5 (Reached)
-BGP NSR/ISSU Sync-Group versions 0/0
-BGP scan interval 60 secs
-
-Status codes: s suppressed, d damped, h history, * valid, > best
-              i - internal, r RIB-failure, S stale, N Nexthop-discard
-Origin codes: i - IGP, e - EGP, ? - incomplete
-   Network            Next Hop            Metric LocPrf Weight Path
-*>i1.1.1.1/32         1.1.1.1                  0    100      0 i
-* i2.2.2.2/32         2.2.2.2                  0    100      0 i
-*>i                   2.2.2.2                  0    100      0 i
-* i3.3.3.3/32         3.3.3.3                  0    100      0 i
-*>i                   3.3.3.3                  0    100      0 i
-* i7.7.7.7/32         3.3.3.3                  0    100      0 7 i
-*>i                   3.3.3.3                  0    100      0 7 i
-*> 8.8.8.8/32         10.8.11.8                0             0 8 i
-* i10.2.10.0/24       2.2.2.2                  0    100      0 i
-*>i                   2.2.2.2                  0    100      0 i
-* i10.10.10.10/32     10.2.10.10               0    100      0 10 i
-*>i                   10.2.10.10               0    100      0 10 i
-*> 11.11.11.11/32     0.0.0.0                  0         32768 i
-* i12.12.12.12/32     12.12.12.12              0    100      0 i
-*>i                   12.12.12.12              0    100      0 i
-* i13.13.13.13/32     13.13.13.13              0    100      0 i
-*>i                   13.13.13.13              0    100      0 i
-* i14.14.14.14/32     13.13.13.13              0    100      0 14 i
-*>i                   13.13.13.13              0    100      0 14 i
-
-Processed 11 prefixes, 19 paths
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#clear bgp *   
-Sun Sep 13 17:27:37.119 UTC
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 17:28:29.885 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:23:51 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 1.1.1.1
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 3.3.3.3
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-   next-hop-self
-  !
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show ip bg
-Sun Sep 13 17:34:18.291 UTC
-BGP router identifier 11.11.11.11, local AS number 1
-BGP generic scan interval 60 secs
-Non-stop routing is enabled
-BGP table state: Active
-Table ID: 0xe0000000   RD version: 68
-BGP main routing table version 68
-BGP NSR Initial initsync version 5 (Reached)
-BGP NSR/ISSU Sync-Group versions 0/0
-BGP scan interval 60 secs
-
-Status codes: s suppressed, d damped, h history, * valid, > best
-              i - internal, r RIB-failure, S stale, N Nexthop-discard
-Origin codes: i - IGP, e - EGP, ? - incomplete
-   Network            Next Hop            Metric LocPrf Weight Path
-*>i1.1.1.1/32         1.1.1.1                  0    100      0 i
-* i2.2.2.2/32         2.2.2.2                  0    100      0 i
-*>i                   2.2.2.2                  0    100      0 i
-* i3.3.3.3/32         3.3.3.3                  0    100      0 i
-*>i                   3.3.3.3                  0    100      0 i
-* i7.7.7.7/32         3.3.3.3                  0    100      0 7 i
-*>i                   3.3.3.3                  0    100      0 7 i
-*> 8.8.8.8/32         10.8.11.8                0             0 8 i
-* i10.2.10.0/24       2.2.2.2                  0    100      0 i
-*>i                   2.2.2.2                  0    100      0 i
-* i10.10.10.10/32     10.2.10.10               0    100      0 10 i
-*>i                   10.2.10.10               0    100      0 10 i
-*> 11.11.11.11/32     0.0.0.0                  0         32768 i
-* i12.12.12.12/32     12.12.12.12              0    100      0 i
-*>i                   12.12.12.12              0    100      0 i
-* i13.13.13.13/32     13.13.13.13              0    100      0 i
-*>i                   13.13.13.13              0    100      0 i
-* i14.14.14.14/32     13.13.13.13              0    100      0 14 i
-*>i                   13.13.13.13              0    100      0 14 i
-
-Processed 11 prefixes, 19 paths
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 17:40:40.485 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:23:51 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 1.1.1.1
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 3.3.3.3
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-   next-hop-self
-  !
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#conf t
-Sun Sep 13 17:42:54.256 UTC
-RP/0/0/CPU0:XR1(config)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)#address-family ipv4 unicast 
-RP/0/0/CPU0:XR1(config-bgp-af)#ne
-network  nexthop  
-RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 mask 255.255.255.0
-                                                 ^
-% Invalid input detected at '^' marker.
-RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 ma?               
-                                                 ^
-% Invalid input detected at '^' marker.
-RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 ? 
-  IPV4 subnet mask  IPv4 network and mask or masklength
-RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0?
-A.B.C.D/length  
-RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 ?
-  IPV4 subnet mask  IPv4 network and mask or masklength
-RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 ma?
-                                                 ^
-% Invalid input detected at '^' marker.
-RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0 i?
-                                                 ^
-% Invalid input detected at '^' marker.
-RP/0/0/CPU0:XR1(config-bgp-af)#network 10.11.8.0/24
-RP/0/0/CPU0:XR1(config-bgp-af)#
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#conf t
-Sun Sep 13 17:45:10.256 UTC
-RP/0/0/CPU0:XR1(config)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)#address-family ipv4 unicast 
-RP/0/0/CPU0:XR1(config-bgp-af)#show config
-Sun Sep 13 17:46:04.773 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-router bgp 1
- address-family ipv4 unicast
- !
-!
-end
-
-RP/0/0/CPU0:XR1(config-bgp-af)#do show run
-Sun Sep 13 17:46:20.172 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:44:42 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 10.11.8.0/24
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 1.1.1.1
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 3.3.3.3
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-   next-hop-self
-  !
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1(config-bgp-af)#no network 10.11.8.0/24
-RP/0/0/CPU0:XR1(config-bgp-af)#network 10.8.11.0/24
-RP/0/0/CPU0:XR1(config-bgp-af)#
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 17:47:06.118 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:47:02 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 10.8.11.0/24
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 1.1.1.1
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 3.3.3.3
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-   next-hop-self
-  !
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show ip route
-Sun Sep 13 17:47:35.266 UTC
-
-Codes: C - connected, S - static, R - RIP, B - BGP, (>) - Diversion path
-       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
-       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
-       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
-       i - ISIS, L1 - IS-IS level-1, L2 - IS-IS level-2
-       ia - IS-IS inter area, su - IS-IS summary null, * - candidate default
-       U - per-user static route, o - ODR, L - local, G  - DAGR, l - LISP
-       A - access/subscriber, a - Application route
-       M - mobile route, r - RPL, (!) - FRR Backup path
-
-Gateway of last resort is not set
-
-i L2 1.1.1.1/32 [115/10] via 10.1.11.1, 12:53:00, GigabitEthernet0/0/0/0.111
-i L2 2.2.2.2/32 [115/10] via 10.2.11.2, 12:55:25, GigabitEthernet0/0/0/0.211
-i L2 3.3.3.3/32 [115/20] via 10.2.11.2, 12:30:34, GigabitEthernet0/0/0/0.211
-                [115/20] via 10.11.12.12, 12:30:34, GigabitEthernet0/0/0/0.1112
-B    7.7.7.7/32 [200/0] via 3.3.3.3, 00:19:56
-B    8.8.8.8/32 [20/0] via 10.8.11.8, 00:19:57
-i L2 10.1.2.0/24 [115/20] via 10.1.11.1, 12:53:00, GigabitEthernet0/0/0/0.111
-                 [115/20] via 10.2.11.2, 12:53:00, GigabitEthernet0/0/0/0.211
-C    10.1.11.0/24 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.111
-L    10.1.11.11/32 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.111
-i L2 10.1.12.0/24 [115/20] via 10.1.11.1, 12:53:00, GigabitEthernet0/0/0/0.111
-                  [115/20] via 10.11.12.12, 12:53:00, GigabitEthernet0/0/0/0.1112
-i L2 10.2.3.0/24 [115/20] via 10.2.11.2, 12:55:25, GigabitEthernet0/0/0/0.211
-B    10.2.10.0/24 [200/0] via 2.2.2.2, 00:19:57
-C    10.2.11.0/24 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.211
-L    10.2.11.11/32 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.211
-i L2 10.2.12.0/24 [115/20] via 10.2.11.2, 12:55:21, GigabitEthernet0/0/0/0.211
-                  [115/20] via 10.11.12.12, 12:55:21, GigabitEthernet0/0/0/0.1112
-i L2 10.2.13.0/24 [115/20] via 10.2.11.2, 12:55:25, GigabitEthernet0/0/0/0.211
-i L2 10.3.12.0/24 [115/20] via 10.11.12.12, 12:55:21, GigabitEthernet0/0/0/0.1112
-i L2 10.3.13.0/24 [115/30] via 10.2.11.2, 12:30:34, GigabitEthernet0/0/0/0.211
-                  [115/30] via 10.11.12.12, 12:30:34, GigabitEthernet0/0/0/0.1112
-C    10.4.11.0/24 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.411
-L    10.4.11.11/32 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.411
-C    10.8.11.0/24 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.811
-L    10.8.11.11/32 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.811
-B    10.10.10.10/32 [200/0] via 10.2.10.10, 00:19:54
-C    10.11.12.0/24 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.1112
-L    10.11.12.11/32 is directly connected, 13:56:02, GigabitEthernet0/0/0/0.1112
-i L2 10.12.13.0/24 [115/30] via 10.2.11.2, 12:52:55, GigabitEthernet0/0/0/0.211
-L    11.11.11.11/32 is directly connected, 13:56:03, Loopback0
-i L2 12.12.12.12/32 [115/10] via 10.11.12.12, 12:55:21, GigabitEthernet0/0/0/0.1112
-i L2 13.13.13.13/32 [115/30] via 10.2.11.2, 12:52:55, GigabitEthernet0/0/0/0.211
-B    14.14.14.14/32 [200/0] via 13.13.13.13, 00:19:36
-RP/0/0/CPU0:XR1#show ip route b
-                        ^
-% Invalid input detected at '^' marker.
-RP/0/0/CPU0:XR1#show ip b
-Sun Sep 13 17:47:44.496 UTC
-BGP router identifier 11.11.11.11, local AS number 1
-BGP generic scan interval 60 secs
-Non-stop routing is enabled
-BGP table state: Active
-Table ID: 0xe0000000   RD version: 69
-BGP main routing table version 69
-BGP NSR Initial initsync version 5 (Reached)
-BGP NSR/ISSU Sync-Group versions 0/0
-BGP scan interval 60 secs
-
-Status codes: s suppressed, d damped, h history, * valid, > best
-              i - internal, r RIB-failure, S stale, N Nexthop-discard
-Origin codes: i - IGP, e - EGP, ? - incomplete
-   Network            Next Hop            Metric LocPrf Weight Path
-*>i1.1.1.1/32         1.1.1.1                  0    100      0 i
-* i2.2.2.2/32         2.2.2.2                  0    100      0 i
-*>i                   2.2.2.2                  0    100      0 i
-* i3.3.3.3/32         3.3.3.3                  0    100      0 i
-*>i                   3.3.3.3                  0    100      0 i
-* i7.7.7.7/32         3.3.3.3                  0    100      0 7 i
-*>i                   3.3.3.3                  0    100      0 7 i
-*> 8.8.8.8/32         10.8.11.8                0             0 8 i
-* i10.2.10.0/24       2.2.2.2                  0    100      0 i
-*>i                   2.2.2.2                  0    100      0 i
-*> 10.8.11.0/24       0.0.0.0                  0         32768 i
-* i10.10.10.10/32     10.2.10.10               0    100      0 10 i
-*>i                   10.2.10.10               0    100      0 10 i
-*> 11.11.11.11/32     0.0.0.0                  0         32768 i
-* i12.12.12.12/32     12.12.12.12              0    100      0 i
-*>i                   12.12.12.12              0    100      0 i
-* i13.13.13.13/32     13.13.13.13              0    100      0 i
-*>i                   13.13.13.13              0    100      0 i
-* i14.14.14.14/32     13.13.13.13              0    100      0 14 i
-*>i                   13.13.13.13              0    100      0 14 i
-
-Processed 12 prefixes, 20 paths
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#wr
-                ^
-% Invalid input detected at '^' marker.
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#terminal length 0
-Sun Sep 13 17:51:13.122 UTC
-RP/0/0/CPU0:XR1#configure terminal
-Sun Sep 13 17:51:13.281 UTC
-RP/0/0/CPU0:XR1(config)#no logging console
-RP/0/0/CPU0:XR1(config)#commit
-Sun Sep 13 17:51:13.741 UTC
-RP/0/0/CPU0:XR1(config)#exit
-RP/0/0/CPU0:XR1#show running-config
-Sun Sep 13 17:51:14.101 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:47:02 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 10.8.11.0/24
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 1.1.1.1
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 3.3.3.3
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-   next-hop-self
-  !
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#quit
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-XR1 con0/0/CPU0 is now available
-
-
-
-
-
-Press RETURN to get started.
-
-
-
-IMPORTANT:  READ CAREFULLY
-Welcome to the Demo Version of Cisco IOS XRv (the "Software").
-The Software is subject to and governed by the terms and conditions
-of the End User License Agreement and the Supplemental End User
-License Agreement accompanying the product, made available at the
-time of your order, or posted on the Cisco website at
-www.cisco.com/go/terms (collectively, the "Agreement").
-As set forth more fully in the Agreement, use of the Software is
-strictly limited to internal use in a non-production environment
-solely for demonstration and evaluation purposes.  Downloading,
-installing, or using the Software constitutes acceptance of the
-Agreement, and you are binding yourself and the business entity
-that you represent to the Agreement.  If you do not agree to all
-of the terms of the Agreement, then Cisco is unwilling to license
-the Software to you and (a) you may not download, install or use the
-Software, and (b) you may return the Software as more fully set forth
-in the Agreement.
-
-
-Please login with any configured user/password, or cisco/cisco
-
-
-User Access Verification
-
-Username: cisco
-Password: 
-
-
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 18:02:06.907 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:47:02 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 10.8.11.0/24
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 1.1.1.1
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 3.3.3.3
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-   next-hop-self
-  !
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#conf t
-Sun Sep 13 18:02:50.814 UTC
-RP/0/0/CPU0:XR1(config)#router bgp 1
-RP/0/0/CPU0:XR1(config-bgp)# neighbor 10.8.11.8
-RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   no next-hop-self
-RP/0/0/CPU0:XR1(config-bgp-nbr-af)#
-Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show run
-Sun Sep 13 18:03:02.993 UTC
-Building configuration...
-!! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 18:02:59 2020 by cisco
-!
-hostname XR1
-line console
- exec-timeout 0 0
-!
-interface Loopback0
- ipv4 address 11.11.11.11 255.255.255.255
- ipv6 address 2001::11/128
-!
-interface MgmtEth0/0/CPU0/0
- shutdown
-!
-interface GigabitEthernet0/0/0/0.111
- ipv4 address 10.1.11.11 255.255.255.0
- ipv6 address 2001:1:11::11/64
- encapsulation dot1q 111
-!
-interface GigabitEthernet0/0/0/0.211
- ipv4 address 10.2.11.11 255.255.255.0
- ipv6 address 2001:2:11::11/64
- encapsulation dot1q 211
-!
-interface GigabitEthernet0/0/0/0.411
- ipv4 address 10.4.11.11 255.255.255.0
- ipv6 address 2001:4:11::11/64
- encapsulation dot1q 411
-!
-interface GigabitEthernet0/0/0/0.811
- ipv4 address 10.8.11.11 255.255.255.0
- ipv6 address 2001:8:11::11/64
- encapsulation dot1q 811
-!
-interface GigabitEthernet0/0/0/0.1112
- ipv4 address 10.11.12.11 255.255.255.0
- ipv6 address 2001:11:12::11/64
- encapsulation dot1q 1112
-!
-route-policy PASS_ALL
-  pass
-end-policy
-!
-router isis 1
- is-type level-2-only
- net 00.0000.0000.0011.00
- log adjacency changes
- address-family ipv4 unicast
-  metric-style wide
- !
- address-family ipv6 unicast
-  metric-style wide
- !
- interface Loopback0
-  passive
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.111
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.211
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
- interface GigabitEthernet0/0/0/0.1112
-  address-family ipv4 unicast
-  !
-  address-family ipv6 unicast
-  !
- !
-!
-router bgp 1
- bgp log neighbor changes detail
- address-family ipv4 unicast
-  network 10.8.11.0/24
-  network 11.11.11.11/32
- !
- af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
-  route-reflector-client
-  next-hop-self
- !
- session-group IBGP_PEERS
-  remote-as 1
-  update-source Loopback0
- !
- neighbor 1.1.1.1
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 2.2.2.2
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 3.3.3.3
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 10.8.11.8
-  remote-as 8
-  address-family ipv4 unicast
-   route-policy PASS_ALL in
-   route-policy PASS_ALL out
-  !
- !
- neighbor 12.12.12.12
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
- neighbor 13.13.13.13
-  use session-group IBGP_PEERS
-  address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
-  !
- !
-!
-end
-
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show bgp ipv
-ipv4  ipv6  
-RP/0/0/CPU0:XR1#show bgp ipv4 unicast neighbors 3.3.3.3 advertised-routes 
-Sun Sep 13 18:08:01.692 UTC
-Network            Next Hop        From            AS Path
-8.8.8.8/32         10.8.11.8       10.8.11.8       8i
-10.8.11.0/24       11.11.11.11     Local           i
-11.11.11.11/32     11.11.11.11     Local           i
-
-Processed 3 prefixes, 3 paths
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#
-RP/0/0/CPU0:XR1#show bgp ipv4 unicast neighbors 3.3.3.3 advertised-routes 
-Sun Sep 13 18:10:09.714 UTC
-Network            Next Hop        From            AS Path
-8.8.8.8/32         10.8.11.8       10.8.11.8       8i
-10.8.11.0/24       11.11.11.11     Local           i
-11.11.11.11/32     11.11.11.11     Local           i
-
-Processed 3 prefixes, 3 paths
+﻿[2020-09-14 14:24:55]
+[2020-09-14 14:24:55]
+[2020-09-14 14:24:55]IMPORTANT:  READ CAREFULLY
+[2020-09-14 14:24:55]Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+[2020-09-14 14:24:55]The Software is subject to and governed by the terms and conditions
+[2020-09-14 14:24:55]of the End User License Agreement and the Supplemental End User
+[2020-09-14 14:24:55]License Agreement accompanying the product, made available at the
+[2020-09-14 14:24:55]time of your order, or posted on the Cisco website at
+[2020-09-14 14:24:55]www.cisco.com/go/terms (collectively, the "Agreement").
+[2020-09-14 14:24:55]As set forth more fully in the Agreement, use of the Software is
+[2020-09-14 14:24:55]strictly limited to internal use in a non-production environment
+[2020-09-14 14:24:55]solely for demonstration and evaluation purposes.  Downloading,
+[2020-09-14 14:24:55]installing, or using the Software constitutes acceptance of the
+[2020-09-14 14:24:55]Agreement, and you are binding yourself and the business entity
+[2020-09-14 14:24:55]that you represent to the Agreement.  If you do not agree to all
+[2020-09-14 14:24:55]of the terms of the Agreement, then Cisco is unwilling to license
+[2020-09-14 14:24:55]the Software to you and (a) you may not download, install or use the
+[2020-09-14 14:24:55]Software, and (b) you may return the Software as more fully set forth
+[2020-09-14 14:24:55]in the Agreement.
+[2020-09-14 14:24:55]
+[2020-09-14 14:24:55]
+[2020-09-14 14:24:55]Please login with any configured user/password, or cisco/cisco
+[2020-09-14 14:24:55]
+[2020-09-14 14:24:55]
+[2020-09-14 14:24:55]User Access Verification
+[2020-09-14 14:24:55]
+[2020-09-14 14:24:55]Username: 
+[2020-09-14 14:24:55]Username: 
+[2020-09-14 14:24:55]
+[2020-09-14 14:24:56]
+[2020-09-14 14:24:56]User Access Verification
+[2020-09-14 14:24:56]
+[2020-09-14 14:24:57]Username: cisoc
+[2020-09-14 14:24:59]Password: 
+[2020-09-14 14:24:59]RP/0/0/CPU0:Sep 14 08:54:58.937 : exec[65743]: %SECURITY-LOGIN-4-AUTHEN_FAILED : Failed authentication attempt by user '<unknown>' from 'console' on 'con0_0_CPU0' 
+[2020-09-14 14:25:00]
+[2020-09-14 14:25:00]User Access Verification
+[2020-09-14 14:25:00]
+[2020-09-14 14:25:00]Username: 
+[2020-09-14 14:25:00]Username: 
+[2020-09-14 14:25:00]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]% Authentication failed
+[2020-09-14 14:25:01]RP/0/0/CPU0:Sep 14 08:55:00.827 : exec[65743]: %MGBL-exec-3-LOGIN_AUTHEN : Login Authentication failed. Exiting... 
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]XR1 con0/0/CPU0 is now available
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:01]Press RETURN to get started.
+[2020-09-14 14:25:01]
+[2020-09-14 14:25:02]
+[2020-09-14 14:25:02]
+[2020-09-14 14:25:02]IMPORTANT:  READ CAREFULLY
+[2020-09-14 14:25:02]Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+[2020-09-14 14:25:02]The Software is subject to and governed by the terms and conditions
+[2020-09-14 14:25:02]of the End User License Agreement and the Supplemental End User
+[2020-09-14 14:25:02]License Agreement accompanying the product, made available at the
+[2020-09-14 14:25:02]time of your order, or posted on the Cisco website at
+[2020-09-14 14:25:02]www.cisco.com/go/terms (collectively, the "Agreement").
+[2020-09-14 14:25:02]As set forth more fully in the Agreement, use of the Software is
+[2020-09-14 14:25:02]strictly limited to internal use in a non-production environment
+[2020-09-14 14:25:02]solely for demonstration and evaluation purposes.  Downloading,
+[2020-09-14 14:25:02]installing, or using the Software constitutes acceptance of the
+[2020-09-14 14:25:02]Agreement, and you are binding yourself and the business entity
+[2020-09-14 14:25:02]that you represent to the Agreement.  If you do not agree to all
+[2020-09-14 14:25:02]of the terms of the Agreement, then Cisco is unwilling to license
+[2020-09-14 14:25:02]the Software to you and (a) you may not download, install or use the
+[2020-09-14 14:25:02]Software, and (b) you may return the Software as more fully set forth
+[2020-09-14 14:25:02]in the Agreement.
+[2020-09-14 14:25:02]
+[2020-09-14 14:25:02]
+[2020-09-14 14:25:02]Please login with any configured user/password, or cisco/cisco
+[2020-09-14 14:25:02]
+[2020-09-14 14:25:02]
+[2020-09-14 14:25:02]User Access Verification
+[2020-09-14 14:25:02]
+[2020-09-14 14:25:04]Username: cisco
+[2020-09-14 14:25:06]Password: 
+[2020-09-14 14:25:06]
+[2020-09-14 14:25:06]
+[2020-09-14 14:25:07]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:07]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:07]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:07]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:07]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:08]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:08]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:10]RP/0/0/CPU0:XR1#show run
+[2020-09-14 14:25:10]Mon Sep 14 08:55:09.437 UTC
+[2020-09-14 14:25:10]Building configuration...
+[2020-09-14 14:25:10]!! IOS XR Configuration 6.0.1
+[2020-09-14 14:25:10]!! Last configuration change at Mon Sep 14 07:13:19 2020 by cisco
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]hostname XR1
+[2020-09-14 14:25:10]line console
+[2020-09-14 14:25:10] exec-timeout 0 0
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]interface Loopback0
+[2020-09-14 14:25:10] ipv4 address 11.11.11.11 255.255.255.255
+[2020-09-14 14:25:10] ipv6 address 2001::11/128
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]interface MgmtEth0/0/CPU0/0
+[2020-09-14 14:25:10] shutdown
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:25:10] ipv4 address 10.1.11.11 255.255.255.0
+[2020-09-14 14:25:10] ipv6 address 2001:1:11::11/64
+[2020-09-14 14:25:10] encapsulation dot1q 111
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:25:10] ipv4 address 10.2.11.11 255.255.255.0
+[2020-09-14 14:25:10] ipv6 address 2001:2:11::11/64
+[2020-09-14 14:25:10] encapsulation dot1q 211
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]interface GigabitEthernet0/0/0/0.411
+[2020-09-14 14:25:10] ipv4 address 10.4.11.11 255.255.255.0
+[2020-09-14 14:25:10] ipv6 address 2001:4:11::11/64
+[2020-09-14 14:25:10] encapsulation dot1q 411
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]interface GigabitEthernet0/0/0/0.811
+[2020-09-14 14:25:10] ipv4 address 10.8.11.11 255.255.255.0
+[2020-09-14 14:25:10] ipv6 address 2001:8:11::11/64
+[2020-09-14 14:25:10] encapsulation dot1q 811
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:25:10] ipv4 address 10.11.12.11 255.255.255.0
+[2020-09-14 14:25:10] ipv6 address 2001:11:12::11/64
+[2020-09-14 14:25:10] encapsulation dot1q 1112
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]route-policy PASS_ALL
+[2020-09-14 14:25:10]  pass
+[2020-09-14 14:25:10]end-policy
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]router isis 1
+[2020-09-14 14:25:10] is-type level-2-only
+[2020-09-14 14:25:10] net 00.0000.0000.0011.00
+[2020-09-14 14:25:10] log adjacency changes
+[2020-09-14 14:25:10] address-family ipv4 unicast
+[2020-09-14 14:25:10]  metric-style wide
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] address-family ipv6 unicast
+[2020-09-14 14:25:10]  metric-style wide
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] interface Loopback0
+[2020-09-14 14:25:10]  passive
+[2020-09-14 14:25:10]  address-family ipv4 unicast
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10]  address-family ipv6 unicast
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:25:10]  address-family ipv4 unicast
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10]  address-family ipv6 unicast
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:25:10]  address-family ipv4 unicast
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10]  address-family ipv6 unicast
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:25:10]  address-family ipv4 unicast
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10]  address-family ipv6 unicast
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]router bgp 1
+[2020-09-14 14:25:10] bgp log neighbor changes detail
+[2020-09-14 14:25:10] address-family ipv4 unicast
+[2020-09-14 14:25:10]  network 10.8.11.0/24
+[2020-09-14 14:25:10]  network 11.11.11.11/32
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+[2020-09-14 14:25:10]  route-reflector-client
+[2020-09-14 14:25:10]  next-hop-self
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] session-group IBGP_PEERS
+[2020-09-14 14:25:10]  remote-as 1
+[2020-09-14 14:25:10]  update-source Loopback0
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] neighbor 1.1.1.1
+[2020-09-14 14:25:10]  use session-group IBGP_PEERS
+[2020-09-14 14:25:10]  address-family ipv4 unicast
+[2020-09-14 14:25:10]   route-reflector-client
+[2020-09-14 14:25:10]   next-hop-self
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] neighbor 2.2.2.2
+[2020-09-14 14:25:10]  use session-group IBGP_PEERS
+[2020-09-14 14:25:10]  address-family ipv4 unicast
+[2020-09-14 14:25:10]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] neighbor 3.3.3.3
+[2020-09-14 14:25:10]  use session-group IBGP_PEERS
+[2020-09-14 14:25:10]  address-family ipv4 unicast
+[2020-09-14 14:25:10]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] neighbor 10.8.11.8
+[2020-09-14 14:25:10]  remote-as 8
+[2020-09-14 14:25:10]  address-family ipv4 unicast
+[2020-09-14 14:25:10]   route-policy PASS_ALL in
+[2020-09-14 14:25:10]   route-policy PASS_ALL out
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] neighbor 12.12.12.12
+[2020-09-14 14:25:10]  use session-group IBGP_PEERS
+[2020-09-14 14:25:10]  address-family ipv4 unicast
+[2020-09-14 14:25:10]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10] neighbor 13.13.13.13
+[2020-09-14 14:25:10]  use session-group IBGP_PEERS
+[2020-09-14 14:25:10]  address-family ipv4 unicast
+[2020-09-14 14:25:10]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:25:10]  !
+[2020-09-14 14:25:10] !
+[2020-09-14 14:25:10]!
+[2020-09-14 14:25:10]end
+[2020-09-14 14:25:10]
+[2020-09-14 14:25:10]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:10]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:10]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:10]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:11]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:11]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:20]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:20]RP/0/0/CPU0:XR1#
+[2020-09-14 14:25:23]RP/0/0/CPU0:XR1#show ip bgp
+[2020-09-14 14:25:23]Mon Sep 14 08:55:23.086 UTC
+[2020-09-14 14:25:23]BGP router identifier 11.11.11.11, local AS number 1
+[2020-09-14 14:25:23]BGP generic scan interval 60 secs
+[2020-09-14 14:25:23]Non-stop routing is enabled
+[2020-09-14 14:25:23]BGP table state: Active
+[2020-09-14 14:25:23]Table ID: 0xe0000000   RD version: 216
+[2020-09-14 14:25:23]BGP main routing table version 216
+[2020-09-14 14:25:23]BGP NSR Initial initsync version 9 (Reached)
+[2020-09-14 14:25:23]BGP NSR/ISSU Sync-Group versions 0/0
+[2020-09-14 14:25:23]BGP scan interval 60 secs
+[2020-09-14 14:25:23]
+[2020-09-14 14:25:23]Status codes: s suppressed, d damped, h history, * valid, > best
+[2020-09-14 14:25:23]              i - internal, r RIB-failure, S stale, N Nexthop-discard
+[2020-09-14 14:25:23]Origin codes: i - IGP, e - EGP, ? - incomplete
+[2020-09-14 14:25:23]   Network            Next Hop            Metric LocPrf Weight Path
+[2020-09-14 14:25:23]*>i1.1.1.1/32         1.1.1.1                  0    100      0 i
+[2020-09-14 14:25:23]* i2.2.2.2/32         1.1.1.1                  0    100      0 i
+[2020-09-14 14:25:23]*>i                   2.2.2.2                  0    100      0 i
+[2020-09-14 14:25:23]*>i3.3.3.3/32         1.1.1.1                  0    100      0 i
+[2020-09-14 14:25:23]* i                   3.3.3.3                  0    100      0 i
+[2020-09-14 14:25:23]*>i7.7.7.7/32         1.1.1.1                  0    100      0 7 i
+[2020-09-14 14:25:23]* i                   3.3.3.3                  0    100      0 7 i
+[2020-09-14 14:25:23]* i                   13.13.13.13              0    100      0 7 i
+[2020-09-14 14:25:23]*> 8.8.8.8/32         10.8.11.8                0             0 8 i
+[2020-09-14 14:25:23]*> 10.8.11.0/24       0.0.0.0                  0         32768 i
+[2020-09-14 14:25:23]* i10.10.10.10/32     1.1.1.1                  0    100      0 10 i
+[2020-09-14 14:25:23]*>i                   2.2.2.2                  0    100      0 10 i
+[2020-09-14 14:25:24]*> 11.11.11.11/32     0.0.0.0                  0         32768 i
+[2020-09-14 14:25:24]* i12.12.12.12/32     1.1.1.1                  0    100      0 i
+[2020-09-14 14:25:24]*>i                   12.12.12.12              0    100      0 i
+[2020-09-14 14:25:24]*>i13.13.13.13/32     1.1.1.1                  0    100      0 i
+[2020-09-14 14:25:24]* i                   13.13.13.13              0    100      0 i
+[2020-09-14 14:25:24]*>i14.14.14.14/32     1.1.1.1                  0    100      0 14 i
+[2020-09-14 14:25:24]* i                   13.13.13.13              0    100      0 14 i
+[2020-09-14 14:25:24]
+[2020-09-14 14:25:24]Processed 11 prefixes, 19 paths
+[2020-09-14 14:25:33]RP/0/0/CPU0:XR1#show ip bgp 10.10.10.10
+[2020-09-14 14:25:33]Mon Sep 14 08:55:33.225 UTC
+[2020-09-14 14:25:33]BGP routing table entry for 10.10.10.10/32
+[2020-09-14 14:25:33]Versions:
+[2020-09-14 14:25:33]  Process           bRIB/RIB  SendTblVer
+[2020-09-14 14:25:33]  Speaker                216         216
+[2020-09-14 14:25:33]Last Modified: Sep 14 08:53:02.449 for 00:02:30
+[2020-09-14 14:25:33]Paths: (2 available, best #2)
+[2020-09-14 14:25:33]  Advertised to peers (in unique update groups):
+[2020-09-14 14:25:33]    10.8.11.8       1.1.1.1         
+[2020-09-14 14:25:33]  Path #1: Received by speaker 0
+[2020-09-14 14:25:33]  Not advertised to any peer
+[2020-09-14 14:25:34]  10, (Received from a RR-client)
+[2020-09-14 14:25:34]    1.1.1.1 (metric 10) from 1.1.1.1 (2.2.2.2)
+[2020-09-14 14:25:34]      Origin IGP, metric 0, localpref 100, valid, internal
+[2020-09-14 14:25:34]      Received Path ID 0, Local Path ID 0, version 0
+[2020-09-14 14:25:34]      Originator: 2.2.2.2, Cluster list: 1.1.1.1
+[2020-09-14 14:25:34]  Path #2: Received by speaker 0
+[2020-09-14 14:25:34]  Advertised to peers (in unique update groups):
+[2020-09-14 14:25:34]    10.8.11.8       1.1.1.1         
+[2020-09-14 14:25:34]  10
+[2020-09-14 14:25:34]    2.2.2.2 (metric 10) from 2.2.2.2 (2.2.2.2)
+[2020-09-14 14:25:34]      Origin IGP, metric 0, localpref 100, valid, internal, best, group-best
+[2020-09-14 14:25:34]      Received Path ID 0, Local Path ID 1, version 216
+[2020-09-14 14:27:35]RP/0/0/CPU0:XR1#
+[2020-09-14 14:27:35]RP/0/0/CPU0:XR1#
+[2020-09-14 14:27:35]RP/0/0/CPU0:XR1#
+[2020-09-14 14:27:35]RP/0/0/CPU0:XR1#
+[2020-09-14 14:27:38]RP/0/0/CPU0:XR1#clear bgp *
+[2020-09-14 14:27:38]Mon Sep 14 08:57:38.136 UTC
+[2020-09-14 14:27:51]RP/0/0/CPU0:XR1#
+[2020-09-14 14:27:51]RP/0/0/CPU0:XR1#
+[2020-09-14 14:27:52]RP/0/0/CPU0:XR1#
+[2020-09-14 14:27:52]RP/0/0/CPU0:XR1#
+[2020-09-14 14:27:52]RP/0/0/CPU0:XR1#
+[2020-09-14 14:27:52]RP/0/0/CPU0:XR1#
+[2020-09-14 14:33:44]RP/0/0/CPU0:XR1#  
+[2020-09-14 14:33:44]RP/0/0/CPU0:XR1#
+[2020-09-14 14:33:45]RP/0/0/CPU0:XR1#
+[2020-09-14 14:33:45]RP/0/0/CPU0:XR1#
+[2020-09-14 14:33:45]RP/0/0/CPU0:XR1#
+[2020-09-14 14:33:53]RP/0/0/CPU0:XR1#show run | s bgp
+[2020-09-14 14:33:53]                           ^
+[2020-09-14 14:33:53]% Invalid input detected at '^' marker.
+[2020-09-14 14:33:59]RP/0/0/CPU0:XR1#show run bgp    
+[2020-09-14 14:33:59]                          ^
+[2020-09-14 14:33:59]% Invalid input detected at '^' marker.
+[2020-09-14 14:34:03]RP/0/0/CPU0:XR1#show run
+[2020-09-14 14:34:03]Mon Sep 14 09:04:02.640 UTC
+[2020-09-14 14:34:03]Building configuration...
+[2020-09-14 14:34:03]!! IOS XR Configuration 6.0.1
+[2020-09-14 14:34:03]!! Last configuration change at Mon Sep 14 07:13:19 2020 by cisco
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]hostname XR1
+[2020-09-14 14:34:03]line console
+[2020-09-14 14:34:03] exec-timeout 0 0
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]interface Loopback0
+[2020-09-14 14:34:03] ipv4 address 11.11.11.11 255.255.255.255
+[2020-09-14 14:34:03] ipv6 address 2001::11/128
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]interface MgmtEth0/0/CPU0/0
+[2020-09-14 14:34:03] shutdown
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:34:03] ipv4 address 10.1.11.11 255.255.255.0
+[2020-09-14 14:34:03] ipv6 address 2001:1:11::11/64
+[2020-09-14 14:34:03] encapsulation dot1q 111
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:34:03] ipv4 address 10.2.11.11 255.255.255.0
+[2020-09-14 14:34:03] ipv6 address 2001:2:11::11/64
+[2020-09-14 14:34:03] encapsulation dot1q 211
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]interface GigabitEthernet0/0/0/0.411
+[2020-09-14 14:34:03] ipv4 address 10.4.11.11 255.255.255.0
+[2020-09-14 14:34:03] ipv6 address 2001:4:11::11/64
+[2020-09-14 14:34:03] encapsulation dot1q 411
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]interface GigabitEthernet0/0/0/0.811
+[2020-09-14 14:34:03] ipv4 address 10.8.11.11 255.255.255.0
+[2020-09-14 14:34:03] ipv6 address 2001:8:11::11/64
+[2020-09-14 14:34:03] encapsulation dot1q 811
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:34:03] ipv4 address 10.11.12.11 255.255.255.0
+[2020-09-14 14:34:03] ipv6 address 2001:11:12::11/64
+[2020-09-14 14:34:03] encapsulation dot1q 1112
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]route-policy PASS_ALL
+[2020-09-14 14:34:03]  pass
+[2020-09-14 14:34:03]end-policy
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]router isis 1
+[2020-09-14 14:34:03] is-type level-2-only
+[2020-09-14 14:34:03] net 00.0000.0000.0011.00
+[2020-09-14 14:34:03] log adjacency changes
+[2020-09-14 14:34:03] address-family ipv4 unicast
+[2020-09-14 14:34:03]  metric-style wide
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] address-family ipv6 unicast
+[2020-09-14 14:34:03]  metric-style wide
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] interface Loopback0
+[2020-09-14 14:34:03]  passive
+[2020-09-14 14:34:03]  address-family ipv4 unicast
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03]  address-family ipv6 unicast
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:34:03]  address-family ipv4 unicast
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03]  address-family ipv6 unicast
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:34:03]  address-family ipv4 unicast
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03]  address-family ipv6 unicast
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:34:03]  address-family ipv4 unicast
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03]  address-family ipv6 unicast
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]router bgp 1
+[2020-09-14 14:34:03] bgp log neighbor changes detail
+[2020-09-14 14:34:03] address-family ipv4 unicast
+[2020-09-14 14:34:03]  network 10.8.11.0/24
+[2020-09-14 14:34:03]  network 11.11.11.11/32
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+[2020-09-14 14:34:03]  route-reflector-client
+[2020-09-14 14:34:03]  next-hop-self
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] session-group IBGP_PEERS
+[2020-09-14 14:34:03]  remote-as 1
+[2020-09-14 14:34:03]  update-source Loopback0
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] neighbor 1.1.1.1
+[2020-09-14 14:34:03]  use session-group IBGP_PEERS
+[2020-09-14 14:34:03]  address-family ipv4 unicast
+[2020-09-14 14:34:03]   route-reflector-client
+[2020-09-14 14:34:03]   next-hop-self
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] neighbor 2.2.2.2
+[2020-09-14 14:34:03]  use session-group IBGP_PEERS
+[2020-09-14 14:34:03]  address-family ipv4 unicast
+[2020-09-14 14:34:03]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] neighbor 3.3.3.3
+[2020-09-14 14:34:03]  use session-group IBGP_PEERS
+[2020-09-14 14:34:03]  address-family ipv4 unicast
+[2020-09-14 14:34:03]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] neighbor 10.8.11.8
+[2020-09-14 14:34:03]  remote-as 8
+[2020-09-14 14:34:03]  address-family ipv4 unicast
+[2020-09-14 14:34:03]   route-policy PASS_ALL in
+[2020-09-14 14:34:03]   route-policy PASS_ALL out
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] neighbor 12.12.12.12
+[2020-09-14 14:34:03]  use session-group IBGP_PEERS
+[2020-09-14 14:34:03]  address-family ipv4 unicast
+[2020-09-14 14:34:03]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03] neighbor 13.13.13.13
+[2020-09-14 14:34:03]  use session-group IBGP_PEERS
+[2020-09-14 14:34:03]  address-family ipv4 unicast
+[2020-09-14 14:34:03]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:03]  !
+[2020-09-14 14:34:03] !
+[2020-09-14 14:34:03]!
+[2020-09-14 14:34:03]end
+[2020-09-14 14:34:03]
+[2020-09-14 14:34:14]RP/0/0/CPU0:XR1#
+[2020-09-14 14:34:38]RP/0/0/CPU0:XR1#conf t
+[2020-09-14 14:34:38]Mon Sep 14 09:04:37.998 UTC
+[2020-09-14 14:34:39]RP/0/0/CPU0:XR1(config)#router bgp 1
+[2020-09-14 14:34:39]RP/0/0/CPU0:XR1(config-bgp)# bgp log neighbor changes detail
+[2020-09-14 14:34:39]RP/0/0/CPU0:XR1(config-bgp)# address-family ipv4 unicast
+[2020-09-14 14:34:39]RP/0/0/CPU0:XR1(config-bgp-af)#  network 10.8.11.0/24
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-af)#  network 11.11.11.11/32
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-af)# !
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-af)# af-group IPV4_IBGP_RR_CLIENTS address-family i$
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-afgrp)#  route-reflector-client
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-afgrp)#  next-hop-self
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-afgrp)# !
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-afgrp)# session-group IBGP_PEERS
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-sngrp)#  remote-as 1
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-sngrp)#  update-source Loopback0
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-sngrp)# !
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp-sngrp)# no neighbor 1.1.1.1
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp)#  !
+[2020-09-14 14:34:40]RP/0/0/CPU0:XR1(config-bgp)# !
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp)# neighbor 2.2.2.2
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 3.3.3.3
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 10.8.11.8
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr)#  remote-as 8
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   route-policy PASS_ALL in
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   route-policy PASS_ALL out
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:34:41]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:42]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:34:42]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:34:42]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
+[2020-09-14 14:34:42]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:34:42]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:34:42]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:42]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:34:42]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:34:42]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#!
+[2020-09-14 14:34:43]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#end
+[2020-09-14 14:34:45]Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+[2020-09-14 14:34:46]RP/0/0/CPU0:XR1#
+[2020-09-14 14:34:47]RP/0/0/CPU0:XR1#
+[2020-09-14 14:34:47]RP/0/0/CPU0:XR1#
+[2020-09-14 14:34:47]RP/0/0/CPU0:XR1#
+[2020-09-14 14:34:47]RP/0/0/CPU0:XR1#
+[2020-09-14 14:34:50]RP/0/0/CPU0:XR1#show run
+[2020-09-14 14:34:50]Mon Sep 14 09:04:50.087 UTC
+[2020-09-14 14:34:50]Building configuration...
+[2020-09-14 14:34:50]!! IOS XR Configuration 6.0.1
+[2020-09-14 14:34:50]!! Last configuration change at Mon Sep 14 09:04:44 2020 by cisco
+[2020-09-14 14:34:50]!
+[2020-09-14 14:34:51]hostname XR1
+[2020-09-14 14:34:51]line console
+[2020-09-14 14:34:51] exec-timeout 0 0
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]interface Loopback0
+[2020-09-14 14:34:51] ipv4 address 11.11.11.11 255.255.255.255
+[2020-09-14 14:34:51] ipv6 address 2001::11/128
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]interface MgmtEth0/0/CPU0/0
+[2020-09-14 14:34:51] shutdown
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:34:51] ipv4 address 10.1.11.11 255.255.255.0
+[2020-09-14 14:34:51] ipv6 address 2001:1:11::11/64
+[2020-09-14 14:34:51] encapsulation dot1q 111
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:34:51] ipv4 address 10.2.11.11 255.255.255.0
+[2020-09-14 14:34:51] ipv6 address 2001:2:11::11/64
+[2020-09-14 14:34:51] encapsulation dot1q 211
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]interface GigabitEthernet0/0/0/0.411
+[2020-09-14 14:34:51] ipv4 address 10.4.11.11 255.255.255.0
+[2020-09-14 14:34:51] ipv6 address 2001:4:11::11/64
+[2020-09-14 14:34:51] encapsulation dot1q 411
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]interface GigabitEthernet0/0/0/0.811
+[2020-09-14 14:34:51] ipv4 address 10.8.11.11 255.255.255.0
+[2020-09-14 14:34:51] ipv6 address 2001:8:11::11/64
+[2020-09-14 14:34:51] encapsulation dot1q 811
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:34:51] ipv4 address 10.11.12.11 255.255.255.0
+[2020-09-14 14:34:51] ipv6 address 2001:11:12::11/64
+[2020-09-14 14:34:51] encapsulation dot1q 1112
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]route-policy PASS_ALL
+[2020-09-14 14:34:51]  pass
+[2020-09-14 14:34:51]end-policy
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]router isis 1
+[2020-09-14 14:34:51] is-type level-2-only
+[2020-09-14 14:34:51] net 00.0000.0000.0011.00
+[2020-09-14 14:34:51] log adjacency changes
+[2020-09-14 14:34:51] address-family ipv4 unicast
+[2020-09-14 14:34:51]  metric-style wide
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] address-family ipv6 unicast
+[2020-09-14 14:34:51]  metric-style wide
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] interface Loopback0
+[2020-09-14 14:34:51]  passive
+[2020-09-14 14:34:51]  address-family ipv4 unicast
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51]  address-family ipv6 unicast
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:34:51]  address-family ipv4 unicast
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51]  address-family ipv6 unicast
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:34:51]  address-family ipv4 unicast
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51]  address-family ipv6 unicast
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:34:51]  address-family ipv4 unicast
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51]  address-family ipv6 unicast
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]router bgp 1
+[2020-09-14 14:34:51] bgp log neighbor changes detail
+[2020-09-14 14:34:51] address-family ipv4 unicast
+[2020-09-14 14:34:51]  network 10.8.11.0/24
+[2020-09-14 14:34:51]  network 11.11.11.11/32
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+[2020-09-14 14:34:51]  route-reflector-client
+[2020-09-14 14:34:51]  next-hop-self
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] session-group IBGP_PEERS
+[2020-09-14 14:34:51]  remote-as 1
+[2020-09-14 14:34:51]  update-source Loopback0
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] neighbor 2.2.2.2
+[2020-09-14 14:34:51]  use session-group IBGP_PEERS
+[2020-09-14 14:34:51]  address-family ipv4 unicast
+[2020-09-14 14:34:51]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] neighbor 3.3.3.3
+[2020-09-14 14:34:51]  use session-group IBGP_PEERS
+[2020-09-14 14:34:51]  address-family ipv4 unicast
+[2020-09-14 14:34:51]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] neighbor 10.8.11.8
+[2020-09-14 14:34:51]  remote-as 8
+[2020-09-14 14:34:51]  address-family ipv4 unicast
+[2020-09-14 14:34:51]   route-policy PASS_ALL in
+[2020-09-14 14:34:51]   route-policy PASS_ALL out
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] neighbor 12.12.12.12
+[2020-09-14 14:34:51]  use session-group IBGP_PEERS
+[2020-09-14 14:34:51]  address-family ipv4 unicast
+[2020-09-14 14:34:51]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51] neighbor 13.13.13.13
+[2020-09-14 14:34:51]  use session-group IBGP_PEERS
+[2020-09-14 14:34:51]  address-family ipv4 unicast
+[2020-09-14 14:34:51]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:34:51]  !
+[2020-09-14 14:34:51] !
+[2020-09-14 14:34:51]!
+[2020-09-14 14:34:51]end
+[2020-09-14 14:34:51]
+[2020-09-14 14:35:16]RP/0/0/CPU0:XR1#conf t
+[2020-09-14 14:35:16]Mon Sep 14 09:05:16.125 UTC
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config)#router bgp 1
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp)# bgp log neighbor changes detail
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp)# address-family ipv4 unicast
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp-af)#  network 10.8.11.0/24
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp-af)#  network 11.11.11.11/32
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp-af)# !
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp-af)# af-group IPV4_IBGP_RR_CLIENTS address-family i$
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp-afgrp)#  route-reflector-client
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp-afgrp)#  next-hop-self
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp-afgrp)# !
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp-afgrp)# session-group IBGP_PEERS
+[2020-09-14 14:35:18]RP/0/0/CPU0:XR1(config-bgp-sngrp)#  remote-as 1
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-sngrp)#  update-source Loopback0
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-sngrp)# !
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-sngrp)# neighbor 1.1.1.1
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 2.2.2.2
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 3.3.3.3
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 10.8.11.8
+[2020-09-14 14:35:19]RP/0/0/CPU0:XR1(config-bgp-nbr)#  remote-as 8
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   route-policy PASS_ALL in
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   route-policy PASS_ALL out
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:35:20]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#!
+[2020-09-14 14:35:22]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#end
+[2020-09-14 14:35:24]Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+[2020-09-14 14:35:26]RP/0/0/CPU0:XR1#
+[2020-09-14 14:35:26]RP/0/0/CPU0:XR1#
+[2020-09-14 14:35:26]RP/0/0/CPU0:XR1#
+[2020-09-14 14:35:26]RP/0/0/CPU0:XR1#
+[2020-09-14 14:35:27]RP/0/0/CPU0:XR1#
+[2020-09-14 14:35:29]RP/0/0/CPU0:XR1#show run
+[2020-09-14 14:35:29]Mon Sep 14 09:05:28.904 UTC
+[2020-09-14 14:35:29]Building configuration...
+[2020-09-14 14:35:29]!! IOS XR Configuration 6.0.1
+[2020-09-14 14:35:29]!! Last configuration change at Mon Sep 14 09:05:23 2020 by cisco
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]hostname XR1
+[2020-09-14 14:35:29]line console
+[2020-09-14 14:35:29] exec-timeout 0 0
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]interface Loopback0
+[2020-09-14 14:35:29] ipv4 address 11.11.11.11 255.255.255.255
+[2020-09-14 14:35:29] ipv6 address 2001::11/128
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]interface MgmtEth0/0/CPU0/0
+[2020-09-14 14:35:29] shutdown
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:35:29] ipv4 address 10.1.11.11 255.255.255.0
+[2020-09-14 14:35:29] ipv6 address 2001:1:11::11/64
+[2020-09-14 14:35:29] encapsulation dot1q 111
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:35:29] ipv4 address 10.2.11.11 255.255.255.0
+[2020-09-14 14:35:29] ipv6 address 2001:2:11::11/64
+[2020-09-14 14:35:29] encapsulation dot1q 211
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]interface GigabitEthernet0/0/0/0.411
+[2020-09-14 14:35:29] ipv4 address 10.4.11.11 255.255.255.0
+[2020-09-14 14:35:29] ipv6 address 2001:4:11::11/64
+[2020-09-14 14:35:29] encapsulation dot1q 411
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]interface GigabitEthernet0/0/0/0.811
+[2020-09-14 14:35:29] ipv4 address 10.8.11.11 255.255.255.0
+[2020-09-14 14:35:29] ipv6 address 2001:8:11::11/64
+[2020-09-14 14:35:29] encapsulation dot1q 811
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:35:29] ipv4 address 10.11.12.11 255.255.255.0
+[2020-09-14 14:35:29] ipv6 address 2001:11:12::11/64
+[2020-09-14 14:35:29] encapsulation dot1q 1112
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]route-policy PASS_ALL
+[2020-09-14 14:35:29]  pass
+[2020-09-14 14:35:29]end-policy
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]router isis 1
+[2020-09-14 14:35:29] is-type level-2-only
+[2020-09-14 14:35:29] net 00.0000.0000.0011.00
+[2020-09-14 14:35:29] log adjacency changes
+[2020-09-14 14:35:29] address-family ipv4 unicast
+[2020-09-14 14:35:29]  metric-style wide
+[2020-09-14 14:35:29] !
+[2020-09-14 14:35:29] address-family ipv6 unicast
+[2020-09-14 14:35:29]  metric-style wide
+[2020-09-14 14:35:29] !
+[2020-09-14 14:35:29] interface Loopback0
+[2020-09-14 14:35:29]  passive
+[2020-09-14 14:35:29]  address-family ipv4 unicast
+[2020-09-14 14:35:29]  !
+[2020-09-14 14:35:29]  address-family ipv6 unicast
+[2020-09-14 14:35:29]  !
+[2020-09-14 14:35:29] !
+[2020-09-14 14:35:29] interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:35:29]  address-family ipv4 unicast
+[2020-09-14 14:35:29]  !
+[2020-09-14 14:35:29]  address-family ipv6 unicast
+[2020-09-14 14:35:29]  !
+[2020-09-14 14:35:29] !
+[2020-09-14 14:35:29] interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:35:29]  address-family ipv4 unicast
+[2020-09-14 14:35:29]  !
+[2020-09-14 14:35:29]  address-family ipv6 unicast
+[2020-09-14 14:35:29]  !
+[2020-09-14 14:35:29] !
+[2020-09-14 14:35:29] interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:35:29]  address-family ipv4 unicast
+[2020-09-14 14:35:29]  !
+[2020-09-14 14:35:29]  address-family ipv6 unicast
+[2020-09-14 14:35:29]  !
+[2020-09-14 14:35:29] !
+[2020-09-14 14:35:29]!
+[2020-09-14 14:35:29]router bgp 1
+[2020-09-14 14:35:29] bgp log neighbor changes detail
+[2020-09-14 14:35:29] address-family ipv4 unicast
+[2020-09-14 14:35:29]  network 10.8.11.0/24
+[2020-09-14 14:35:29]  network 11.11.11.11/32
+[2020-09-14 14:35:29] !
+[2020-09-14 14:35:29] af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+[2020-09-14 14:35:29]  route-reflector-client
+[2020-09-14 14:35:29]  next-hop-self
+[2020-09-14 14:35:29] !
+[2020-09-14 14:35:29] session-group IBGP_PEERS
+[2020-09-14 14:35:30]  remote-as 1
+[2020-09-14 14:35:30]  update-source Loopback0
+[2020-09-14 14:35:30] !
+[2020-09-14 14:35:30] neighbor 1.1.1.1
+[2020-09-14 14:35:30]  use session-group IBGP_PEERS
+[2020-09-14 14:35:30]  address-family ipv4 unicast
+[2020-09-14 14:35:30]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:35:30]  !
+[2020-09-14 14:35:30] !
+[2020-09-14 14:35:30] neighbor 2.2.2.2
+[2020-09-14 14:35:30]  use session-group IBGP_PEERS
+[2020-09-14 14:35:30]  address-family ipv4 unicast
+[2020-09-14 14:35:30]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:35:30]  !
+[2020-09-14 14:35:30] !
+[2020-09-14 14:35:30] neighbor 3.3.3.3
+[2020-09-14 14:35:30]  use session-group IBGP_PEERS
+[2020-09-14 14:35:30]  address-family ipv4 unicast
+[2020-09-14 14:35:30]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:35:30]  !
+[2020-09-14 14:35:30] !
+[2020-09-14 14:35:30] neighbor 10.8.11.8
+[2020-09-14 14:35:30]  remote-as 8
+[2020-09-14 14:35:30]  address-family ipv4 unicast
+[2020-09-14 14:35:30]   route-policy PASS_ALL in
+[2020-09-14 14:35:30]   route-policy PASS_ALL out
+[2020-09-14 14:35:30]  !
+[2020-09-14 14:35:30] !
+[2020-09-14 14:35:30] neighbor 12.12.12.12
+[2020-09-14 14:35:30]  use session-group IBGP_PEERS
+[2020-09-14 14:35:30]  address-family ipv4 unicast
+[2020-09-14 14:35:30]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:35:30]  !
+[2020-09-14 14:35:30] !
+[2020-09-14 14:35:30] neighbor 13.13.13.13
+[2020-09-14 14:35:30]  use session-group IBGP_PEERS
+[2020-09-14 14:35:30]  address-family ipv4 unicast
+[2020-09-14 14:35:30]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:35:30]  !
+[2020-09-14 14:35:30] !
+[2020-09-14 14:35:30]!
+[2020-09-14 14:35:30]end
+[2020-09-14 14:35:30]
+[2020-09-14 14:36:14]RP/0/0/CPU0:XR1#
+[2020-09-14 14:36:14]RP/0/0/CPU0:XR1#
+[2020-09-14 14:36:14]RP/0/0/CPU0:XR1#
+[2020-09-14 14:36:15]RP/0/0/CPU0:XR1#
+[2020-09-14 14:36:15]RP/0/0/CPU0:XR1#
+[2020-09-14 14:40:04]RP/0/0/CPU0:XR1#
+[2020-09-14 14:40:04]RP/0/0/CPU0:XR1#
+[2020-09-14 14:40:04]RP/0/0/CPU0:XR1#
+[2020-09-14 14:40:05]RP/0/0/CPU0:XR1#
+[2020-09-14 14:41:29]RP/0/0/CPU0:XR1#
+[2020-09-14 14:41:29]RP/0/0/CPU0:XR1#
+[2020-09-14 14:41:29]RP/0/0/CPU0:XR1#
+[2020-09-14 14:41:29]RP/0/0/CPU0:XR1#terminal length 0
+[2020-09-14 14:41:29]Mon Sep 14 09:11:28.610 UTC
+[2020-09-14 14:41:29]RP/0/0/CPU0:XR1#configure terminal
+[2020-09-14 14:41:29]Mon Sep 14 09:11:28.800 UTC
+[2020-09-14 14:41:29]RP/0/0/CPU0:XR1(config)#no logging console
+[2020-09-14 14:41:29]RP/0/0/CPU0:XR1(config)#commit
+[2020-09-14 14:41:30]Mon Sep 14 09:11:29.340 UTC
+[2020-09-14 14:41:30]RP/0/0/CPU0:XR1(config)#exit
+[2020-09-14 14:41:30]RP/0/0/CPU0:XR1#show running-config
+[2020-09-14 14:41:30]Mon Sep 14 09:11:29.800 UTC
+[2020-09-14 14:41:30]Building configuration...
+[2020-09-14 14:41:30]!! IOS XR Configuration 6.0.1
+[2020-09-14 14:41:30]!! Last configuration change at Mon Sep 14 09:05:23 2020 by cisco
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]hostname XR1
+[2020-09-14 14:41:30]line console
+[2020-09-14 14:41:30] exec-timeout 0 0
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]interface Loopback0
+[2020-09-14 14:41:30] ipv4 address 11.11.11.11 255.255.255.255
+[2020-09-14 14:41:30] ipv6 address 2001::11/128
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]interface MgmtEth0/0/CPU0/0
+[2020-09-14 14:41:30] shutdown
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:41:30] ipv4 address 10.1.11.11 255.255.255.0
+[2020-09-14 14:41:30] ipv6 address 2001:1:11::11/64
+[2020-09-14 14:41:30] encapsulation dot1q 111
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:41:30] ipv4 address 10.2.11.11 255.255.255.0
+[2020-09-14 14:41:30] ipv6 address 2001:2:11::11/64
+[2020-09-14 14:41:30] encapsulation dot1q 211
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]interface GigabitEthernet0/0/0/0.411
+[2020-09-14 14:41:30] ipv4 address 10.4.11.11 255.255.255.0
+[2020-09-14 14:41:30] ipv6 address 2001:4:11::11/64
+[2020-09-14 14:41:30] encapsulation dot1q 411
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]interface GigabitEthernet0/0/0/0.811
+[2020-09-14 14:41:30] ipv4 address 10.8.11.11 255.255.255.0
+[2020-09-14 14:41:30] ipv6 address 2001:8:11::11/64
+[2020-09-14 14:41:30] encapsulation dot1q 811
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:41:30] ipv4 address 10.11.12.11 255.255.255.0
+[2020-09-14 14:41:30] ipv6 address 2001:11:12::11/64
+[2020-09-14 14:41:30] encapsulation dot1q 1112
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]route-policy PASS_ALL
+[2020-09-14 14:41:30]  pass
+[2020-09-14 14:41:30]end-policy
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]router isis 1
+[2020-09-14 14:41:30] is-type level-2-only
+[2020-09-14 14:41:30] net 00.0000.0000.0011.00
+[2020-09-14 14:41:30] log adjacency changes
+[2020-09-14 14:41:30] address-family ipv4 unicast
+[2020-09-14 14:41:30]  metric-style wide
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30] address-family ipv6 unicast
+[2020-09-14 14:41:30]  metric-style wide
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30] interface Loopback0
+[2020-09-14 14:41:30]  passive
+[2020-09-14 14:41:30]  address-family ipv4 unicast
+[2020-09-14 14:41:30]  !
+[2020-09-14 14:41:30]  address-family ipv6 unicast
+[2020-09-14 14:41:30]  !
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30] interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:41:30]  address-family ipv4 unicast
+[2020-09-14 14:41:30]  !
+[2020-09-14 14:41:30]  address-family ipv6 unicast
+[2020-09-14 14:41:30]  !
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30] interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:41:30]  address-family ipv4 unicast
+[2020-09-14 14:41:30]  !
+[2020-09-14 14:41:30]  address-family ipv6 unicast
+[2020-09-14 14:41:30]  !
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30] interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:41:30]  address-family ipv4 unicast
+[2020-09-14 14:41:30]  !
+[2020-09-14 14:41:30]  address-family ipv6 unicast
+[2020-09-14 14:41:30]  !
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30]!
+[2020-09-14 14:41:30]router bgp 1
+[2020-09-14 14:41:30] bgp log neighbor changes detail
+[2020-09-14 14:41:30] address-family ipv4 unicast
+[2020-09-14 14:41:30]  network 10.8.11.0/24
+[2020-09-14 14:41:30]  network 11.11.11.11/32
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30] af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+[2020-09-14 14:41:30]  route-reflector-client
+[2020-09-14 14:41:30]  next-hop-self
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30] session-group IBGP_PEERS
+[2020-09-14 14:41:30]  remote-as 1
+[2020-09-14 14:41:30]  update-source Loopback0
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30] neighbor 1.1.1.1
+[2020-09-14 14:41:30]  use session-group IBGP_PEERS
+[2020-09-14 14:41:30]  address-family ipv4 unicast
+[2020-09-14 14:41:30]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:41:30]  !
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30] neighbor 2.2.2.2
+[2020-09-14 14:41:30]  use session-group IBGP_PEERS
+[2020-09-14 14:41:30]  address-family ipv4 unicast
+[2020-09-14 14:41:30]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:41:30]  !
+[2020-09-14 14:41:30] !
+[2020-09-14 14:41:30] neighbor 3.3.3.3
+[2020-09-14 14:41:30]  use session-group IBGP_PEERS
+[2020-09-14 14:41:31]  address-family ipv4 unicast
+[2020-09-14 14:41:31]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:41:31]  !
+[2020-09-14 14:41:31] !
+[2020-09-14 14:41:31] neighbor 10.8.11.8
+[2020-09-14 14:41:31]  remote-as 8
+[2020-09-14 14:41:31]  address-family ipv4 unicast
+[2020-09-14 14:41:31]   route-policy PASS_ALL in
+[2020-09-14 14:41:31]   route-policy PASS_ALL out
+[2020-09-14 14:41:31]  !
+[2020-09-14 14:41:31] !
+[2020-09-14 14:41:31] neighbor 12.12.12.12
+[2020-09-14 14:41:31]  use session-group IBGP_PEERS
+[2020-09-14 14:41:31]  address-family ipv4 unicast
+[2020-09-14 14:41:31]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:41:31]  !
+[2020-09-14 14:41:31] !
+[2020-09-14 14:41:31] neighbor 13.13.13.13
+[2020-09-14 14:41:31]  use session-group IBGP_PEERS
+[2020-09-14 14:41:31]  address-family ipv4 unicast
+[2020-09-14 14:41:31]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:41:31]  !
+[2020-09-14 14:41:31] !
+[2020-09-14 14:41:31]!
+[2020-09-14 14:41:31]end
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]RP/0/0/CPU0:XR1#quit
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]XR1 con0/0/CPU0 is now available
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]
+[2020-09-14 14:41:31]Press RETURN to get started.
+[2020-09-14 14:41:31]
+[2020-09-14 14:42:43]
+[2020-09-14 14:42:43]
+[2020-09-14 14:42:43]IMPORTANT:  READ CAREFULLY
+[2020-09-14 14:42:43]Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+[2020-09-14 14:42:43]The Software is subject to and governed by the terms and conditions
+[2020-09-14 14:42:43]of the End User License Agreement and the Supplemental End User
+[2020-09-14 14:42:43]License Agreement accompanying the product, made available at the
+[2020-09-14 14:42:43]time of your order, or posted on the Cisco website at
+[2020-09-14 14:42:43]www.cisco.com/go/terms (collectively, the "Agreement").
+[2020-09-14 14:42:43]As set forth more fully in the Agreement, use of the Software is
+[2020-09-14 14:42:43]strictly limited to internal use in a non-production environment
+[2020-09-14 14:42:43]solely for demonstration and evaluation purposes.  Downloading,
+[2020-09-14 14:42:43]installing, or using the Software constitutes acceptance of the
+[2020-09-14 14:42:43]Agreement, and you are binding yourself and the business entity
+[2020-09-14 14:42:43]that you represent to the Agreement.  If you do not agree to all
+[2020-09-14 14:42:43]of the terms of the Agreement, then Cisco is unwilling to license
+[2020-09-14 14:42:43]the Software to you and (a) you may not download, install or use the
+[2020-09-14 14:42:43]Software, and (b) you may return the Software as more fully set forth
+[2020-09-14 14:42:43]in the Agreement.
+[2020-09-14 14:42:43]
+[2020-09-14 14:42:43]
+[2020-09-14 14:42:43]Please login with any configured user/password, or cisco/cisco
+[2020-09-14 14:42:43]
+[2020-09-14 14:42:43]
+[2020-09-14 14:42:43]User Access Verification
+[2020-09-14 14:42:43]
+[2020-09-14 14:42:43]Username: 
+[2020-09-14 14:43:14]Username: 
+[2020-09-14 14:43:14]
+[2020-09-14 14:43:14]User Access Verification
+[2020-09-14 14:43:14]
+[2020-09-14 14:43:44]Username: 
+[2020-09-14 14:43:45]
+[2020-09-14 14:43:45]User Access Verification
+[2020-09-14 14:43:45]
+[2020-09-14 14:44:15]Username: 
+[2020-09-14 14:44:15]RP/0/0/CPU0:Sep 14 09:14:14.928 : exec[65743]: %MGBL-exec-3-LOGIN_AUTHEN : Login Authentication failed. Exiting... 
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]XR1 con0/0/CPU0 is now available
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]
+[2020-09-14 14:44:15]Press RETURN to get started.
+[2020-09-14 14:44:15]
+[2020-09-14 14:49:20]
+[2020-09-14 14:49:20]
+[2020-09-14 14:49:20]IMPORTANT:  READ CAREFULLY
+[2020-09-14 14:49:20]Welcome to the Demo Version of Cisco IOS XRv (the "Software").
+[2020-09-14 14:49:20]The Software is subject to and governed by the terms and conditions
+[2020-09-14 14:49:20]of the End User License Agreement and the Supplemental End User
+[2020-09-14 14:49:20]License Agreement accompanying the product, made available at the
+[2020-09-14 14:49:20]time of your order, or posted on the Cisco website at
+[2020-09-14 14:49:20]www.cisco.com/go/terms (collectively, the "Agreement").
+[2020-09-14 14:49:20]As set forth more fully in the Agreement, use of the Software is
+[2020-09-14 14:49:20]strictly limited to internal use in a non-production environment
+[2020-09-14 14:49:20]solely for demonstration and evaluation purposes.  Downloading,
+[2020-09-14 14:49:20]installing, or using the Software constitutes acceptance of the
+[2020-09-14 14:49:20]Agreement, and you are binding yourself and the business entity
+[2020-09-14 14:49:20]that you represent to the Agreement.  If you do not agree to all
+[2020-09-14 14:49:20]of the terms of the Agreement, then Cisco is unwilling to license
+[2020-09-14 14:49:20]the Software to you and (a) you may not download, install or use the
+[2020-09-14 14:49:20]Software, and (b) you may return the Software as more fully set forth
+[2020-09-14 14:49:20]in the Agreement.
+[2020-09-14 14:49:20]
+[2020-09-14 14:49:20]
+[2020-09-14 14:49:20]Please login with any configured user/password, or cisco/cisco
+[2020-09-14 14:49:20]
+[2020-09-14 14:49:20]
+[2020-09-14 14:49:20]User Access Verification
+[2020-09-14 14:49:20]
+[2020-09-14 14:49:20]Username: 
+[2020-09-14 14:49:22]Username: cisco
+[2020-09-14 14:49:23]Password: 
+[2020-09-14 14:49:23]
+[2020-09-14 14:49:23]
+[2020-09-14 14:49:24]RP/0/0/CPU0:XR1#
+[2020-09-14 14:49:24]RP/0/0/CPU0:XR1#
+[2020-09-14 14:49:24]RP/0/0/CPU0:XR1#
+[2020-09-14 14:49:24]RP/0/0/CPU0:XR1#
+[2020-09-14 14:49:27]RP/0/0/CPU0:XR1#show ipv
+[2020-09-14 14:49:27]ipv4  ipv6  
+[2020-09-14 14:49:31]RP/0/0/CPU0:XR1#show ipv4 bgp ?
+[2020-09-14 14:49:31]                          ^
+[2020-09-14 14:49:31]% Invalid input detected at '^' marker.
+[2020-09-14 14:49:40]RP/0/0/CPU0:XR1#show ip bgp ? 
+[2020-09-14 14:49:40]                        ^
+[2020-09-14 14:49:40]% Invalid input detected at '^' marker.
+[2020-09-14 14:50:53]RP/0/0/CPU0:XR1#show bgp neighbor 3.3.3.3 advertised-routes ?
+[2020-09-14 14:50:53]  standby  Display Standby BGP information
+[2020-09-14 14:50:53]  |        Output Modifiers
+[2020-09-14 14:50:53]  <cr>     
+[2020-09-14 14:50:55]RP/0/0/CPU0:XR1#show bgp neighbor 3.3.3.3 advertised-routes 
+[2020-09-14 14:50:55]Mon Sep 14 09:20:54.311 UTC
+[2020-09-14 14:50:55]Network            Next Hop        From            AS Path
+[2020-09-14 14:50:55]8.8.8.8/32         10.8.11.8       10.8.11.8       8i
+[2020-09-14 14:50:55]10.8.11.0/24       11.11.11.11     Local           i
+[2020-09-14 14:50:55]11.11.11.11/32     11.11.11.11     Local           i
+[2020-09-14 14:50:55]
+[2020-09-14 14:50:55]Processed 3 prefixes, 3 paths
+[2020-09-14 14:51:19]RP/0/0/CPU0:XR1#show bgp neighbor 2.2.2.2 advertised-routes 
+[2020-09-14 14:51:19]Mon Sep 14 09:21:18.389 UTC
+[2020-09-14 14:51:19]Network            Next Hop        From            AS Path
+[2020-09-14 14:51:19]8.8.8.8/32         10.8.11.8       10.8.11.8       8i
+[2020-09-14 14:51:19]10.8.11.0/24       11.11.11.11     Local           i
+[2020-09-14 14:51:19]11.11.11.11/32     11.11.11.11     Local           i
+[2020-09-14 14:51:19]
+[2020-09-14 14:51:19]Processed 3 prefixes, 3 paths
+[2020-09-14 14:51:33]RP/0/0/CPU0:XR1#show bgp neighbor 12.12.12.12 advertised-routes 
+[2020-09-14 14:51:33]Mon Sep 14 09:21:32.618 UTC
+[2020-09-14 14:51:33]Network            Next Hop        From            AS Path
+[2020-09-14 14:51:33]8.8.8.8/32         10.8.11.8       10.8.11.8       8i
+[2020-09-14 14:51:33]10.8.11.0/24       11.11.11.11     Local           i
+[2020-09-14 14:51:33]11.11.11.11/32     11.11.11.11     Local           i
+[2020-09-14 14:51:33]
+[2020-09-14 14:51:33]Processed 3 prefixes, 3 paths
+[2020-09-14 14:51:54]RP/0/0/CPU0:XR1#show run
+[2020-09-14 14:51:54]Mon Sep 14 09:21:53.357 UTC
+[2020-09-14 14:51:54]Building configuration...
+[2020-09-14 14:51:54]!! IOS XR Configuration 6.0.1
+[2020-09-14 14:51:54]!! Last configuration change at Mon Sep 14 09:05:23 2020 by cisco
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]hostname XR1
+[2020-09-14 14:51:54]line console
+[2020-09-14 14:51:54] exec-timeout 0 0
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]interface Loopback0
+[2020-09-14 14:51:54] ipv4 address 11.11.11.11 255.255.255.255
+[2020-09-14 14:51:54] ipv6 address 2001::11/128
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]interface MgmtEth0/0/CPU0/0
+[2020-09-14 14:51:54] shutdown
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:51:54] ipv4 address 10.1.11.11 255.255.255.0
+[2020-09-14 14:51:54] ipv6 address 2001:1:11::11/64
+[2020-09-14 14:51:54] encapsulation dot1q 111
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:51:54] ipv4 address 10.2.11.11 255.255.255.0
+[2020-09-14 14:51:54] ipv6 address 2001:2:11::11/64
+[2020-09-14 14:51:54] encapsulation dot1q 211
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]interface GigabitEthernet0/0/0/0.411
+[2020-09-14 14:51:54] ipv4 address 10.4.11.11 255.255.255.0
+[2020-09-14 14:51:54] ipv6 address 2001:4:11::11/64
+[2020-09-14 14:51:54] encapsulation dot1q 411
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]interface GigabitEthernet0/0/0/0.811
+[2020-09-14 14:51:54] ipv4 address 10.8.11.11 255.255.255.0
+[2020-09-14 14:51:54] ipv6 address 2001:8:11::11/64
+[2020-09-14 14:51:54] encapsulation dot1q 811
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:51:54] ipv4 address 10.11.12.11 255.255.255.0
+[2020-09-14 14:51:54] ipv6 address 2001:11:12::11/64
+[2020-09-14 14:51:54] encapsulation dot1q 1112
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]route-policy PASS_ALL
+[2020-09-14 14:51:54]  pass
+[2020-09-14 14:51:54]end-policy
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]router isis 1
+[2020-09-14 14:51:54] is-type level-2-only
+[2020-09-14 14:51:54] net 00.0000.0000.0011.00
+[2020-09-14 14:51:54] log adjacency changes
+[2020-09-14 14:51:54] address-family ipv4 unicast
+[2020-09-14 14:51:54]  metric-style wide
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] address-family ipv6 unicast
+[2020-09-14 14:51:54]  metric-style wide
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] interface Loopback0
+[2020-09-14 14:51:54]  passive
+[2020-09-14 14:51:54]  address-family ipv4 unicast
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54]  address-family ipv6 unicast
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] interface GigabitEthernet0/0/0/0.111
+[2020-09-14 14:51:54]  address-family ipv4 unicast
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54]  address-family ipv6 unicast
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] interface GigabitEthernet0/0/0/0.211
+[2020-09-14 14:51:54]  address-family ipv4 unicast
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54]  address-family ipv6 unicast
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 14:51:54]  address-family ipv4 unicast
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54]  address-family ipv6 unicast
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]router bgp 1
+[2020-09-14 14:51:54] bgp log neighbor changes detail
+[2020-09-14 14:51:54] address-family ipv4 unicast
+[2020-09-14 14:51:54]  network 10.8.11.0/24
+[2020-09-14 14:51:54]  network 11.11.11.11/32
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+[2020-09-14 14:51:54]  route-reflector-client
+[2020-09-14 14:51:54]  next-hop-self
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] session-group IBGP_PEERS
+[2020-09-14 14:51:54]  remote-as 1
+[2020-09-14 14:51:54]  update-source Loopback0
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] neighbor 1.1.1.1
+[2020-09-14 14:51:54]  use session-group IBGP_PEERS
+[2020-09-14 14:51:54]  address-family ipv4 unicast
+[2020-09-14 14:51:54]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] neighbor 2.2.2.2
+[2020-09-14 14:51:54]  use session-group IBGP_PEERS
+[2020-09-14 14:51:54]  address-family ipv4 unicast
+[2020-09-14 14:51:54]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] neighbor 3.3.3.3
+[2020-09-14 14:51:54]  use session-group IBGP_PEERS
+[2020-09-14 14:51:54]  address-family ipv4 unicast
+[2020-09-14 14:51:54]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] neighbor 10.8.11.8
+[2020-09-14 14:51:54]  remote-as 8
+[2020-09-14 14:51:54]  address-family ipv4 unicast
+[2020-09-14 14:51:54]   route-policy PASS_ALL in
+[2020-09-14 14:51:54]   route-policy PASS_ALL out
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] neighbor 12.12.12.12
+[2020-09-14 14:51:54]  use session-group IBGP_PEERS
+[2020-09-14 14:51:54]  address-family ipv4 unicast
+[2020-09-14 14:51:54]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54] neighbor 13.13.13.13
+[2020-09-14 14:51:54]  use session-group IBGP_PEERS
+[2020-09-14 14:51:54]  address-family ipv4 unicast
+[2020-09-14 14:51:54]   use af-group IPV4_IBGP_CLIENTS
+[2020-09-14 14:51:54]  !
+[2020-09-14 14:51:54] !
+[2020-09-14 14:51:54]!
+[2020-09-14 14:51:54]end
+[2020-09-14 14:51:54]
+[2020-09-14 14:53:09]RP/0/0/CPU0:XR1#
+[2020-09-14 14:53:16]RP/0/0/CPU0:XR1#
+[2020-09-14 14:53:16]RP/0/0/CPU0:XR1#
+[2020-09-14 14:53:16]RP/0/0/CPU0:XR1#
+[2020-09-14 14:53:18]RP/0/0/CPU0:XR1#conf t
+[2020-09-14 14:53:18]Mon Sep 14 09:23:17.301 UTC
+[2020-09-14 14:53:25]RP/0/0/CPU0:XR1(config)#no router bgp 1
+[2020-09-14 14:53:26]RP/0/0/CPU0:XR1(config)#
+[2020-09-14 14:53:27]Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+[2020-09-14 14:56:12]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:12]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:12]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:12]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:14]RP/0/0/CPU0:XR1#conf t
+[2020-09-14 14:56:14]Mon Sep 14 09:26:13.979 UTC
+[2020-09-14 14:56:22]RP/0/0/CPU0:XR1(config)#router bgp 1
+[2020-09-14 14:56:22]RP/0/0/CPU0:XR1(config-bgp)# bgp log neighbor changes detail
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp)# address-family ipv4 unicast
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-af)#  network 10.8.11.0/24
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-af)#  network 11.11.11.11/32
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-af)# !
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-af)# af-group IPV4_IBGP_RR_CLIENTS address-family i$
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-afgrp)#  route-reflector-client
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-afgrp)#  next-hop-self
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-afgrp)# !
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-afgrp)# session-group IBGP_PEERS
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-sngrp)#  remote-as 1
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-sngrp)#  update-source Loopback0
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-sngrp)# !
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-sngrp)# neighbor 1.1.1.1
+[2020-09-14 14:56:23]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_RR_CLIENTS
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 2.2.2.2
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_RR_CLIENTS
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 3.3.3.3
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_RR_CLIENTS
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 10.8.11.8
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr)#  remote-as 8
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:56:24]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   route-policy PASS_ALL in
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   route-policy PASS_ALL out
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 12.12.12.12
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_RR_CLIENTS
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# neighbor 13.13.13.13
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr)#  use session-group IBGP_PEERS
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr)#  address-family ipv4 unicast
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#   use af-group IPV4_IBGP_RR_CLIENTS
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#  !
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)# !
+[2020-09-14 14:56:25]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#!
+[2020-09-14 14:56:30]RP/0/0/CPU0:XR1(config-bgp-nbr-af)#end
+[2020-09-14 14:56:32]Uncommitted changes found, commit them before exiting(yes/no/cancel)? [cancel]:y
+[2020-09-14 14:56:40]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:41]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:41]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:41]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:41]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:41]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:41]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:41]RP/0/0/CPU0:XR1#
+[2020-09-14 14:56:42]RP/0/0/CPU0:XR1#
+[2020-09-14 14:57:36]RP/0/0/CPU0:XR1#
+[2020-09-14 14:57:36]RP/0/0/CPU0:XR1#
+[2020-09-14 14:57:36]RP/0/0/CPU0:XR1#
+[2020-09-14 14:58:55]RP/0/0/CPU0:XR1#show bgp neighbor 3.3.3.3 ?
+[2020-09-14 14:58:55]  advertised-count        Display the count of routes advertised to neighbor
+[2020-09-14 14:58:55]  advertised-routes       Display the routes advertised to a BGP neighbor
+[2020-09-14 14:58:55]  configuration           Show the effective configuration
+[2020-09-14 14:58:55]  dampened-routes         Display the dampened routes received from neighbor
+[2020-09-14 14:58:55]  decoded-message-log     Show BGP message logs
+[2020-09-14 14:58:55]  detail                  Detailed information
+[2020-09-14 14:58:55]  flap-statistics         Display flap statistics of the routes learned from neighbor
+[2020-09-14 14:58:55]  inheritance             Show the groups this neighbor/group can inherit config from
+[2020-09-14 14:58:55]  nsr                     Show postit information for this neighbor
+[2020-09-14 14:58:55]  performance-statistics  Show performance statistics
+[2020-09-14 14:58:55]  received                Display information received from a BGP neighbor
+[2020-09-14 14:58:55]  routes                  Display routes learned from neighbor
+[2020-09-14 14:58:55]  standby                 Display Standby BGP information
+[2020-09-14 14:58:55]  |                       Output Modifiers
+[2020-09-14 14:58:55]  <cr>                    
+[2020-09-14 14:59:00]RP/0/0/CPU0:XR1#show bgp neighbor 3.3.3.3 performance-statistics 
+[2020-09-14 14:59:00]Mon Sep 14 09:29:00.088 UTC
+[2020-09-14 14:59:01]
+[2020-09-14 14:59:01]BGP neighbor is 3.3.3.3
+[2020-09-14 14:59:01] Remote AS 1
+[2020-09-14 14:59:01]  Read 8 messages (274 bytes) in 6 calls (time spent: 0.000 secs)
+[2020-09-14 14:59:01]  Read partly throttled 0 times
+[2020-09-14 14:59:01]  Max socket read size: 141 bytes
+[2020-09-14 14:59:01]  Actives 1, Failed Post Actives 0, Passives 0, Rejected Passives 0
+[2020-09-14 14:59:01]  Allow Active Close
+[2020-09-14 14:59:01]  Processed 3 inbound update messages (time spent: 0.019 secs)
+[2020-09-14 14:59:01]  Wrote 833 bytes in 5 calls (time spent: 0.000 secs)
+[2020-09-14 14:59:01]  Processing sub-group: wrote 11 messages in 8 calls (time spent: 0.000 secs)
+[2020-09-14 14:59:01]  Processing write queue: wrote 2 messages in 16 calls (time spent: 0.000 secs)
+[2020-09-14 14:59:01]
+[2020-09-14 14:59:01]  Received 8 messages, 0 notifications, 0 in queue
+[2020-09-14 14:59:01]  Sent 15 messages, 0 notifications, 0 in queue
+[2020-09-14 14:59:01]  NSR State: None
+[2020-09-14 14:59:01]  NSR Statistics:
+[2020-09-14 14:59:01]    First standby offset 0, First standby PDU offset 0
+[2020-09-14 14:59:01]    Read 274 cumulative bytes, socket total bytes 274
+[2020-09-14 14:59:01]    Read 141 cumulative update bytes
+[2020-09-14 14:59:01]    Wrote 795 cumulative bytes (write thread)
+[2020-09-14 14:59:01]    Last Sent SN 833, Last Ackd SN 814
+[2020-09-14 14:59:01]  Nbr Primary fd:136 Reset flags:0x0 Sync flags:0x0 Nbr-flags:0x40310030 Rst retries:0
+[2020-09-14 14:59:01]
+[2020-09-14 14:59:01] For Address Family: IPv4 Unicast
+[2020-09-14 14:59:01]  Message statistics:
+[2020-09-14 14:59:01]    Update messages processed: 11
+[2020-09-14 14:59:01]    Update messages sent: 11
+[2020-09-14 14:59:01]    Split-horizon Advertisement messages: sent 0, blocked 0
+[2020-09-14 14:59:01]    Split-horizon Withdraw messages: sent 0, blocked 0
+[2020-09-14 14:59:17]RP/0/0/CPU0:XR1#show bgp neighbor 3.3.3.3 advertised-routes      
+[2020-09-14 14:59:17]Mon Sep 14 09:29:16.496 UTC
+[2020-09-14 14:59:17]Network            Next Hop        From            AS Path
+[2020-09-14 14:59:17]1.1.1.1/32         1.1.1.1         1.1.1.1         i
+[2020-09-14 14:59:17]2.2.2.2/32         2.2.2.2         2.2.2.2         i
+[2020-09-14 14:59:17]3.3.3.3/32         11.11.11.11     3.3.3.3         i
+[2020-09-14 14:59:17]7.7.7.7/32         11.11.11.11     3.3.3.3         7i
+[2020-09-14 14:59:17]8.8.8.8/32         11.11.11.11     10.8.11.8       8i
+[2020-09-14 14:59:17]10.8.11.0/24       11.11.11.11     Local           i
+[2020-09-14 14:59:17]10.10.10.10/32     2.2.2.2         2.2.2.2         10i
+[2020-09-14 14:59:17]11.11.11.11/32     11.11.11.11     Local           i
+[2020-09-14 14:59:17]12.12.12.12/32     12.12.12.12     12.12.12.12     i
+[2020-09-14 14:59:17]13.13.13.13/32     13.13.13.13     13.13.13.13     i
+[2020-09-14 14:59:17]14.14.14.14/32     13.13.13.13     13.13.13.13     14i
+[2020-09-14 14:59:17]
+[2020-09-14 14:59:17]Processed 11 prefixes, 11 paths
+[2020-09-14 15:00:26]RP/0/0/CPU0:XR1#show bgp neighbor 3.3.3.3 advertised-routes 
+[2020-09-14 15:00:26]Mon Sep 14 09:30:25.762 UTC
+[2020-09-14 15:00:26]Network            Next Hop        From            AS Path
+[2020-09-14 15:00:26]1.1.1.1/32         1.1.1.1         1.1.1.1         i
+[2020-09-14 15:00:26]2.2.2.2/32         2.2.2.2         2.2.2.2         i
+[2020-09-14 15:00:26]3.3.3.3/32         11.11.11.11     3.3.3.3         i
+[2020-09-14 15:00:26]7.7.7.7/32         11.11.11.11     3.3.3.3         7i
+[2020-09-14 15:00:26]8.8.8.8/32         11.11.11.11     10.8.11.8       8i
+[2020-09-14 15:00:26]10.8.11.0/24       11.11.11.11     Local           i
+[2020-09-14 15:00:26]10.10.10.10/32     2.2.2.2         2.2.2.2         10i
+[2020-09-14 15:00:26]11.11.11.11/32     11.11.11.11     Local           i
+[2020-09-14 15:00:26]12.12.12.12/32     12.12.12.12     12.12.12.12     i
+[2020-09-14 15:00:26]13.13.13.13/32     13.13.13.13     13.13.13.13     i
+[2020-09-14 15:00:26]14.14.14.14/32     13.13.13.13     13.13.13.13     14i
+[2020-09-14 15:00:26]
+[2020-09-14 15:00:26]Processed 11 prefixes, 11 paths
+[2020-09-14 15:00:30]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:30]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:30]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:31]RP/0/0/CPU0:XR1#
+[2020-09-14 15:00:32]RP/0/0/CPU0:XR1#show bgp neighbor 3.3.3.3 advertised-routes 
+[2020-09-14 15:00:32]Mon Sep 14 09:30:32.201 UTC
+[2020-09-14 15:00:33]Network            Next Hop        From            AS Path
+[2020-09-14 15:00:33]1.1.1.1/32         1.1.1.1         1.1.1.1         i
+[2020-09-14 15:00:33]2.2.2.2/32         2.2.2.2         2.2.2.2         i
+[2020-09-14 15:00:33]3.3.3.3/32         11.11.11.11     3.3.3.3         i
+[2020-09-14 15:00:33]7.7.7.7/32         11.11.11.11     3.3.3.3         7i
+[2020-09-14 15:00:33]8.8.8.8/32         11.11.11.11     10.8.11.8       8i
+[2020-09-14 15:00:33]10.8.11.0/24       11.11.11.11     Local           i
+[2020-09-14 15:00:33]10.10.10.10/32     2.2.2.2         2.2.2.2         10i
+[2020-09-14 15:00:33]11.11.11.11/32     11.11.11.11     Local           i
+[2020-09-14 15:00:33]12.12.12.12/32     12.12.12.12     12.12.12.12     i
+[2020-09-14 15:00:33]13.13.13.13/32     13.13.13.13     13.13.13.13     i
+[2020-09-14 15:00:33]14.14.14.14/32     13.13.13.13     13.13.13.13     14i
+[2020-09-14 15:00:33]
+[2020-09-14 15:00:33]Processed 11 prefixes, 11 paths
+[2020-09-14 15:07:19]RP/0/0/CPU0:XR1#
+[2020-09-14 15:07:19]RP/0/0/CPU0:XR1#
+[2020-09-14 15:07:19]RP/0/0/CPU0:XR1#
+[2020-09-14 15:07:19]RP/0/0/CPU0:XR1#terminal length 0
+[2020-09-14 15:07:19]Mon Sep 14 09:37:18.683 UTC
+[2020-09-14 15:07:19]RP/0/0/CPU0:XR1#configure terminal
+[2020-09-14 15:07:19]Mon Sep 14 09:37:18.863 UTC
+[2020-09-14 15:07:19]RP/0/0/CPU0:XR1(config)#no logging console
+[2020-09-14 15:07:20]RP/0/0/CPU0:XR1(config)#commit
+[2020-09-14 15:07:20]Mon Sep 14 09:37:19.393 UTC
+[2020-09-14 15:07:20]RP/0/0/CPU0:XR1(config)#exit
+[2020-09-14 15:07:20]RP/0/0/CPU0:XR1#show running-config
+[2020-09-14 15:07:20]Mon Sep 14 09:37:19.763 UTC
+[2020-09-14 15:07:20]Building configuration...
+[2020-09-14 15:07:20]!! IOS XR Configuration 6.0.1
+[2020-09-14 15:07:20]!! Last configuration change at Mon Sep 14 09:26:31 2020 by cisco
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]hostname XR1
+[2020-09-14 15:07:20]line console
+[2020-09-14 15:07:20] exec-timeout 0 0
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]interface Loopback0
+[2020-09-14 15:07:20] ipv4 address 11.11.11.11 255.255.255.255
+[2020-09-14 15:07:20] ipv6 address 2001::11/128
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]interface MgmtEth0/0/CPU0/0
+[2020-09-14 15:07:20] shutdown
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]interface GigabitEthernet0/0/0/0.111
+[2020-09-14 15:07:20] ipv4 address 10.1.11.11 255.255.255.0
+[2020-09-14 15:07:20] ipv6 address 2001:1:11::11/64
+[2020-09-14 15:07:20] encapsulation dot1q 111
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]interface GigabitEthernet0/0/0/0.211
+[2020-09-14 15:07:20] ipv4 address 10.2.11.11 255.255.255.0
+[2020-09-14 15:07:20] ipv6 address 2001:2:11::11/64
+[2020-09-14 15:07:20] encapsulation dot1q 211
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]interface GigabitEthernet0/0/0/0.411
+[2020-09-14 15:07:20] ipv4 address 10.4.11.11 255.255.255.0
+[2020-09-14 15:07:20] ipv6 address 2001:4:11::11/64
+[2020-09-14 15:07:20] encapsulation dot1q 411
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]interface GigabitEthernet0/0/0/0.811
+[2020-09-14 15:07:20] ipv4 address 10.8.11.11 255.255.255.0
+[2020-09-14 15:07:20] ipv6 address 2001:8:11::11/64
+[2020-09-14 15:07:20] encapsulation dot1q 811
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 15:07:20] ipv4 address 10.11.12.11 255.255.255.0
+[2020-09-14 15:07:20] ipv6 address 2001:11:12::11/64
+[2020-09-14 15:07:20] encapsulation dot1q 1112
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]route-policy PASS_ALL
+[2020-09-14 15:07:20]  pass
+[2020-09-14 15:07:20]end-policy
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]router isis 1
+[2020-09-14 15:07:20] is-type level-2-only
+[2020-09-14 15:07:20] net 00.0000.0000.0011.00
+[2020-09-14 15:07:20] log adjacency changes
+[2020-09-14 15:07:20] address-family ipv4 unicast
+[2020-09-14 15:07:20]  metric-style wide
+[2020-09-14 15:07:20] !
+[2020-09-14 15:07:20] address-family ipv6 unicast
+[2020-09-14 15:07:20]  metric-style wide
+[2020-09-14 15:07:20] !
+[2020-09-14 15:07:20] interface Loopback0
+[2020-09-14 15:07:20]  passive
+[2020-09-14 15:07:20]  address-family ipv4 unicast
+[2020-09-14 15:07:20]  !
+[2020-09-14 15:07:20]  address-family ipv6 unicast
+[2020-09-14 15:07:20]  !
+[2020-09-14 15:07:20] !
+[2020-09-14 15:07:20] interface GigabitEthernet0/0/0/0.111
+[2020-09-14 15:07:20]  address-family ipv4 unicast
+[2020-09-14 15:07:20]  !
+[2020-09-14 15:07:20]  address-family ipv6 unicast
+[2020-09-14 15:07:20]  !
+[2020-09-14 15:07:20] !
+[2020-09-14 15:07:20] interface GigabitEthernet0/0/0/0.211
+[2020-09-14 15:07:20]  address-family ipv4 unicast
+[2020-09-14 15:07:20]  !
+[2020-09-14 15:07:20]  address-family ipv6 unicast
+[2020-09-14 15:07:20]  !
+[2020-09-14 15:07:20] !
+[2020-09-14 15:07:20] interface GigabitEthernet0/0/0/0.1112
+[2020-09-14 15:07:20]  address-family ipv4 unicast
+[2020-09-14 15:07:20]  !
+[2020-09-14 15:07:20]  address-family ipv6 unicast
+[2020-09-14 15:07:20]  !
+[2020-09-14 15:07:20] !
+[2020-09-14 15:07:20]!
+[2020-09-14 15:07:20]router bgp 1
+[2020-09-14 15:07:20] bgp log neighbor changes detail
+[2020-09-14 15:07:20] address-family ipv4 unicast
+[2020-09-14 15:07:20]  network 10.8.11.0/24
+[2020-09-14 15:07:20]  network 11.11.11.11/32
+[2020-09-14 15:07:20] !
+[2020-09-14 15:07:20] af-group IPV4_IBGP_RR_CLIENTS address-family ipv4 unicast
+[2020-09-14 15:07:20]  route-reflector-client
+[2020-09-14 15:07:20]  next-hop-self
+[2020-09-14 15:07:20] !
+[2020-09-14 15:07:20] session-group IBGP_PEERS
+[2020-09-14 15:07:20]  remote-as 1
+[2020-09-14 15:07:20]  update-source Loopback0
+[2020-09-14 15:07:20] !
+[2020-09-14 15:07:20] neighbor 1.1.1.1
+[2020-09-14 15:07:20]  use session-group IBGP_PEERS
+[2020-09-14 15:07:20]  address-family ipv4 unicast
+[2020-09-14 15:07:21]   use af-group IPV4_IBGP_RR_CLIENTS
+[2020-09-14 15:07:21]  !
+[2020-09-14 15:07:21] !
+[2020-09-14 15:07:21] neighbor 2.2.2.2
+[2020-09-14 15:07:21]  use session-group IBGP_PEERS
+[2020-09-14 15:07:21]  address-family ipv4 unicast
+[2020-09-14 15:07:21]   use af-group IPV4_IBGP_RR_CLIENTS
+[2020-09-14 15:07:21]  !
+[2020-09-14 15:07:21] !
+[2020-09-14 15:07:21] neighbor 3.3.3.3
+[2020-09-14 15:07:21]  use session-group IBGP_PEERS
+[2020-09-14 15:07:21]  address-family ipv4 unicast
+[2020-09-14 15:07:21]   use af-group IPV4_IBGP_RR_CLIENTS
+[2020-09-14 15:07:21]  !
+[2020-09-14 15:07:21] !
+[2020-09-14 15:07:21] neighbor 10.8.11.8
+[2020-09-14 15:07:21]  remote-as 8
+[2020-09-14 15:07:21]  address-family ipv4 unicast
+[2020-09-14 15:07:21]   route-policy PASS_ALL in
+[2020-09-14 15:07:21]   route-policy PASS_ALL out
+[2020-09-14 15:07:21]  !
+[2020-09-14 15:07:21] !
+[2020-09-14 15:07:21] neighbor 12.12.12.12
+[2020-09-14 15:07:21]  use session-group IBGP_PEERS
+[2020-09-14 15:07:21]  address-family ipv4 unicast
+[2020-09-14 15:07:21]   use af-group IPV4_IBGP_RR_CLIENTS
+[2020-09-14 15:07:21]  !
+[2020-09-14 15:07:21] !
+[2020-09-14 15:07:21] neighbor 13.13.13.13
+[2020-09-14 15:07:21]  use session-group IBGP_PEERS
+[2020-09-14 15:07:21]  address-family ipv4 unicast
+[2020-09-14 15:07:21]   use af-group IPV4_IBGP_RR_CLIENTS
+[2020-09-14 15:07:21]  !
+[2020-09-14 15:07:21] !
+[2020-09-14 15:07:21]!
+[2020-09-14 15:07:21]end
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]RP/0/0/CPU0:XR1#quit
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]XR1 con0/0/CPU0 is now available
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]
+[2020-09-14 15:07:21]Press RETURN to get started.
+[2020-09-14 15:07:21]
+[2020-09-14 17:30:35]=====Disconnect: 2020-09-14 17:30:35

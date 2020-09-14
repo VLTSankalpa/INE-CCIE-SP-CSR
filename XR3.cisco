@@ -1,5 +1,5 @@
 !! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 09:12:22 2020 by cisco
+!! Last configuration change at Mon Sep 14 04:33:21 2020 by cisco
 !
 hostname XR3
 line console
@@ -99,6 +99,13 @@ router bgp 1
   update-source Loopback0
   address-family ipv4 unicast
    next-hop-self
+  !
+ !
+ neighbor 10.7.13.7
+  remote-as 7
+  address-family ipv4 unicast
+   route-policy PASS in
+   route-policy PASS out
   !
  !
  neighbor 10.13.14.14

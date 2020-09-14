@@ -1,5 +1,5 @@
 !! IOS XR Configuration 6.0.1
-!! Last configuration change at Sun Sep 13 17:47:02 2020 by cisco
+!! Last configuration change at Mon Sep 14 09:26:31 2020 by cisco
 !
 hostname XR1
 line console
@@ -101,19 +101,19 @@ router bgp 1
  neighbor 1.1.1.1
   use session-group IBGP_PEERS
   address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
+   use af-group IPV4_IBGP_RR_CLIENTS
   !
  !
  neighbor 2.2.2.2
   use session-group IBGP_PEERS
   address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
+   use af-group IPV4_IBGP_RR_CLIENTS
   !
  !
  neighbor 3.3.3.3
   use session-group IBGP_PEERS
   address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
+   use af-group IPV4_IBGP_RR_CLIENTS
   !
  !
  neighbor 10.8.11.8
@@ -121,19 +121,18 @@ router bgp 1
   address-family ipv4 unicast
    route-policy PASS_ALL in
    route-policy PASS_ALL out
-   next-hop-self
   !
  !
  neighbor 12.12.12.12
   use session-group IBGP_PEERS
   address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
+   use af-group IPV4_IBGP_RR_CLIENTS
   !
  !
  neighbor 13.13.13.13
   use session-group IBGP_PEERS
   address-family ipv4 unicast
-   use af-group IPV4_IBGP_CLIENTS
+   use af-group IPV4_IBGP_RR_CLIENTS
   !
  !
 !

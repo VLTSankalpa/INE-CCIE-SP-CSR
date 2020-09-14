@@ -1,5 +1,5 @@
 !
-! Last configuration change at 06:06:47 UTC Sun Sep 13 2020
+! Last configuration change at 08:52:53 UTC Mon Sep 14 2020
 !
 version 16.6
 service timestamps debug datetime msec
@@ -169,12 +169,13 @@ router isis 1
 router bgp 1
  bgp log-neighbor-changes
  network 2.2.2.2 mask 255.255.255.255
- network 10.2.10.0 mask 255.255.255.0
  neighbor 1.1.1.1 remote-as 1
  neighbor 1.1.1.1 update-source Loopback0
+ neighbor 1.1.1.1 next-hop-self
  neighbor 10.2.10.10 remote-as 10
  neighbor 11.11.11.11 remote-as 1
  neighbor 11.11.11.11 update-source Loopback0
+ neighbor 11.11.11.11 next-hop-self
 !
 !
 !

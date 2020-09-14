@@ -1,576 +1,395 @@
-﻿
-R10>
-R10>
-R10>en
-R10#show ip route bgp
-R10#show ip route bgp 
-Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
-       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
-       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
-       E1 - OSPF external type 1, E2 - OSPF external type 2
-       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
-       ia - IS-IS inter area, * - candidate default, U - per-user static route
-       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
-       a - application route
-       + - replicated route, % - next hop override, p - overrides from PfR
-
-Gateway of last resort is not set
-
-      1.0.0.0/32 is subnetted, 1 subnets
-B        1.1.1.1 [20/0] via 10.2.10.2, 02:10:54
-      2.0.0.0/32 is subnetted, 1 subnets
-B        2.2.2.2 [20/0] via 10.2.10.2, 11:50:41
-      3.0.0.0/32 is subnetted, 1 subnets
-B        3.3.3.3 [20/0] via 10.2.10.2, 02:07:08
-      7.0.0.0/32 is subnetted, 1 subnets
-B        7.7.7.7 [20/0] via 10.2.10.2, 02:07:08
-      11.0.0.0/32 is subnetted, 1 subnets
-B        11.11.11.11 [20/0] via 10.2.10.2, 00:08:35
-      12.0.0.0/32 is subnetted, 1 subnets
-B        12.12.12.12 [20/0] via 10.2.10.2, 02:07:08
-      13.0.0.0/32 is subnetted, 1 subnets
-B        13.13.13.13 [20/0] via 10.2.10.2, 02:10:54
-      14.0.0.0/32 is subnetted, 1 subnets
-B        14.14.14.14 [20/0] via 10.2.10.2, 02:10:54
-R10#
-R10#
-R10#show ip route bgp 
-Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
-       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
-       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
-       E1 - OSPF external type 1, E2 - OSPF external type 2
-       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
-       ia - IS-IS inter area, * - candidate default, U - per-user static route
-       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
-       a - application route
-       + - replicated route, % - next hop override, p - overrides from PfR
-
-Gateway of last resort is not set
-
-      1.0.0.0/32 is subnetted, 1 subnets
-B        1.1.1.1 [20/0] via 10.2.10.2, 02:11:12
-      2.0.0.0/32 is subnetted, 1 subnets
-B        2.2.2.2 [20/0] via 10.2.10.2, 11:50:59
-      3.0.0.0/32 is subnetted, 1 subnets
-B        3.3.3.3 [20/0] via 10.2.10.2, 02:07:26
-      7.0.0.0/32 is subnetted, 1 subnets
-B        7.7.7.7 [20/0] via 10.2.10.2, 02:07:26
-      11.0.0.0/32 is subnetted, 1 subnets
-B        11.11.11.11 [20/0] via 10.2.10.2, 00:08:53
-      12.0.0.0/32 is subnetted, 1 subnets
-B        12.12.12.12 [20/0] via 10.2.10.2, 02:07:26
-      13.0.0.0/32 is subnetted, 1 subnets
-B        13.13.13.13 [20/0] via 10.2.10.2, 02:11:12
-      14.0.0.0/32 is subnetted, 1 subnets
-B        14.14.14.14 [20/0] via 10.2.10.2, 02:11:12
-R10#
-R10#
-R10#
-R10#show run | S bgp
-router bgp 10
- bgp log-neighbor-changes
- network 10.10.10.10 mask 255.255.255.255
- neighbor 10.2.10.2 remote-as 1
-R10#
-R10#
-R10#
-R10#show ip route bgp 
-Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
-       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
-       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
-       E1 - OSPF external type 1, E2 - OSPF external type 2
-       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
-       ia - IS-IS inter area, * - candidate default, U - per-user static route
-       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
-       a - application route
-       + - replicated route, % - next hop override, p - overrides from PfR
-
-Gateway of last resort is not set
-
-      1.0.0.0/32 is subnetted, 1 subnets
-B        1.1.1.1 [20/0] via 10.2.10.2, 02:19:37
-      2.0.0.0/32 is subnetted, 1 subnets
-B        2.2.2.2 [20/0] via 10.2.10.2, 11:59:24
-      3.0.0.0/32 is subnetted, 1 subnets
-B        3.3.3.3 [20/0] via 10.2.10.2, 02:15:51
-      7.0.0.0/32 is subnetted, 1 subnets
-B        7.7.7.7 [20/0] via 10.2.10.2, 02:15:51
-      11.0.0.0/32 is subnetted, 1 subnets
-B        11.11.11.11 [20/0] via 10.2.10.2, 00:17:18
-      12.0.0.0/32 is subnetted, 1 subnets
-B        12.12.12.12 [20/0] via 10.2.10.2, 02:15:51
-      13.0.0.0/32 is subnetted, 1 subnets
-B        13.13.13.13 [20/0] via 10.2.10.2, 02:19:37
-      14.0.0.0/32 is subnetted, 1 subnets
-B        14.14.14.14 [20/0] via 10.2.10.2, 02:19:37
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#show ip bg
-BGP table version is 27, local router ID is 10.10.10.10
-Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, 
-              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter, 
-              x best-external, a additional-path, c RIB-compressed, 
-              t secondary path, 
-Origin codes: i - IGP, e - EGP, ? - incomplete
-RPKI validation codes: V valid, I invalid, N Not found
-
-     Network          Next Hop            Metric LocPrf Weight Path
- *>   1.1.1.1/32       10.2.10.2                              0 1 i
- *>   2.2.2.2/32       10.2.10.2                0             0 1 i
- *>   3.3.3.3/32       10.2.10.2                              0 1 i
- *>   7.7.7.7/32       10.2.10.2                              0 1 7 i
- r>   10.2.10.0/24     10.2.10.2                0             0 1 i
- *>   10.10.10.10/32   0.0.0.0                  0         32768 i
- *>   11.11.11.11/32   10.2.10.2                              0 1 i
- *>   12.12.12.12/32   10.2.10.2                              0 1 i
- *>   13.13.13.13/32   10.2.10.2                              0 1 i
- *>   14.14.14.14/32   10.2.10.2                              0 1 14 i
-R10#
-R10#
-R10#
-R10#
-R10#show ip route bgp 
-Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
-       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
-       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
-       E1 - OSPF external type 1, E2 - OSPF external type 2
-       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
-       ia - IS-IS inter area, * - candidate default, U - per-user static route
-       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
-       a - application route
-       + - replicated route, % - next hop override, p - overrides from PfR
-
-Gateway of last resort is not set
-
-      1.0.0.0/32 is subnetted, 1 subnets
-B        1.1.1.1 [20/0] via 10.2.10.2, 02:22:21
-      2.0.0.0/32 is subnetted, 1 subnets
-B        2.2.2.2 [20/0] via 10.2.10.2, 12:02:08
-      3.0.0.0/32 is subnetted, 1 subnets
-B        3.3.3.3 [20/0] via 10.2.10.2, 02:18:35
-      7.0.0.0/32 is subnetted, 1 subnets
-B        7.7.7.7 [20/0] via 10.2.10.2, 02:18:35
-      11.0.0.0/32 is subnetted, 1 subnets
-B        11.11.11.11 [20/0] via 10.2.10.2, 00:20:02
-      12.0.0.0/32 is subnetted, 1 subnets
-B        12.12.12.12 [20/0] via 10.2.10.2, 02:18:35
-      13.0.0.0/32 is subnetted, 1 subnets
-B        13.13.13.13 [20/0] via 10.2.10.2, 02:22:21
-      14.0.0.0/32 is subnetted, 1 subnets
-B        14.14.14.14 [20/0] via 10.2.10.2, 02:22:21
-R10#
-R10#
-R10#show ip route bgp 
-Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
-       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
-       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
-       E1 - OSPF external type 1, E2 - OSPF external type 2
-       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
-       ia - IS-IS inter area, * - candidate default, U - per-user static route
-       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
-       a - application route
-       + - replicated route, % - next hop override, p - overrides from PfR
-
-Gateway of last resort is not set
-
-      1.0.0.0/32 is subnetted, 1 subnets
-B        1.1.1.1 [20/0] via 10.2.10.2, 02:23:48
-      2.0.0.0/32 is subnetted, 1 subnets
-B        2.2.2.2 [20/0] via 10.2.10.2, 12:03:35
-      3.0.0.0/32 is subnetted, 1 subnets
-B        3.3.3.3 [20/0] via 10.2.10.2, 02:20:02
-      7.0.0.0/32 is subnetted, 1 subnets
-B        7.7.7.7 [20/0] via 10.2.10.2, 02:20:02
-      11.0.0.0/32 is subnetted, 1 subnets
-B        11.11.11.11 [20/0] via 10.2.10.2, 00:21:29
-      12.0.0.0/32 is subnetted, 1 subnets
-B        12.12.12.12 [20/0] via 10.2.10.2, 02:20:02
-      13.0.0.0/32 is subnetted, 1 subnets
-B        13.13.13.13 [20/0] via 10.2.10.2, 02:23:48
-      14.0.0.0/32 is subnetted, 1 subnets
-B        14.14.14.14 [20/0] via 10.2.10.2, 02:23:48
-R10#  
-R10#
-R10#
-R10#show ip route bgp 
-Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
-       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
-       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
-       E1 - OSPF external type 1, E2 - OSPF external type 2
-       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
-       ia - IS-IS inter area, * - candidate default, U - per-user static route
-       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
-       a - application route
-       + - replicated route, % - next hop override, p - overrides from PfR
-
-Gateway of last resort is not set
-
-      1.0.0.0/32 is subnetted, 1 subnets
-B        1.1.1.1 [20/0] via 10.2.10.2, 02:25:19
-      2.0.0.0/32 is subnetted, 1 subnets
-B        2.2.2.2 [20/0] via 10.2.10.2, 12:05:06
-      3.0.0.0/32 is subnetted, 1 subnets
-B        3.3.3.3 [20/0] via 10.2.10.2, 02:21:33
-      7.0.0.0/32 is subnetted, 1 subnets
-B        7.7.7.7 [20/0] via 10.2.10.2, 02:21:33
-      11.0.0.0/32 is subnetted, 1 subnets
-B        11.11.11.11 [20/0] via 10.2.10.2, 00:23:00
-      12.0.0.0/32 is subnetted, 1 subnets
-B        12.12.12.12 [20/0] via 10.2.10.2, 02:21:33
-      13.0.0.0/32 is subnetted, 1 subnets
-B        13.13.13.13 [20/0] via 10.2.10.2, 02:25:19
-      14.0.0.0/32 is subnetted, 1 subnets
-B        14.14.14.14 [20/0] via 10.2.10.2, 02:25:19
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#show ip route bgp 
-Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
-       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
-       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
-       E1 - OSPF external type 1, E2 - OSPF external type 2
-       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
-       ia - IS-IS inter area, * - candidate default, U - per-user static route
-       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
-       a - application route
-       + - replicated route, % - next hop override, p - overrides from PfR
-
-Gateway of last resort is not set
-
-      1.0.0.0/32 is subnetted, 1 subnets
-B        1.1.1.1 [20/0] via 10.2.10.2, 02:26:26
-      2.0.0.0/32 is subnetted, 1 subnets
-B        2.2.2.2 [20/0] via 10.2.10.2, 12:06:13
-      3.0.0.0/32 is subnetted, 1 subnets
-B        3.3.3.3 [20/0] via 10.2.10.2, 02:22:40
-      7.0.0.0/32 is subnetted, 1 subnets
-B        7.7.7.7 [20/0] via 10.2.10.2, 02:22:40
-      11.0.0.0/32 is subnetted, 1 subnets
-B        11.11.11.11 [20/0] via 10.2.10.2, 00:24:07
-      12.0.0.0/32 is subnetted, 1 subnets
-B        12.12.12.12 [20/0] via 10.2.10.2, 02:22:40
-      13.0.0.0/32 is subnetted, 1 subnets
-B        13.13.13.13 [20/0] via 10.2.10.2, 02:26:26
-      14.0.0.0/32 is subnetted, 1 subnets
-B        14.14.14.14 [20/0] via 10.2.10.2, 02:26:26
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#ping 14.14.14.14 s
-R10#ping 14.14.14.14 so
-R10#ping 14.14.14.14 source lo
-R10#ping 14.14.14.14 source loo
-R10#ping 14.14.14.14 source loopback 0
-Type escape sequence to abort.
-Sending 5, 100-byte ICMP Echos to 14.14.14.14, timeout is 2 seconds:
-Packet sent with a source address of 10.10.10.10 
-!!!!!
-Success rate is 100 percent (5/5), round-trip min/avg/max = 26/38/66 ms
-R10#tar
-R10#tarc  
-R10#tra 
-R10#traceroute 14.14.14.14 so 
-R10#traceroute 14.14.14.14 source loo
-R10#traceroute 14.14.14.14 source loopback 0
-Type escape sequence to abort.
-Tracing the route to 14.14.14.14
-VRF info: (vrf in name/id, vrf out name/id)
-  1 10.2.10.2 [AS 1] 14 msec 9 msec 9 msec
-  2 10.2.13.13 23 msec 11 msec 13 msec
-  3 10.13.14.14 36 msec *  30 msec
-R10#traceroute 14.14.14.14 source loopback 0
-Type escape sequence to abort.
-Tracing the route to 14.14.14.14
-VRF info: (vrf in name/id, vrf out name/id)
-  1 10.2.10.2 [AS 1] 7 msec 9 msec 8 msec
-  2 10.2.13.13 15 msec 13 msec 14 msec
-  3 10.13.14.14 31 msec *  21 msec
-R10#
-R10#
-R10#
-R10#show ip route bgp                       
-Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
-       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
-       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
-       E1 - OSPF external type 1, E2 - OSPF external type 2
-       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
-       ia - IS-IS inter area, * - candidate default, U - per-user static route
-       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
-       a - application route
-       + - replicated route, % - next hop override, p - overrides from PfR
-
-Gateway of last resort is not set
-
-      1.0.0.0/32 is subnetted, 1 subnets
-B        1.1.1.1 [20/0] via 10.2.10.2, 02:48:02
-      2.0.0.0/32 is subnetted, 1 subnets
-B        2.2.2.2 [20/0] via 10.2.10.2, 12:27:49
-      3.0.0.0/32 is subnetted, 1 subnets
-B        3.3.3.3 [20/0] via 10.2.10.2, 02:44:16
-      7.0.0.0/32 is subnetted, 1 subnets
-B        7.7.7.7 [20/0] via 10.2.10.2, 02:44:16
-      8.0.0.0/32 is subnetted, 1 subnets
-B        8.8.8.8 [20/0] via 10.2.10.2, 00:01:28
-      10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
-B        10.8.11.0/24 [20/0] via 10.2.10.2, 00:01:58
-      11.0.0.0/32 is subnetted, 1 subnets
-B        11.11.11.11 [20/0] via 10.2.10.2, 00:45:43
-      12.0.0.0/32 is subnetted, 1 subnets
-B        12.12.12.12 [20/0] via 10.2.10.2, 02:44:16
-      13.0.0.0/32 is subnetted, 1 subnets
-B        13.13.13.13 [20/0] via 10.2.10.2, 02:48:02
-      14.0.0.0/32 is subnetted, 1 subnets
-B        14.14.14.14 [20/0] via 10.2.10.2, 02:48:02
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#wr
-Building configuration...
-[OK]
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#
-R10#terminal length 0
-R10#more system:running-config
-!
-! Last configuration change at 05:22:04 UTC Sun Sep 13 2020
-!
-version 16.6
-service timestamps debug datetime msec
-service timestamps log datetime msec
-platform qfp utilization monitor load 80
-no platform punt-keepalive disable-kernel-core
-platform console serial
-!
-hostname R10
-!
-boot-start-marker
-boot-end-marker
-!
-!
-!
-no aaa new-model
-!
-!
-!
-!
-!
-!
-!
-no ip domain lookup
-!
-!
-!
-no login on-success log
-!
-!
-!
-!
-!
-!
-!
-subscriber templating
-! 
-! 
-! 
-! 
-!
-ipv6 unicast-routing
-!
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-!
-crypto pki trustpoint TP-self-signed-1279934213
- enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-1279934213
- revocation-check none
- rsakeypair TP-self-signed-1279934213
-!
-!
-crypto pki certificate chain TP-self-signed-1279934213
-!
-!
-!
-!
-!
-!
-!
-!
-!
-license udi pid CSR1000V sn 9V3L3L90EHX
-diagnostic bootup level minimal
-spanning-tree extend system-id
-!
-!
-!
-!
-redundancy
-!
-!
-!
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-! 
-! 
-!
-!
-interface Loopback0
- ip address 10.10.10.10 255.255.255.255
- ipv6 address 2001::10/128
-!
-interface GigabitEthernet1
- no ip address
- negotiation auto
- no mop enabled
- no mop sysid
-!
-interface GigabitEthernet1.210
- encapsulation dot1Q 210
- ip address 10.2.10.10 255.255.255.0
- ipv6 address 2001:2:10::10/64
-!
-router bgp 10
- bgp log-neighbor-changes
- network 10.10.10.10 mask 255.255.255.255
- neighbor 10.2.10.2 remote-as 1
-!
-!
-virtual-service csr_mgmt
-!
-ip forward-protocol nd
-ip http server
-ip http authentication local
-ip http secure-server
-!
-!
-!
-!
-!
-!
-contrquit
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-R10 con0 is now available
-
-
-
-
-
-Press RETURN to get started.
-
-
-
-
-
-
-
-
-
-
-
-
-R10>
+﻿[2020-09-14 15:03:48]
+[2020-09-14 15:03:48]R10>
+[2020-09-14 15:03:49]R10>
+[2020-09-14 15:03:49]R10>
+[2020-09-14 15:03:50]R10>en
+[2020-09-14 15:03:52]R10#show ip bgp
+[2020-09-14 15:03:56]R10#show ip bgp nei 
+[2020-09-14 15:04:09]R10#show ip bgp neighbors 2.2.2.2 ad
+[2020-09-14 15:04:10]R10#show ip bgp neighbors 2.2.2.2 advertised-routes 
+[2020-09-14 15:04:10]% No such neighbor or address family
+[2020-09-14 15:04:24]R10#show ip bg
+[2020-09-14 15:04:25]R10#show ip bgp 
+[2020-09-14 15:04:25]BGP table version is 20, local router ID is 10.10.10.10
+[2020-09-14 15:04:25]Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, 
+[2020-09-14 15:04:25]              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter, 
+[2020-09-14 15:04:25]              x best-external, a additional-path, c RIB-compressed, 
+[2020-09-14 15:04:25]              t secondary path, 
+[2020-09-14 15:04:25]Origin codes: i - IGP, e - EGP, ? - incomplete
+[2020-09-14 15:04:25]RPKI validation codes: V valid, I invalid, N Not found
+[2020-09-14 15:04:25]
+[2020-09-14 15:04:25]     Network          Next Hop            Metric LocPrf Weight Path
+[2020-09-14 15:04:25] *>   1.1.1.1/32       10.2.10.2                              0 1 i
+[2020-09-14 15:04:25] *>   2.2.2.2/32       10.2.10.2                0             0 1 i
+[2020-09-14 15:04:25] *>   3.3.3.3/32       10.2.10.2                              0 1 i
+[2020-09-14 15:04:25] *>   7.7.7.7/32       10.2.10.2                              0 1 7 i
+[2020-09-14 15:04:25] *>   8.8.8.8/32       10.2.10.2                              0 1 8 i
+[2020-09-14 15:04:25] *>   10.8.11.0/24     10.2.10.2                              0 1 i
+[2020-09-14 15:04:25] *>   10.10.10.10/32   0.0.0.0                  0         32768 i
+[2020-09-14 15:04:25] *>   11.11.11.11/32   10.2.10.2                              0 1 i
+[2020-09-14 15:04:25] *>   12.12.12.12/32   10.2.10.2                              0 1 i
+[2020-09-14 15:04:25] *>   13.13.13.13/32   10.2.10.2                              0 1 i
+[2020-09-14 15:04:25] *>   14.14.14.14/32   10.2.10.2                              0 1 14 i
+[2020-09-14 15:04:36]R10#
+[2020-09-14 15:04:41]R10#show ip bgp  2.2.2.2
+[2020-09-14 15:04:41]BGP routing table entry for 2.2.2.2/32, version 3
+[2020-09-14 15:04:41]Paths: (1 available, best #1, table default)
+[2020-09-14 15:04:41]  Not advertised to any peer
+[2020-09-14 15:04:41]  Refresh Epoch 2
+[2020-09-14 15:04:41]  1
+[2020-09-14 15:04:41]    10.2.10.2 from 10.2.10.2 (2.2.2.2)
+[2020-09-14 15:04:41]      Origin IGP, metric 0, localpref 100, valid, external, best
+[2020-09-14 15:04:41]      rx pathid: 0, tx pathid: 0x0
+[2020-09-14 15:04:49]R10#show ip bgp sum     
+[2020-09-14 15:04:49]BGP router identifier 10.10.10.10, local AS number 10
+[2020-09-14 15:04:49]BGP table version is 20, main routing table version 20
+[2020-09-14 15:04:49]11 network entries using 2728 bytes of memory
+[2020-09-14 15:04:49]11 path entries using 1496 bytes of memory
+[2020-09-14 15:04:49]6/6 BGP path/bestpath attribute entries using 1680 bytes of memory
+[2020-09-14 15:04:49]4 BGP AS-PATH entries using 144 bytes of memory
+[2020-09-14 15:04:49]0 BGP route-map cache entries using 0 bytes of memory
+[2020-09-14 15:04:49]0 BGP filter-list cache entries using 0 bytes of memory
+[2020-09-14 15:04:49]BGP using 6048 total bytes of memory
+[2020-09-14 15:04:49]BGP activity 54/43 prefixes, 60/49 paths, scan interval 60 secs
+[2020-09-14 15:04:49]
+[2020-09-14 15:04:49]Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+[2020-09-14 15:04:49]10.2.10.2       4            1     177     159       20    0    0 02:19:51       10
+[2020-09-14 15:04:54]R10#show ip bgp nei
+[2020-09-14 15:05:00]R10#show ip bgp neighbors 10.2.10.2 ad
+[2020-09-14 15:05:00]R10#show ip bgp neighbors 10.2.10.2 advertised-routes 
+[2020-09-14 15:05:00]BGP table version is 20, local router ID is 10.10.10.10
+[2020-09-14 15:05:00]Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, 
+[2020-09-14 15:05:00]              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter, 
+[2020-09-14 15:05:00]              x best-external, a additional-path, c RIB-compressed, 
+[2020-09-14 15:05:00]              t secondary path, 
+[2020-09-14 15:05:00]Origin codes: i - IGP, e - EGP, ? - incomplete
+[2020-09-14 15:05:00]RPKI validation codes: V valid, I invalid, N Not found
+[2020-09-14 15:05:00]
+[2020-09-14 15:05:00]     Network          Next Hop            Metric LocPrf Weight Path
+[2020-09-14 15:05:00] *>   10.10.10.10/32   0.0.0.0                  0         32768 i
+[2020-09-14 15:05:00]
+[2020-09-14 15:05:00]Total number of prefixes 1 
+[2020-09-14 15:05:18]R10#
+[2020-09-14 15:05:56]R10#show run
+[2020-09-14 15:05:56]Building configuration...
+[2020-09-14 15:05:57]
+[2020-09-14 15:05:57]Current configuration : 1617 bytes
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]! Last configuration change at 02:47:54 UTC Mon Sep 14 2020
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]version 16.6
+[2020-09-14 15:05:57]service timestamps debug datetime msec
+[2020-09-14 15:05:57]service timestamps log datetime msec
+[2020-09-14 15:05:57]platform qfp utilization monitor load 80
+[2020-09-14 15:05:57]no platform punt-keepalive disable-kernel-core
+[2020-09-14 15:05:57]platform console serial
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]hostname R10
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]boot-start-marker
+[2020-09-14 15:05:57]boot-end-marker
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]no aaa new-model
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!         
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]no ip domain lookup
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]no login on-success log
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]subscriber templating
+[2020-09-14 15:05:57]! 
+[2020-09-14 15:05:57]! 
+[2020-09-14 15:05:57]! 
+[2020-09-14 15:05:57]! 
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]ipv6 unicast-routing
+[2020-09-14 15:05:57]!         
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]multilink bundle-name authenticated
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]crypto pki trustpoint TP-self-signed-1279934213
+[2020-09-14 15:05:57] enrollment selfsigned
+[2020-09-14 15:05:57] subject-name cn=IOS-Self-Signed-Certificate-1279934213
+[2020-09-14 15:05:57] revocation-check none
+[2020-09-14 15:05:57] rsakeypair TP-self-signed-1279934213
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]crypto pki certificate chain TP-self-signed-1279934213
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!         
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]license udi pid CSR1000V sn 9133IXGJ3BC
+[2020-09-14 15:05:57]diagnostic bootup level minimal
+[2020-09-14 15:05:57]spanning-tree extend system-id
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]redundancy
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]! 
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:57]!
+[2020-09-14 15:05:58]!         
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]! 
+[2020-09-14 15:05:58]! 
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]interface Loopback0
+[2020-09-14 15:05:58] ip address 10.10.10.10 255.255.255.255
+[2020-09-14 15:05:58] ipv6 address 2001::10/128
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]interface GigabitEthernet1
+[2020-09-14 15:05:58] no ip address
+[2020-09-14 15:05:58] negotiation auto
+[2020-09-14 15:05:58] no mop enabled
+[2020-09-14 15:05:58] no mop sysid
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]interface GigabitEthernet1.210
+[2020-09-14 15:05:58] encapsulation dot1Q 210
+[2020-09-14 15:05:58] ip address 10.2.10.10 255.255.255.0
+[2020-09-14 15:05:58] ipv6 address 2001:2:10::10/64
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]router bgp 10
+[2020-09-14 15:05:58] bgp log-neighbor-changes
+[2020-09-14 15:05:58] network 10.10.10.10 mask 255.255.255.255
+[2020-09-14 15:05:58] neighbor 10.2.10.2 remote-as 1
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]virtual-service csr_mgmt
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]ip forward-protocol nd
+[2020-09-14 15:05:58]ip http server
+[2020-09-14 15:05:58]ip http authentication local
+[2020-09-14 15:05:58]ip http secure-server
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]control-plane
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!         
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]line con 0
+[2020-09-14 15:05:58] exec-timeout 0 0
+[2020-09-14 15:05:58] stopbits 1
+[2020-09-14 15:05:58]line vty 0 4
+[2020-09-14 15:05:58] login
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]!
+[2020-09-14 15:05:58]end
+[2020-09-14 15:05:58]
+[2020-09-14 15:06:23]R10# wr
+[2020-09-14 15:06:26]Building configuration...
+[2020-09-14 15:06:35][OK]
+[2020-09-14 15:07:22]R10#
+[2020-09-14 15:07:22]R10#
+[2020-09-14 15:07:22]R10#
+[2020-09-14 15:07:22]R10#terminal length 0
+[2020-09-14 15:07:23]R10#more system:running-config
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]! Last configuration change at 02:47:54 UTC Mon Sep 14 2020
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]version 16.6
+[2020-09-14 15:07:24]service timestamps debug datetime msec
+[2020-09-14 15:07:24]service timestamps log datetime msec
+[2020-09-14 15:07:24]platform qfp utilization monitor load 80
+[2020-09-14 15:07:24]no platform punt-keepalive disable-kernel-core
+[2020-09-14 15:07:24]platform console serial
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]hostname R10
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]boot-start-marker
+[2020-09-14 15:07:24]boot-end-marker
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]no aaa new-model
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]no ip domain lookup
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]no login on-success log
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]subscriber templating
+[2020-09-14 15:07:24]! 
+[2020-09-14 15:07:24]! 
+[2020-09-14 15:07:24]! 
+[2020-09-14 15:07:24]! 
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]ipv6 unicast-routing
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]multilink bundle-name authenticated
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]crypto pki trustpoint TP-self-signed-1279934213
+[2020-09-14 15:07:24] enrollment selfsigned
+[2020-09-14 15:07:24] subject-name cn=IOS-Self-Signed-Certificate-1279934213
+[2020-09-14 15:07:24] revocation-check none
+[2020-09-14 15:07:24] rsakeypair TP-self-signed-1279934213
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]crypto pki certificate chain TP-self-signed-1279934213
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]license udi pid CSR1000V sn 9133IXGJ3BC
+[2020-09-14 15:07:24]diagnostic bootup level minimal
+[2020-09-14 15:07:24]spanning-tree extend system-id
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]redundancy
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]! 
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]hbor 10.2.10.2 remote-as 1
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]virtual-service csr_mgmt
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]ip forward-protocol nd
+[2020-09-14 15:07:24]ip http server
+[2020-09-14 15:07:24]ip http authentication localrol-plane
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]line con 0
+[2020-09-14 15:07:24] exec-timeout 0 0
+[2020-09-14 15:07:24] stopbits 1
+[2020-09-14 15:07:24]line vty 0 4
+[2020-09-14 15:07:24] login
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]!
+[2020-09-14 15:07:24]end
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:24]R10#quit
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:24]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 15:07:25]
+[2020-09-14 23:33:09]=====Disconnect: 2020-09-14 23:33:09
